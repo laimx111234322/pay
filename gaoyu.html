@@ -1,0 +1,1499 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球开店 - 跨境电商全链路合规解决方案服务商</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36B37E',
+                        dark: '#172B4D',
+                        light: '#F4F5F7',
+                        accent: '#FF5630'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Montserrat', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .section-fade {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+            .section-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .feature-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .feature-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+            }
+            .stat-card {
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .stat-card:hover {
+                transform: scale(1.03);
+            }
+            .animate-counter {
+                counter-reset: count 0;
+                animation: count 2s forwards ease-out;
+            }
+        }
+    </style>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-white text-dark overflow-x-hidden">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl"></div>
+                <span class="ml-3 text-xl font-bold text-dark">全球开店</span>
+            </div>
+            
+            <!-- 桌面导航 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-primary font-medium">首页</a>
+                <a href="#advantages" class="text-dark/80 hover:text-primary transition-colors font-medium">核心优势</a>
+                <a href="#services" class="text-dark/80 hover:text-primary transition-colors font-medium">服务体系</a>
+                <a href="#data" class="text-dark/80 hover:text-primary transition-colors font-medium">数据中心</a>
+                <a href="#cases" class="text-dark/80 hover:text-primary transition-colors font-medium">成功案例</a>
+                <a href="#contact" class="text-dark/80 hover:text-primary transition-colors font-medium">联系我们</a>
+            </nav>
+            
+            <!-- 登录/注册按钮 -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#" class="text-dark/80 hover:text-primary transition-colors font-medium">登录</a>
+                <a href="#" class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">免费注册</a>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button class="md:hidden text-dark text-xl" id="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-y-full opacity-0 transition-all duration-300 pointer-events-none" id="mobile-menu">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#home" class="text-primary font-medium py-2">首页</a>
+                <a href="#advantages" class="text-dark/80 hover:text-primary transition-colors font-medium py-2">核心优势</a>
+                <a href="#services" class="text-dark/80 hover:text-primary transition-colors font-medium py-2">服务体系</a>
+                <a href="#data" class="text-dark/80 hover:text-primary transition-colors font-medium py-2">数据中心</a>
+                <a href="#cases" class="text-dark/80 hover:text-primary transition-colors font-medium py-2">成功案例</a>
+                <a href="#contact" class="text-dark/80 hover:text-primary transition-colors font-medium py-2">联系我们</a>
+                <div class="flex space-x-4 pt-2 border-t border-dark/10">
+                    <a href="#" class="text-dark/80 hover:text-primary transition-colors font-medium">登录</a>
+                    <a href="#" class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">免费注册</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容 -->
+    <main>
+        <!-- 封面页 -->
+        <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+                <div class="absolute -right-24 -bottom-24 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl"></div>
+                <div class="absolute -left-24 -top-24 w-96 h-96 bg-secondary/10 rounded-full filter blur-3xl"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 md:px-6 z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
+                            跨境电商 · 全链路合规解决方案
+                        </div>
+                        
+                        <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-display font-bold leading-tight mb-6">
+                            数据驱动的<br>
+                            <span class="text-primary">全球开店</span>智慧生态
+                        </h1>
+                        
+                        <p class="text-[clamp(1rem,2vw,1.25rem)] text-dark/70 max-w-xl mb-10">
+                            比传统方式快5倍的入驻效率，99.2%的店铺存活率，帮助品牌3个月内实现全球布局，平均提升销售额180%。
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            <a href="#" class="px-8 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors w-full sm:w-auto flex items-center justify-center">
+                                <i class="fa fa-rocket mr-2"></i>
+                                立即开启全球业务
+                            </a>
+                            <a href="#data" class="px-8 py-3 border border-dark/20 text-dark font-medium rounded-lg hover:bg-dark/5 transition-colors w-full sm:w-auto flex items-center justify-center">
+                                <i class="fa fa-chart-bar mr-2"></i>
+                                查看业绩数据
+                            </a>
+                        </div>
+                        
+                        <div class="mt-12 grid grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-primary mb-1 counter" data-target="45">0</div>
+                                <p class="text-dark/60 text-sm">覆盖国家</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-primary mb-1 counter" data-target="32">0</div>
+                                <p class="text-dark/60 text-sm">合作平台</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-primary mb-1 counter" data-target="5000">0</div>
+                                <p class="text-dark/60 text-sm">成功案例</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="relative z-10 rounded-xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                            <img src="https://picsum.photos/id/26/600/400" alt="全球开店生态系统" class="w-full h-auto">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent flex items-end">
+                                <div class="p-6 text-white">
+                                    <h3 class="text-xl font-bold mb-2">比行业平均效率提升500%</h3>
+                                    <p class="text-white/80">从入驻到运营的全流程优化</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-primary/10 rounded-full -z-10"></div>
+                        <div class="absolute -top-6 -right-6 w-40 h-40 bg-secondary/10 rounded-full -z-10"></div>
+                    </div>
+                </div>
+                
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <a href="#advantages" class="text-dark/50 hover:text-primary transition-colors">
+                        <i class="fa fa-angle-down text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 核心优势 -->
+        <section id="advantages" class="py-20 bg-white section-fade">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium mb-3">核心竞争力</span>
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-display font-bold mb-4">数据见证的五大核心优势</h2>
+                    <p class="text-dark/60 max-w-2xl mx-auto">通过量化数据对比，直观呈现我们的服务优势</p>
+                </div>
+                
+                <!-- 优势1：开店效率 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+                    <div>
+                        <div class="bg-light p-1 rounded-xl inline-block mb-4">
+                            <span class="px-4 py-1 bg-primary text-white rounded-lg text-sm font-medium">优势一：极致效率</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">平均入驻周期缩短80%</h3>
+                        <p class="text-dark/70 mb-6">通过标准化流程与平台绿色通道，我们将主流平台的入驻周期从行业平均15天缩短至3天，帮助品牌快速抢占市场先机。</p>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-white text-xs"></i>
+                                </div>
+                                <p class="ml-3 text-dark/80">亚马逊入驻：3天（行业平均15天）</p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-white text-xs"></i>
+                                </div>
+                                <p class="ml-3 text-dark/80">eBay入驻：2天（行业平均10天）</p>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-check text-white text-xs"></i>
+                                </div>
+                                <p class="ml-3 text-dark/80">TikTok Shop：1天（行业平均7天）</p>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            了解高效入驻流程 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <h4 class="text-lg font-medium mb-4">平台入驻效率对比（天）</h4>
+                        <div class="h-80">
+                            <canvas id="efficiencyChart"></canvas>
+                        </div>
+                        <p class="text-xs text-dark/50 mt-4 text-center">数据来源：2023年跨境电商服务商行业报告与平台内部数据统计</p>
+                    </div>
+                </div>
+                
+                <!-- 优势2：安全稳定 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+                    <div class="order-2 lg:order-1">
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <h4 class="text-lg font-medium mb-4">店铺安全表现对比（%）</h4>
+                            <div class="h-80">
+                                <canvas id="securityChart"></canvas>
+                            </div>
+                            <p class="text-xs text-dark/50 mt-4 text-center">数据统计周期：2023年1月-12月，样本量：1000+客户店铺</p>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2">
+                        <div class="bg-light p-1 rounded-xl inline-block mb-4">
+                            <span class="px-4 py-1 bg-primary text-white rounded-lg text-sm font-medium">优势二：安全保障</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">99.2%的店铺存活率</h3>
+                        <p class="text-dark/70 mb-6">通过防关联技术、合规运营指导和实时风险监控，我们的客户店铺存活率远高于行业平均水平，封号率仅为0.5%。</p>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-light p-4 rounded-lg text-center">
+                                <div class="text-3xl font-bold text-secondary mb-1">99.2%</div>
+                                <p class="text-dark/70 text-sm">12个月店铺存活率</p>
+                            </div>
+                            <div class="bg-light p-4 rounded-lg text-center">
+                                <div class="text-3xl font-bold text-secondary mb-1">0.5%</div>
+                                <p class="text-dark/70 text-sm">年度封号率</p>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            了解安全保障体系 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 优势3：全球覆盖 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+                    <div>
+                        <div class="bg-light p-1 rounded-xl inline-block mb-4">
+                            <span class="px-4 py-1 bg-primary text-white rounded-lg text-sm font-medium">优势三：全球布局</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">覆盖45国32个主流平台</h3>
+                        <p class="text-dark/70 mb-6">从成熟市场到新兴蓝海，我们的服务网络覆盖全球45个国家和地区，与32个主流电商平台建立官方合作关系。</p>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-medium mb-3">重点市场覆盖率</h4>
+                            <div class="space-y-2">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>北美市场</span>
+                                        <span>100%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>欧洲市场</span>
+                                        <span>100%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>东南亚市场</span>
+                                        <span>95%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>中东市场</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            查看全球覆盖详情 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm h-full">
+                            <h4 class="text-lg font-medium mb-4">全球市场覆盖分布</h4>
+                            <div class="relative w-full h-80 bg-light rounded-lg overflow-hidden">
+                                <!-- 简化版全球覆盖地图 -->
+                                <img src="https://picsum.photos/id/237/800/500" alt="全球覆盖地图" class="w-full h-full object-cover opacity-50">
+                                
+                                <!-- 覆盖热点区域 -->
+                                <div class="absolute top-1/4 left-1/4 w-24 h-24 bg-primary/30 rounded-full filter blur-xl animate-pulse"></div> <!-- 北美 -->
+                                <div class="absolute top-1/3 left-2/3 w-20 h-20 bg-primary/30 rounded-full filter blur-xl animate-pulse" style="animation-delay: 0.5s"></div> <!-- 欧洲 -->
+                                <div class="absolute bottom-1/3 left-3/4 w-18 h-18 bg-primary/30 rounded-full filter blur-xl animate-pulse" style="animation-delay: 1s"></div> <!-- 东南亚 -->
+                                <div class="absolute bottom-1/4 left-2/3 w-16 h-16 bg-primary/30 rounded-full filter blur-xl animate-pulse" style="animation-delay: 1.5s"></div> <!-- 中东 -->
+                                
+                                <!-- 平台分布标签 -->
+                                <div class="absolute top-4 left-4 bg-white/90 px-3 py-1 rounded-full text-sm shadow-sm">
+                                    北美：8个平台
+                                </div>
+                                <div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-sm shadow-sm">
+                                    欧洲：7个平台
+                                </div>
+                                <div class="absolute bottom-4 right-4 bg-white/90 px-3 py-1 rounded-full text-sm shadow-sm">
+                                    亚太：11个平台
+                                </div>
+                                <div class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded-full text-sm shadow-sm">
+                                    其他：6个平台
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 优势4：成本优化 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+                    <div class="order-2 lg:order-1">
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <h4 class="text-lg font-medium mb-4">年度运营成本对比（万元）</h4>
+                            <div class="h-80">
+                                <canvas id="costChart"></canvas>
+                            </div>
+                            <p class="text-xs text-dark/50 mt-4 text-center">数据基于年销售额1000万美金的跨境电商企业统计</p>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2">
+                        <div class="bg-light p-1 rounded-xl inline-block mb-4">
+                            <span class="px-4 py-1 bg-primary text-white rounded-lg text-sm font-medium">优势四：成本优化</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">综合成本降低32%</h3>
+                        <p class="text-dark/70 mb-6">通过整合资源、优化流程和规模效应，我们帮助客户平均降低32%的跨境运营成本，显著提升利润率。</p>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fa fa-money text-secondary mr-2"></i>
+                                    <span>收款费率优势</span>
+                                </div>
+                                <span class="font-medium">低0.8%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fa fa-calculator text-secondary mr-2"></i>
+                                    <span>税务合规成本</span>
+                                </div>
+                                <span class="font-medium">降40%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fa fa-user text-secondary mr-2"></i>
+                                    <span>运营人力成本</span>
+                                </div>
+                                <span class="font-medium">降25%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fa fa-shield text-secondary mr-2"></i>
+                                    <span>安全合规成本</span>
+                                </div>
+                                <span class="font-medium">降38%</span>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                            查看成本优化方案 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 优势5：增长赋能 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="bg-light p-1 rounded-xl inline-block mb-4">
+                            <span class="px-4 py-1 bg-primary text-white rounded-lg text-sm font-medium">优势五：增长赋能</span>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">平均销售额增长180%</h3>
+                        <p class="text-dark/70 mb-6">我们不仅提供基础服务，更通过数据分析和市场洞察，帮助客户优化运营策略，实现业务快速增长。</p>
+                        
+                        <div class="bg-light p-5 rounded-xl mb-6">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 mt-1">
+                                    <i class="fa fa-lightbulb-o"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium mb-2">增长加速公式</h4>
+                                    <p class="text-dark/70 text-sm">
+                                        快速入驻×多平台布局×本地化运营×安全合规 = 业务指数级增长
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#cases" class="inline-flex items-center text-primary font-medium hover:underline">
+                            查看客户增长案例 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <h4 class="text-lg font-medium mb-4">客户业务增长趋势（%）</h4>
+                            <div class="h-80">
+                                <canvas id="growthChart"></canvas>
+                            </div>
+                            <p class="text-xs text-dark/50 mt-4 text-center">数据基于合作6个月以上的客户群体统计，对比合作前后的销售额增长</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 服务体系 -->
+        <section id="services" class="py-20 bg-light section-fade">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium mb-3">服务体系</span>
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-display font-bold mb-4">全链路跨境电商解决方案</h2>
+                    <p class="text-dark/60 max-w-2xl mx-auto">从入驻到运营的一站式服务，覆盖跨境电商全流程</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 全球开店 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden feature-card">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/26/600/400" alt="全球开店服务" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                                <i class="fa fa-shopping-cart text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">全球开店</h3>
+                            <p class="text-dark/70 mb-4">32个主流电商平台快速入驻，平均3天完成，通过率98.7%，比行业快5倍</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded">核心服务</span>
+                                <a href="#" class="text-primary font-medium hover:underline text-sm">了解详情</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 安全浏览器 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden feature-card">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/160/600/400" alt="安全浏览器" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                                <i class="fa fa-globe text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">安全浏览器</h3>
+                            <p class="text-dark/70 mb-4">防关联隔离技术，多账号安全管理，保障99.2%的店铺存活率</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded">核心服务</span>
+                                <a href="#" class="text-primary font-medium hover:underline text-sm">了解详情</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 全球收款 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden feature-card">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/180/600/400" alt="全球收款" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                                <i class="fa fa-credit-card text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">全球收款</h3>
+                            <p class="text-dark/70 mb-4">费率低至0.3%，支持20+币种，T+1到账，年节省成本超300万</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded">核心服务</span>
+                                <a href="#" class="text-primary font-medium hover:underline text-sm">了解详情</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 海外注册 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden feature-card">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/20/600/400" alt="海外注册" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                                <i class="fa fa-building text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">海外注册</h3>
+                            <p class="text-dark/70 mb-4">覆盖15国公司注册，平均节省40%成本，助力品牌本地化运营</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded">增值服务</span>
+                                <a href="#" class="text-primary font-medium hover:underline text-sm">了解详情</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 海外税务 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden feature-card">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/104/600/400" alt="海外税务" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                                <i class="fa fa-calculator text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">海外税务</h3>
+                            <p class="text-dark/70 mb-4">合规报税，税务筹划，平均为客户节省25-40%的税务成本</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded">增值服务</span>
+                                <a href="#" class="text-primary font-medium hover:underline text-sm">了解详情</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 运营支持 -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden feature-card">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/119/600/400" alt="运营支持" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                                <i class="fa fa-line-chart text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">运营支持</h3>
+                            <p class="text-dark/70 mb-4">数据驱动的运营指导，帮助客户平均提升销售额180%，加速市场拓展</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded">增值服务</span>
+                                <a href="#" class="text-primary font-medium hover:underline text-sm">了解详情</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 数据中心 -->
+        <section id="data" class="py-20 bg-white section-fade">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium mb-3">数据中心</span>
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-display font-bold mb-4">平台实力数据</h2>
+                    <p class="text-dark/60 max-w-2xl mx-auto">用数据说话，见证我们的服务实力与客户价值</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    <div class="bg-light p-6 rounded-xl text-center stat-card">
+                        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa fa-globe text-2xl"></i>
+                        </div>
+                        <div class="text-4xl font-bold text-primary mb-2 counter" data-target="45">0</div>
+                        <p class="text-dark/70">覆盖国家/地区</p>
+                    </div>
+                    
+                    <div class="bg-light p-6 rounded-xl text-center stat-card">
+                        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa fa-shopping-bag text-2xl"></i>
+                        </div>
+                        <div class="text-4xl font-bold text-primary mb-2 counter" data-target="32">0</div>
+                        <p class="text-dark/70">合作电商平台</p>
+                    </div>
+                    
+                    <div class="bg-light p-6 rounded-xl text-center stat-card">
+                        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa fa-users text-2xl"></i>
+                        </div>
+                        <div class="text-4xl font-bold text-primary mb-2 counter" data-target="5000">0</div>
+                        <p class="text-dark/70">成功服务客户</p>
+                    </div>
+                    
+                    <div class="bg-light p-6 rounded-xl text-center stat-card">
+                        <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa fa-usd text-2xl"></i>
+                        </div>
+                        <div class="text-4xl font-bold text-primary mb-2 counter" data-target="180">0</div>
+                        <p class="text-dark/70">客户平均增长率(%)</p>
+                    </div>
+                </div>
+                
+                <div class="bg-light p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-8 text-center">客户满意度与复购率</h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm h-full">
+                                <h4 class="text-lg font-medium mb-4">客户满意度评分</h4>
+                                <div class="h-80">
+                                    <canvas id="satisfactionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm h-full">
+                                <h4 class="text-lg font-medium mb-4">服务复购率趋势</h4>
+                                <div class="h-80">
+                                    <canvas id="repurchaseChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 成功案例 -->
+        <section id="cases" class="py-20 bg-light section-fade">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium mb-3">成功案例</span>
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-display font-bold mb-4">客户增长故事</h2>
+                    <p class="text-dark/60 max-w-2xl mx-auto">5000+品牌通过我们的服务实现全球业务突破</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/96/600/400" alt="电子产品品牌案例" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium">电子产品</span>
+                                <span class="ml-auto text-sm text-dark/60">2023年</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">某智能手表品牌</h3>
+                            <p class="text-dark/70 mb-4">通过全生态服务，6个月内入驻6大平台，全球销售额突破500万美金</p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>销售额增长</span>
+                                        <span class="font-medium">280%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-secondary h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>成本降低</span>
+                                        <span class="font-medium">32%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 32%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <a href="#" class="text-primary font-medium hover:underline text-sm">查看完整案例</a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/21/600/400" alt="家居用品品牌案例" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium">家居用品</span>
+                                <span class="ml-auto text-sm text-dark/60">2022年</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">某家居装饰品牌</h3>
+                            <p class="text-dark/70 mb-4">借助海外注册与税务服务，实现品牌本地化运营，欧洲市场份额提升35%</p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>销售额增长</span>
+                                        <span class="font-medium">150%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-secondary h-2 rounded-full" style="width: 55%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>成本降低</span>
+                                        <span class="font-medium">40%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <a href="#" class="text-primary font-medium hover:underline text-sm">查看完整案例</a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/id/64/600/400" alt="时尚服饰品牌案例" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium">时尚服饰</span>
+                                <span class="ml-auto text-sm text-dark/60">2023年</span>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">某快时尚品牌</h3>
+                            <p class="text-dark/70 mb-4">通过多平台入驻与全球收款服务，3个月打开北美市场，月销突破100万美金</p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>销售额增长</span>
+                                        <span class="font-medium">320%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-secondary h-2 rounded-full" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>成本降低</span>
+                                        <span class="font-medium">28%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 28%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <a href="#" class="text-primary font-medium hover:underline text-sm">查看完整案例</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="#" class="inline-flex items-center px-8 py-3 border border-primary text-primary font-medium rounded-lg hover:bg-primary/5 transition-colors">
+                        查看更多成功案例 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 联系我们 -->
+        <section id="contact" class="py-20 bg-white section-fade">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-16">
+                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium mb-3">联系我们</span>
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-display font-bold mb-4">开启您的全球业务之旅</h2>
+                    <p class="text-dark/60 max-w-2xl mx-auto">专业顾问将为您提供一对一咨询服务，定制全球开店方案</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <div class="bg-light p-8 rounded-2xl h-full">
+                            <h3 class="text-2xl font-semibold mb-6">预约专属顾问</h3>
+                            
+                            <form>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <label for="name" class="block text-sm font-medium text-dark/80 mb-2">姓名</label>
+                                        <input type="text" id="name" placeholder="请输入您的姓名" class="w-full px-4 py-3 border border-dark/20 rounded-lg focus:outline-none focus:border-primary">
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-sm font-medium text-dark/80 mb-2">电话</label>
+                                        <input type="tel" id="phone" placeholder="请输入您的联系电话" class="w-full px-4 py-3 border border-dark/20 rounded-lg focus:outline-none focus:border-primary">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="company" class="block text-sm font-medium text-dark/80 mb-2">公司名称</label>
+                                    <input type="text" id="company" placeholder="请输入您的公司名称" class="w-full px-4 py-3 border border-dark/20 rounded-lg focus:outline-none focus:border-primary">
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="platform" class="block text-sm font-medium text-dark/80 mb-2">意向平台</label>
+                                    <select id="platform" class="w-full px-4 py-3 border border-dark/20 rounded-lg focus:outline-none focus:border-primary">
+                                        <option value="">请选择意向入驻平台</option>
+                                        <option value="amazon">亚马逊</option>
+                                        <option value="ebay">eBay</option>
+                                        <option value="temu">Temu</option>
+                                        <option value="tiktok">TikTok Shop</option>
+                                        <option value="shopify">Shopify</option>
+                                        <option value="multiple">多个平台</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="message" class="block text-sm font-medium text-dark/80 mb-2">需求描述</label>
+                                    <textarea id="message" rows="4" placeholder="请简要描述您的需求" class="w-full px-4 py-3 border border-dark/20 rounded-lg focus:outline-none focus:border-primary"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">
+                                    提交预约
+                                </button>
+                            </form>
+                            
+                            <div class="mt-8 pt-6 border-t border-dark/10">
+                                <p class="text-dark/70 text-sm mb-4">我们承诺：您的信息仅用于业务沟通，不会泄露给第三方</p>
+                                <div class="flex items-center text-sm text-dark/60">
+                                    <i class="fa fa-clock-o mr-2 text-primary"></i>
+                                    <span>工作时间：周一至周日 9:00-21:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-primary text-white p-8 rounded-2xl h-full">
+                            <h3 class="text-2xl font-semibold mb-6">联系方式</h3>
+                            
+                            <div class="space-y-6 mb-8">
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fa fa-phone text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold mb-1">电话咨询</h4>
+                                        <p class="text-white/80 mb-1">400-888-9999</p>
+                                        <p class="text-sm text-white/60">7×12小时服务</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fa fa-envelope text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold mb-1">邮件咨询</h4>
+                                        <p class="text-white/80 mb-1">service@globalstore.com</p>
+                                        <p class="text-sm text-white/60">24小时内回复</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fa fa-comments text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold mb-1">在线客服</h4>
+                                        <p class="text-white/80 mb-1">官网在线客服系统</p>
+                                        <p class="text-sm text-white/60">实时响应</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fa fa-map-marker text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold mb-1">总部地址</h4>
+                                        <p class="text-white/80 mb-1">深圳市全球开店</p>
+                                        <p class="text-sm text-white/60">欢迎来访（需预约）</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-6 border-t border-white/10">
+                                <h4 class="font-semibold mb-4">关注我们</h4>
+                                <div class="flex space-x-4">
+                                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+                                        <i class="fa fa-weixin"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+                                        <i class="fa fa-weibo"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+                                        <i class="fa fa-linkedin"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+                                        <i class="fa fa-youtube-play"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 行动召唤 -->
+        <section class="py-20 bg-primary text-white section-fade">
+            <div class="container mx-auto px-4 md:px-6 text-center">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-display font-bold mb-6">立即开启您的全球业务</h2>
+                <p class="text-white/80 max-w-2xl mx-auto mb-10 text-[clamp(1rem,2vw,1.25rem)]">
+                    加入5000+品牌的选择，借助我们的数据驱动型解决方案，快速实现全球市场布局
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#" class="px-8 py-3 bg-white text-primary font-medium rounded-lg hover:bg-white/90 transition-colors w-full sm:w-auto">
+                        免费注册
+                    </a>
+                    <a href="#" class="px-8 py-3 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors w-full sm:w-auto">
+                        预约演示
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-primary font-bold text-xl">G</div>
+                        <span class="ml-3 text-xl font-bold">全球开店</span>
+                    </div>
+                    <p class="text-white/60 mb-4">数据驱动的跨境电商全链路解决方案服务商，为品牌出海提供安全高效的全球开店服务。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-weixin text-xl"></i></a>
+                        <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-weibo text-xl"></i></a>
+                        <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-linkedin text-xl"></i></a>
+                        <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-youtube-play text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">核心服务</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">全球开店</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">安全浏览器</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">全球收款</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">海外注册</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">海外税务</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">运营支持</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">关于我们</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">公司介绍</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">成功案例</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">平台资源</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">合作伙伴</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">加入我们</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">帮助中心</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">常见问题</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">入驻指南</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">安全指南</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">费用说明</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">服务协议</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-white transition-colors">隐私政策</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-white/10 text-center text-white/40 text-sm">
+                <p>© 2023 全球开店 版权所有 | 沪ICP备12345678号-1</p>
+                <p class="mt-2">合规经营 · 安全可靠 · 全球服务</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white', 'shadow-md');
+            } else {
+                navbar.classList.remove('bg-white', 'shadow-md');
+            }
+        });
+        
+        // 移动端菜单
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('opacity-0')) {
+                mobileMenu.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
+                mobileMenu.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                menuToggle.innerHTML = '<i class="fa fa-times"></i>';
+            } else {
+                mobileMenu.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+                mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单
+                if (!mobileMenu.classList.contains('opacity-0')) {
+                    mobileMenu.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
+                    mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 滚动动画
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.section-fade').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // 数字计数器动画
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const duration = 2000; // 动画持续时间（毫秒）
+                const frameDuration = 1000 / 60; // 每帧持续时间
+                const totalFrames = Math.round(duration / frameDuration);
+                let frame = 0;
+                
+                const startCount = 0;
+                const increment = target / totalFrames;
+                
+                const updateCount = () => {
+                    frame++;
+                    const currentCount = startCount + increment * frame;
+                    
+                    // 处理小数显示
+                    if (target % 1 !== 0) {
+                        counter.textContent = currentCount.toFixed(1);
+                    } else {
+                        counter.textContent = Math.round(currentCount).toLocaleString();
+                    }
+                    
+                    if (frame < totalFrames) {
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.textContent = target % 1 !== 0 ? target.toFixed(1) : target.toLocaleString();
+                    }
+                };
+                
+                updateCount();
+            });
+        }
+        
+        // 当数据中心部分进入视图时启动计数器动画
+        const dataSection = document.getElementById('data');
+        const dataObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    dataObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        dataObserver.observe(dataSection);
+        
+        // 首页数字动画
+        const homeSection = document.getElementById('home');
+        const homeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // 只动画首页的计数器
+                    const homeCounters = homeSection.querySelectorAll('.counter');
+                    homeCounters.forEach(counter => {
+                        const target = parseFloat(counter.getAttribute('data-target'));
+                        const duration = 2000;
+                        const frameDuration = 1000 / 60;
+                        const totalFrames = Math.round(duration / frameDuration);
+                        let frame = 0;
+                        
+                        const startCount = 0;
+                        const increment = target / totalFrames;
+                        
+                        const updateCount = () => {
+                            frame++;
+                            const currentCount = startCount + increment * frame;
+                            
+                            if (target % 1 !== 0) {
+                                counter.textContent = currentCount.toFixed(1);
+                            } else {
+                                counter.textContent = Math.round(currentCount).toLocaleString();
+                            }
+                            
+                            if (frame < totalFrames) {
+                                requestAnimationFrame(updateCount);
+                            } else {
+                                counter.textContent = target % 1 !== 0 ? target.toFixed(1) : target.toLocaleString();
+                            }
+                        };
+                        
+                        updateCount();
+                    });
+                    homeObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        homeObserver.observe(homeSection);
+        
+        // 效率对比图表
+        const efficiencyCtx = document.getElementById('efficiencyChart');
+        if (efficiencyCtx) {
+            new Chart(efficiencyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['亚马逊', 'eBay', 'TikTok Shop', 'Shopify', '速卖通', 'Wish'],
+                    datasets: [
+                        { 
+                            label: '全球开店平均入驻周期（天）', 
+                            data: [3, 2, 1, 2, 3, 2], 
+                            backgroundColor: '#165DFF',
+                            borderRadius: 6
+                        },
+                        { 
+                            label: '行业平均入驻周期（天）', 
+                            data: [15, 10, 7, 8, 12, 9], 
+                            backgroundColor: '#E5E7EB',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    const globalValue = context.datasetIndex === 0 ? context.raw : null;
+                                    const industryValue = context.datasetIndex === 1 ? context.raw : context.chart.data.datasets[1].data[context.dataIndex];
+                                    
+                                    if (context.datasetIndex === 0 && globalValue && industryValue) {
+                                        const ratio = (industryValue / globalValue).toFixed(1);
+                                        return `比行业快 ${ratio} 倍`;
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { 
+                            beginAtZero: true, 
+                            title: { 
+                                display: true, 
+                                text: '天数' 
+                            } 
+                        } 
+                    }
+                }
+            });
+        }
+        
+        // 安全对比图表
+        const securityCtx = document.getElementById('securityChart');
+        if (securityCtx) {
+            new Chart(securityCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    datasets: [
+                        { 
+                            label: '全球开店封号率（%）', 
+                            data: [0.6, 0.5, 0.4, 0.5, 0.5, 0.4, 0.6, 0.5, 0.4, 0.5, 0.5, 0.4], 
+                            borderColor: '#36B37E', 
+                            backgroundColor: 'rgba(54, 179, 126, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        { 
+                            label: '行业平均封号率（%）', 
+                            data: [7.8, 8.2, 8.5, 8.1, 8.3, 8.4, 8.0, 7.9, 8.2, 8.5, 8.3, 8.1], 
+                            borderColor: '#FF5630', 
+                            backgroundColor: 'rgba(255, 86, 48, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: { 
+                        y: { 
+                            title: { 
+                                display: true, 
+                                text: '封号率（%）' 
+                            }, 
+                            min: 0, 
+                            max: 10 
+                        } 
+                    }
+                }
+            });
+        }
+        
+        // 成本对比图表
+        const costCtx = document.getElementById('costChart');
+        if (costCtx) {
+            new Chart(costCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['入驻总成本', '年度运营成本', '收款成本', '税务合规成本', '安全合规成本'],
+                    datasets: [
+                        { 
+                            label: '传统服务', 
+                            data: [5, 30, 8, 15, 12], 
+                            backgroundColor: '#E5E7EB',
+                            borderRadius: 6
+                        },
+                        { 
+                            label: '全球开店', 
+                            data: [2.8, 18, 3.5, 9, 4.5], 
+                            backgroundColor: '#165DFF',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    const globalValue = context.datasetIndex === 1 ? context.raw : null;
+                                    const traditionalValue = context.datasetIndex === 0 ? context.raw : context.chart.data.datasets[0].data[context.dataIndex];
+                                    
+                                    if (context.datasetIndex === 1 && globalValue && traditionalValue) {
+                                        const saving = ((traditionalValue - globalValue) / traditionalValue * 100).toFixed(0);
+                                        return `节省 ${saving}%`;
+                                    }
+                                    return '';
+                                }
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: 32,
+                                    yMax: 32,
+                                    borderColor: '#36B37E',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                    label: {
+                                        content: '平均节省32%',
+                                        enabled: true,
+                                        position: 'end'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { 
+                            title: { 
+                                display: true, 
+                                text: '成本（万元/年）' 
+                            } 
+                        } 
+                    }
+                }
+            });
+        }
+        
+        // 增长趋势图表
+        const growthCtx = document.getElementById('growthChart');
+        if (growthCtx) {
+            new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['合作前', '1个月', '2个月', '3个月', '4个月', '5个月', '6个月'],
+                    datasets: [
+                        { 
+                            label: '全球开店客户', 
+                            data: [100, 120, 150, 200, 240, 260, 280], 
+                            borderColor: '#165DFF', 
+                            backgroundColor: 'rgba(22, 93, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#165DFF',
+                            pointRadius: 4
+                        },
+                        { 
+                            label: '行业平均水平', 
+                            data: [100, 105, 110, 120, 130, 140, 150], 
+                            borderColor: '#E5E7EB', 
+                            backgroundColor: 'rgba(229, 231, 235, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#E5E7EB',
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { 
+                            title: { 
+                                display: true, 
+                                text: '销售额（基准值100%）' 
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        } 
+                    }
+                }
+            });
+        }
+        
+        // 客户满意度图表
+        const satisfactionCtx = document.getElementById('satisfactionChart');
+        if (satisfactionCtx) {
+            new Chart(satisfactionCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['服务效率', '专业程度', '成本优势', '安全性', '客户支持', '效果达成'],
+                    datasets: [
+                        { 
+                            label: '全球开店', 
+                            data: [95, 92, 90, 96, 93, 94], 
+                            backgroundColor: 'rgba(22, 93, 255, 0.2)',
+                            borderColor: '#165DFF',
+                            pointBackgroundColor: '#165DFF',
+                            pointRadius: 4
+                        },
+                        { 
+                            label: '行业平均', 
+                            data: [72, 75, 68, 65, 70, 66], 
+                            backgroundColor: 'rgba(229, 231, 235, 0.2)',
+                            borderColor: '#E5E7EB',
+                            pointBackgroundColor: '#E5E7EB',
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 复购率图表
+        const repurchaseCtx = document.getElementById('repurchaseChart');
+        if (repurchaseCtx) {
+            new Chart(repurchaseCtx, {
+                type: 'line',
+                data: {
+                    labels: '2018,2019,2020,2021,2022,2023'.split(','),
+                    datasets: [
+                        { 
+                            label: '全球开店复购率', 
+                            data: [82, 85, 88, 90, 92, 94], 
+                            borderColor: '#36B37E', 
+                            backgroundColor: 'rgba(54, 179, 126, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        { 
+                            label: '行业平均复购率', 
+                            data: [60, 62, 63, 65, 66, 67], 
+                            borderColor: '#E5E7EB', 
+                            backgroundColor: 'rgba(229, 231, 235, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: { 
+                        y: { 
+                            title: { 
+                                display: true, 
+                                text: '复购率（%）' 
+                            },
+                            min: 50,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        } 
+                    }
+                }
+            });
+        }
+    </script>
+
+
+</body></html>
