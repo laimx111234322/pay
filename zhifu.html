@@ -1,0 +1,1892 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>硕丰全球支付 - 管理中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        dark: '#1D2129',
+                        'sidebar-bg': '#0E1424',
+                        'card-bg': '#FFFFFF',
+                        'gray-light': '#F2F3F5',
+                        'gray-medium': '#C9CDD4',
+                        'gray-dark': '#86909C'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .sidebar-item {
+                @apply flex items-center px-5 py-3 text-gray-medium hover:bg-primary/10 hover:text-primary transition-all duration-200 cursor-pointer;
+            }
+            .sidebar-item.active {
+                @apply bg-primary/10 text-primary border-l-4 border-primary;
+            }
+            .sidebar-subitem {
+                @apply flex items-center px-5 pl-14 py-2 text-gray-medium hover:bg-primary/10 hover:text-primary transition-all duration-200 cursor-pointer text-sm;
+            }
+            .sidebar-subitem.active {
+                @apply bg-primary/10 text-primary;
+            }
+            .sidebar-subsubitem {
+                @apply flex items-center px-5 pl-18 py-2 text-gray-medium hover:bg-primary/10 hover:text-primary transition-all duration-200 cursor-pointer text-sm;
+            }
+            .sidebar-subsubitem.active {
+                @apply bg-primary/10 text-primary;
+            }
+            .card-shadow {
+                box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.06);
+            }
+            .nav-item {
+                @apply relative px-3 py-2 text-gray-dark hover:text-primary transition-colors;
+            }
+            .nav-item:after {
+                @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-200 content-[''];
+            }
+            .nav-item:hover:after {
+                @apply w-full;
+            }
+            .nav-item.active {
+                @apply text-primary;
+            }
+            .nav-item.active:after {
+                @apply w-full;
+            }
+            .step-active {
+                @apply bg-primary text-white border-primary;
+            }
+            .step-completed {
+                @apply bg-success text-white border-success;
+            }
+            .step-pending {
+                @apply bg-white text-gray-dark border-gray-medium;
+            }
+            .country-item {
+                @apply flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-primary/5 cursor-pointer transition-all;
+            }
+            .bank-item {
+                @apply flex items-center p-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-primary/5 cursor-pointer transition-all;
+            }
+            .chain-item {
+                @apply flex items-center p-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-primary/5 cursor-pointer transition-all;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-inter bg-gray-light text-dark antialiased">
+    <div class="flex h-screen overflow-hidden">
+        <!-- 侧边栏 -->
+        <aside class="w-64 bg-sidebar-bg text-white hidden md:block flex-shrink-0 overflow-y-auto">
+            <div class="flex items-center h-16 px-5 border-b border-gray-700/50">
+                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-primary text-white font-bold text-sm">S</div>
+                <span class="ml-3 text-lg font-bold">硕丰支付</span>
+            </div>
+            
+            <div class="py-4">
+                <p class="px-5 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">主菜单</p>
+                
+                <!-- 总览 -->
+                <div class="sidebar-item active group">
+                    <i class="fa fa-dashboard w-5 text-center mr-3"></i>
+                    <span>总览</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                
+                <!-- 法币账户 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-credit-card w-5 text-center mr-3"></i>
+                    <span>法币账户</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">美元账户</div>
+                    <div class="sidebar-subitem">欧元账户</div>
+                    <div class="sidebar-subitem">英镑账户</div>
+                    <div class="sidebar-subitem">人民币账户</div>
+                    <div class="sidebar-subitem">其他货币</div>
+                </div>
+                
+                <!-- 数字货币 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-bitcoin w-5 text-center mr-3"></i>
+                    <span>数字货币</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">稳定币</div>
+                    <div class="sidebar-subitem">主流币种</div>
+                    <div class="sidebar-subitem">其他币种</div>
+                    <div class="sidebar-subitem group">
+                        <span>币种管理</span>
+                        <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                    </div>
+                    <div class="sidebar-subsubmenu hidden">
+                        <div>添加币种</div>
+                        <div>隐藏币种</div>
+                        <div>价格提醒</div>
+                    </div>
+                </div>
+                
+                <!-- 全球收款账号 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-globe w-5 text-center mr-3"></i>
+                    <span>全球收款账号</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">申请新收款账号</div>
+                    <div class="sidebar-subitem">我的收款账号</div>
+                    <div class="sidebar-subitem">收款记录</div>
+                    <div class="sidebar-subitem">收款费率</div>
+                    <div class="sidebar-subitem">收款限额</div>
+                </div>
+                
+                <!-- 全球付款账号 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-paper-plane w-5 text-center mr-3"></i>
+                    <span>全球付款账号</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">添加付款账号</div>
+                    <div class="sidebar-subitem">我的付款账号</div>
+                    <div class="sidebar-subitem">付款记录</div>
+                    <div class="sidebar-subitem">付款费率</div>
+                    <div class="sidebar-subitem">批量付款</div>
+                </div>
+                
+                <!-- 数字货币转账钱包 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-exchange w-5 text-center mr-3"></i>
+                    <span>数字货币转账</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem group">
+                        <span>比特币链</span>
+                        <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                    </div>
+                    <div class="sidebar-subsubmenu hidden">
+                        <div>BTC转账</div>
+                        <div>BTC地址管理</div>
+                        <div>BTC转账记录</div>
+                    </div>
+                    <div class="sidebar-subitem group">
+                        <span>以太坊链</span>
+                        <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                    </div>
+                    <div class="sidebar-subsubmenu hidden">
+                        <div>ETH转账</div>
+                        <div>ERC20代币转账</div>
+                        <div>ETH地址管理</div>
+                    </div>
+                    <div class="sidebar-subitem group">
+                        <span>币安智能链</span>
+                        <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                    </div>
+                    <div class="sidebar-subsubmenu hidden">
+                        <div>BNB转账</div>
+                        <div>BEP20代币转账</div>
+                    </div>
+                    <div class="sidebar-subitem">Solana链</div>
+                    <div class="sidebar-subitem">Polygon链</div>
+                    <div class="sidebar-subitem">转账记录查询</div>
+                </div>
+                
+                <!-- 货币兑换 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-random w-5 text-center mr-3"></i>
+                    <span>货币兑换</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">法币兑换</div>
+                    <div class="sidebar-subitem">数字货币兑换</div>
+                    <div class="sidebar-subitem">法币与数字货币兑换</div>
+                    <div class="sidebar-subitem">汇率查询</div>
+                    <div class="sidebar-subitem">兑换记录</div>
+                </div>
+                
+                <!-- 交易记录 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-history w-5 text-center mr-3"></i>
+                    <span>交易记录</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">收款记录</div>
+                    <div class="sidebar-subitem">付款记录</div>
+                    <div class="sidebar-subitem">转账记录</div>
+                    <div class="sidebar-subitem">兑换记录</div>
+                    <div class="sidebar-subitem">充值记录</div>
+                    <div class="sidebar-subitem">提现记录</div>
+                </div>
+                
+                <p class="px-5 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-6">财务管理</p>
+                
+                <!-- 资金报表 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-line-chart w-5 text-center mr-3"></i>
+                    <span>资金报表</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">账户余额报表</div>
+                    <div class="sidebar-subitem">收支明细报表</div>
+                    <div class="sidebar-subitem">趋势分析报表</div>
+                    <div class="sidebar-subitem">自定义报表</div>
+                    <div class="sidebar-subitem">报表导出</div>
+                </div>
+                
+                <!-- 供应链金融 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-link w-5 text-center mr-3"></i>
+                    <span>供应链金融</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">应收账款管理</div>
+                    <div class="sidebar-subitem">采购融资</div>
+                    <div class="sidebar-subitem">订单融资</div>
+                    <div class="sidebar-subitem">保理服务</div>
+                </div>
+                
+                <!-- 汇率避险 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-shield w-5 text-center mr-3"></i>
+                    <span>汇率避险</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">远期结售汇</div>
+                    <div class="sidebar-subitem">期权产品</div>
+                    <div class="sidebar-subitem">汇率风险评估</div>
+                    <div class="sidebar-subitem">历史汇率查询</div>
+                </div>
+                
+                <p class="px-5 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-6">系统设置</p>
+                
+                <!-- 账户管理 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-user w-5 text-center mr-3"></i>
+                    <span>账户管理</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">个人信息</div>
+                    <div class="sidebar-subitem">安全设置</div>
+                    <div class="sidebar-subitem">认证中心</div>
+                    <div class="sidebar-subitem">权限管理</div>
+                    <div class="sidebar-subitem">登录日志</div>
+                </div>
+                
+                <!-- 系统设置 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-cog w-5 text-center mr-3"></i>
+                    <span>系统设置</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">通知设置</div>
+                    <div class="sidebar-subitem">显示设置</div>
+                    <div class="sidebar-subitem">语言设置</div>
+                    <div class="sidebar-subitem">API设置</div>
+                    <div class="sidebar-subitem">第三方集成</div>
+                </div>
+                
+                <!-- 帮助中心 -->
+                <div class="sidebar-item group">
+                    <i class="fa fa-question-circle w-5 text-center mr-3"></i>
+                    <span>帮助中心</span>
+                    <i class="fa fa-angle-down ml-auto transition-transform duration-200 group-hover:rotate-180"></i>
+                </div>
+                <div class="sidebar-submenu hidden">
+                    <div class="sidebar-subitem">常见问题</div>
+                    <div class="sidebar-subitem">操作指南</div>
+                    <div class="sidebar-subitem">视频教程</div>
+                    <div class="sidebar-subitem">联系客服</div>
+                    <div class="sidebar-subitem">意见反馈</div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- 主内容区 -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- 顶部导航 -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0">
+                <div class="flex items-center">
+                    <button class="md:hidden mr-4 text-gray-500" id="mobile-menu-btn">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-semibold">账户总览</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="text-gray-500 hover:text-primary transition-colors">
+                            <i class="fa fa-bell text-xl"></i>
+                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-danger rounded-full text-white text-xs flex items-center justify-center">3</span>
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <button class="flex items-center">
+                            <img src="https://picsum.photos/id/1005/40/40" alt="用户头像" class="w-8 h-8 rounded-full object-cover">
+                            <span class="ml-2 text-sm font-medium hidden md:inline-block">laimaoxuan</span>
+                            <i class="fa fa-angle-down ml-1 text-gray-500 hidden md:inline-block"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- 页面内容 -->
+            <main class="flex-1 overflow-y-auto p-6 bg-gray-light">
+                <!-- 快捷操作 -->
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button class="flex items-center bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                        <i class="fa fa-plus text-primary mr-2"></i>
+                        新增账户
+                    </button>
+                    <button class="flex items-center bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                        <i class="fa fa-exchange text-primary mr-2"></i>
+                        转账汇款
+                    </button>
+                    <button class="flex items-center bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                        <i class="fa fa-random text-primary mr-2"></i>
+                        货币兑换
+                    </button>
+                    <button class="flex items-center bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                        <i class="fa fa-download text-primary mr-2"></i>
+                        导出报表
+                    </button>
+                    <button class="flex items-center bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" id="apply-receive-account-btn">
+                        <i class="fa fa-globe text-primary mr-2"></i>
+                        申请全球收款账号
+                    </button>
+                    <button class="flex items-center bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors" id="add-payment-account-btn">
+                        <i class="fa fa-paper-plane text-primary mr-2"></i>
+                        添加全球付款账号
+                    </button>
+                </div>
+                
+                <!-- 账户余额卡片 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-gray-dark text-sm">总资产 (USD)</p>
+                                <h3 class="text-2xl font-bold mt-1">$248,5600.0</h3>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <i class="fa fa-money"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>3.2% 较上月</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-gray-dark text-sm">法币余额</p>
+                                <h3 class="text-2xl font-bold mt-1">$186,2405</h3>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center text-success">
+                                <i class="fa fa-credit-card"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>2.1% 较上月</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-gray-dark text-sm">数字货币</p>
+                                <h3 class="text-2xl font-bold mt-1">$62,3195</h3>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center text-warning">
+                                <i class="fa fa-bitcoin"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-danger text-sm">
+                            <i class="fa fa-arrow-down mr-1"></i>
+                            <span>1.8% 较上月</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-gray-dark text-sm">本月交易</p>
+                                <h3 class="text-2xl font-bold mt-1">186 笔</h3>
+                            </div>
+                            <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+                                <i class="fa fa-exchange"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>12.5% 较上月</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 资金分布图表 -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white rounded-xl p-5 card-shadow lg:col-span-2">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-semibold text-lg">资金趋势 (30天)</h3>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary">日</button>
+                                <button class="px-3 py-1 text-xs rounded-full bg-gray-light text-gray-dark">周</button>
+                                <button class="px-3 py-1 text-xs rounded-full bg-gray-light text-gray-dark">月</button>
+                            </div>
+                        </div>
+                        <div class="h-64">
+                            <canvas id="fundsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-5 card-shadow">
+                        <h3 class="font-semibold text-lg mb-6">资产分布</h3>
+                        <div class="h-64 flex items-center justify-center">
+                            <canvas id="assetDistributionChart"></canvas>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 rounded-full bg-primary mr-2"></span>
+                                <span class="text-sm">美元 (42%)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 rounded-full bg-secondary mr-2"></span>
+                                <span class="text-sm">欧元 (28%)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 rounded-full bg-warning mr-2"></span>
+                                <span class="text-sm">USDT (15%)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 rounded-full bg-success mr-2"></span>
+                                <span class="text-sm">其他 (15%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 全球收款账号 -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">全球收款账号</h3>
+                        <a href="#" class="text-primary text-sm hover:underline" id="view-all-receive-accounts">查看全部</a>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-light">
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">国家/地区</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">银行名称</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">账号类型</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">账号状态</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">创建时间</th>
+                                        <th class="py-3 px-5 text-right text-sm font-semibold text-gray-700">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/237/30/20" alt="美国国旗" class="w-6 h-4 mr-2 object-cover">
+                                                美国
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">美国银行</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">个人账户</span>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">正常</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-05-12</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="收款记录">
+                                                    <i class="fa fa-history"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="管理">
+                                                    <i class="fa fa-cog"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/238/30/20" alt="欧元区国旗" class="w-6 h-4 mr-2 object-cover">
+                                                欧元区
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">汇丰银行(欧洲)</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">公司账户</span>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">正常</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-04-28</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="收款记录">
+                                                    <i class="fa fa-history"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="管理">
+                                                    <i class="fa fa-cog"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/239/30/20" alt="英国国旗" class="w-6 h-4 mr-2 object-cover">
+                                                英国
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">巴克莱银行</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">公司账户</span>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">审核中</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-06-14</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="取消申请">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 全球付款账号 -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">全球付款账号</h3>
+                        <a href="#" class="text-primary text-sm hover:underline" id="view-all-payment-accounts">查看全部</a>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-light">
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">收款人</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">国家/地区</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">银行名称</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">币种</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">添加时间</th>
+                                        <th class="py-3 px-5 text-right text-sm font-semibold text-gray-700">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="font-medium">John Smith</div>
+                                            <div class="text-xs text-gray-dark">个人</div>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/237/30/20" alt="美国国旗" class="w-6 h-4 mr-2 object-cover">
+                                                美国
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">摩根大通银行</td>
+                                        <td class="py-3 px-5">USD</td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-05-20</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="发起付款">
+                                                    <i class="fa fa-paper-plane"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="编辑">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="删除">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="font-medium">ABC Trading GmbH</div>
+                                            <div class="text-xs text-gray-dark">公司</div>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/240/30/20" alt="德国国旗" class="w-6 h-4 mr-2 object-cover">
+                                                德国
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">德国商业银行</td>
+                                        <td class="py-3 px-5">EUR</td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-04-15</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="发起付款">
+                                                    <i class="fa fa-paper-plane"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="编辑">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="删除">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="font-medium">田中商事</div>
+                                            <div class="text-xs text-gray-dark">公司</div>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/241/30/20" alt="日本国旗" class="w-6 h-4 mr-2 object-cover">
+                                                日本
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">三菱日联银行</td>
+                                        <td class="py-3 px-5">JPY</td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-06-02</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="发起付款">
+                                                    <i class="fa fa-paper-plane"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="编辑">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="删除">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数字货币钱包 -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">数字货币钱包</h3>
+                        <a href="#" class="text-primary text-sm hover:underline" id="manage-crypto-wallets">管理钱包</a>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-light">
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">币种</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">链类型</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">钱包地址</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">余额</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">状态</th>
+                                        <th class="py-3 px-5 text-right text-sm font-semibold text-gray-700">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/242/30/30" alt="BTC" class="w-6 h-6 mr-3">
+                                                <div>
+                                                    <p class="font-medium">BTC</p>
+                                                    <p class="text-xs text-gray-dark">比特币</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-gray-light text-gray-dark">比特币链</span>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <span class="text-sm font-mono truncate max-w-xs">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</span>
+                                                <button class="ml-2 text-gray-dark hover:text-primary" title="复制">
+                                                    <i class="fa fa-copy text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5 font-medium">0.8524 BTC</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">正常</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="充值">
+                                                    <i class="fa fa-plus-circle"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="提现" id="crypto-withdraw-btn">
+                                                    <i class="fa fa-minus-circle"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="转账">
+                                                    <i class="fa fa-exchange"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/243/30/30" alt="USDT" class="w-6 h-6 mr-3">
+                                                <div>
+                                                    <p class="font-medium">USDT</p>
+                                                    <p class="text-xs text-gray-dark">Tether</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-gray-light text-gray-dark">以太坊链(ERC20)</span>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <span class="text-sm font-mono truncate max-w-xs">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</span>
+                                                <button class="ml-2 text-gray-dark hover:text-primary" title="复制">
+                                                    <i class="fa fa-copy text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5 font-medium">42,580.25 USDT</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">正常</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="充值">
+                                                    <i class="fa fa-plus-circle"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="提现" id="usdt-withdraw-btn">
+                                                    <i class="fa fa-minus-circle"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="转账">
+                                                    <i class="fa fa-exchange"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <img src="https://picsum.photos/id/244/30/30" alt="USDT" class="w-6 h-6 mr-3">
+                                                <div>
+                                                    <p class="font-medium">USDT</p>
+                                                    <p class="text-xs text-gray-dark">Tether</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-gray-light text-gray-dark">币安智能链(BEP20)</span>
+                                        </td>
+                                        <td class="py-3 px-5">
+                                            <div class="flex items-center">
+                                                <span class="text-sm font-mono truncate max-w-xs">0x342f52A5D97647183E534cC60428275293824300</span>
+                                                <button class="ml-2 text-gray-dark hover:text-primary" title="复制">
+                                                    <i class="fa fa-copy text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-5 font-medium">18,750.50 USDT</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">正常</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-right">
+                                            <div class="flex justify-end space-x-2">
+                                                <button class="text-primary hover:text-primary/80" title="充值">
+                                                    <i class="fa fa-plus-circle"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="提现" id="bep20-withdraw-btn">
+                                                    <i class="fa fa-minus-circle"></i>
+                                                </button>
+                                                <button class="text-gray-dark hover:text-dark" title="转账">
+                                                    <i class="fa fa-exchange"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 最近交易 -->
+                <div class="mt-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-semibold text-lg">最近交易</h3>
+                        <a href="#" class="text-primary text-sm hover:underline">查看全部</a>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl overflow-hidden card-shadow">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-light">
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">交易ID</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">类型</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">金额</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">状态</th>
+                                        <th class="py-3 px-5 text-left text-sm font-semibold text-gray-700">时间</th>
+                                        <th class="py-3 px-5 text-right text-sm font-semibold text-gray-700">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5 text-sm font-mono">TX852456987</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">法币收款</span>
+                                        </td>
+                                        <td class="py-3 px-5 font-medium">+$12,500.00 USD</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">已完成</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-06-15 09:24:36</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <button class="text-primary text-sm hover:underline">详情</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5 text-sm font-mono">TX753159462</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">数字货币转账</span>
+                                        </td>
+                                        <td class="py-3 px-5 font-medium">-5,000.00 USDT</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">已完成</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-06-14 16:48:12</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <button class="text-primary text-sm hover:underline">详情</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5 text-sm font-mono">TX963258741</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-secondary/10 text-secondary">货币兑换</span>
+                                        </td>
+                                        <td class="py-3 px-5 font-medium">€8,500.00 → $9,245.50</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-success/10 text-success">已完成</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-06-14 11:32:57</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <button class="text-primary text-sm hover:underline">详情</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="py-3 px-5 text-sm font-mono">TX147258369</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-danger/10 text-danger">法币提现</span>
+                                        </td>
+                                        <td class="py-3 px-5 font-medium">-$25,000.00 USD</td>
+                                        <td class="py-3 px-5">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-warning/10 text-warning">处理中</span>
+                                        </td>
+                                        <td class="py-3 px-5 text-sm text-gray-dark">2023-06-13 18:15:42</td>
+                                        <td class="py-3 px-5 text-right">
+                                            <button class="text-primary text-sm hover:underline">详情</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- 申请全球收款账号模态框 -->
+    <div id="receiveAccountModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl w-full max-w-2xl mx-4 overflow-hidden transform transition-all max-h-[90vh] flex flex-col">
+            <div class="p-5 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold text-lg">申请全球收款账号</h3>
+                <button class="close-modal text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="p-5 overflow-y-auto flex-1">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">账户类型</label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:border-primary hover:bg-primary/5 cursor-pointer transition-all flex items-center" id="receive-personal-account">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">个人账户</h3>
+                                <p class="text-sm text-gray-dark">适用于个人全球收款需求</p>
+                            </div>
+                            <div class="ml-auto">
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-medium account-radio"></div>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:border-primary hover:bg-primary/5 cursor-pointer transition-all flex items-center" id="receive-company-account">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
+                                <i class="fa fa-building"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">公司账户</h3>
+                                <p class="text-sm text-gray-dark">适用于企业跨境贸易收款</p>
+                            </div>
+                            <div class="ml-auto">
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-medium account-radio"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">选择收款国家/地区 <span class="text-danger">*</span></label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none" id="receive-country-select">
+                            <option value="">请选择国家/地区</option>
+                            <!-- 国家选项将通过JS动态生成 -->
+                        </select>
+                        <i class="fa fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-dark pointer-events-none"></i>
+                    </div>
+                </div>
+                
+                <div class="mb-6" id="receive-bank-container" style="display: none;">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">选择收款银行 <span class="text-danger">*</span></label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none" id="receive-bank-select">
+                            <option value="">请选择银行</option>
+                            <!-- 银行选项将通过JS动态生成 -->
+                        </select>
+                        <i class="fa fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-dark pointer-events-none"></i>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">预计月收款金额 <span class="text-danger">*</span></label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-primary hover:bg-primary/5 cursor-pointer transition-all" data-amount="0-10000">
+                            <span class="font-medium">0 - 10,000 USD</span>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-primary hover:bg-primary/5 cursor-pointer transition-all" data-amount="10000-50000">
+                            <span class="font-medium">10,000 - 50,000 USD</span>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-primary hover:bg-primary/5 cursor-pointer transition-all" data-amount="50000+">
+                            <span class="font-medium">50,000+ USD</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">收款用途 <span class="text-danger">*</span></label>
+                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <option value="">请选择收款用途</option>
+                        <option>跨境贸易收款</option>
+                        <option>服务费用收款</option>
+                        <option>薪资收入</option>
+                        <option>投资收益</option>
+                        <option>平台销售收款</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+                
+                <div class="p-4 bg-warning/10 rounded-lg border border-warning/20">
+                    <div class="flex items-start">
+                        <i class="fa fa-info-circle text-warning mt-0.5 mr-3"></i>
+                        <div>
+                            <p class="text-sm font-medium text-warning">申请须知</p>
+                            <p class="text-sm text-gray-dark mt-1">1. 申请全球收款账号需完成实名认证</p>
+                            <p class="text-sm text-gray-dark">2. 不同国家/地区的账号申请审核时间为1-5个工作日</p>
+                            <p class="text-sm text-gray-dark">3. 部分国家/地区可能需要额外的证明材料</p>
+                            <p class="text-sm text-gray-dark">4. 账号申请成功后将收取年度服务费，具体以页面展示为准</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 border-t border-gray-200 flex justify-end">
+                <button class="close-modal px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors mr-3">
+                    取消
+                </button>
+                <button class="px-6 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">
+                    提交申请
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加全球付款账号模态框 -->
+    <div id="paymentAccountModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl w-full max-w-2xl mx-4 overflow-hidden transform transition-all max-h-[90vh] flex flex-col">
+            <div class="p-5 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold text-lg">添加全球付款账号</h3>
+                <button class="close-modal text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="p-5 overflow-y-auto flex-1">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">收款人类型 <span class="text-danger">*</span></label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-primary hover:bg-primary/5 cursor-pointer transition-all" id="payee-personal">
+                                <span class="font-medium">个人</span>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-primary hover:bg-primary/5 cursor-pointer transition-all" id="payee-company">
+                                <span class="font-medium">公司</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">收款人姓名/名称 <span class="text-danger">*</span></label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">选择国家/地区 <span class="text-danger">*</span></label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none" id="payment-country-select">
+                            <option value="">请选择国家/地区</option>
+                            <!-- 国家选项将通过JS动态生成 -->
+                        </select>
+                        <i class="fa fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-dark pointer-events-none"></i>
+                    </div>
+                </div>
+                
+                <div class="mb-6" id="payment-bank-container" style="display: none;">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">选择银行 <span class="text-danger">*</span></label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none" id="payment-bank-select">
+                            <option value="">请选择银行</option>
+                            <!-- 银行选项将通过JS动态生成 -->
+                        </select>
+                        <i class="fa fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-dark pointer-events-none"></i>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">银行账号 <span class="text-danger">*</span></label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">SWIFT代码</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="国际银行代码">
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">银行地址</label>
+                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">币种 <span class="text-danger">*</span></label>
+                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" id="payment-currency-select">
+                        <option value="">请选择币种</option>
+                        <option>USD - 美元</option>
+                        <option>EUR - 欧元</option>
+                        <option>GBP - 英镑</option>
+                        <option>JPY - 日元</option>
+                        <option>CAD - 加元</option>
+                        <option>AUD - 澳元</option>
+                        <option>CNY - 人民币</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">备注名称</label>
+                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="为该付款账号设置一个便于识别的名称">
+                </div>
+                
+                <div class="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                    <div class="flex items-start">
+                        <i class="fa fa-lightbulb-o text-primary mt-0.5 mr-3"></i>
+                        <div>
+                            <p class="text-sm font-medium text-primary">提示</p>
+                            <p class="text-sm text-gray-dark mt-1">1. 请仔细核对收款信息，信息错误可能导致付款失败或资金损失</p>
+                            <p class="text-sm text-gray-dark">2. 添加的付款账号将经过系统验证后才能使用</p>
+                            <p class="text-sm text-gray-dark">3. 您可以添加多个付款账号，便于管理不同的收款方</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 border-t border-gray-200 flex justify-end">
+                <button class="close-modal px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors mr-3">
+                    取消
+                </button>
+                <button class="px-6 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">
+                    保存账号
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 数字货币提现模态框 -->
+    <div id="cryptoWithdrawModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl w-full max-w-md mx-4 overflow-hidden transform transition-all max-h-[90vh] flex flex-col">
+            <div class="p-5 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold text-lg">数字货币提现</h3>
+                <button class="close-modal text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="p-5 overflow-y-auto flex-1">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">选择币种 <span class="text-danger">*</span></label>
+                    <div class="relative">
+                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none" id="withdraw-crypto-select">
+                            <option value="">请选择币种</option>
+                            <option value="BTC">BTC - 比特币</option>
+                            <option value="USDT">USDT - Tether</option>
+                            <option value="ETH">ETH - 以太坊</option>
+                            <option value="BNB">BNB - 币安币</option>
+                            <option value="SOL">SOL - 索拉纳</option>
+                        </select>
+                        <i class="fa fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-dark pointer-events-none"></i>
+                    </div>
+                </div>
+                
+                <div class="mb-4" id="withdraw-chain-container">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">选择链类型 <span class="text-danger">*</span></label>
+                    <div class="grid grid-cols-2 gap-3" id="chain-options">
+                        <!-- 链类型选项将通过JS动态生成 -->
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="flex justify-between mb-1">
+                        <label class="block text-sm font-medium text-gray-700">余额</label>
+                        <span class="text-sm font-medium" id="crypto-balance">0.0000 BTC</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">提现地址 <span class="text-danger">*</span></label>
+                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入提现地址">
+                    <div class="mt-2 flex flex-wrap gap-2">
+                        <div class="px-3 py-1 bg-gray-light rounded-full text-sm text-gray-dark cursor-pointer hover:bg-gray-200 transition-colors">
+                            常用地址 1
+                        </div>
+                        <div class="px-3 py-1 bg-gray-light rounded-full text-sm text-gray-dark cursor-pointer hover:bg-gray-200 transition-colors">
+                            常用地址 2
+                        </div>
+                        <button class="px-3 py-1 bg-primary/10 rounded-full text-sm text-primary hover:bg-primary/20 transition-colors">
+                            <i class="fa fa-plus mr-1"></i> 添加
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">提现数量 <span class="text-danger">*</span></label>
+                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入提现数量">
+                    <div class="flex space-x-2 mt-2">
+                        <button class="text-xs px-2 py-1 bg-gray-light rounded hover:bg-gray-200 transition-colors">25%</button>
+                        <button class="text-xs px-2 py-1 bg-gray-light rounded hover:bg-gray-200 transition-colors">50%</button>
+                        <button class="text-xs px-2 py-1 bg-gray-light rounded hover:bg-gray-200 transition-colors">75%</button>
+                        <button class="text-xs px-2 py-1 bg-gray-light rounded hover:bg-gray-200 transition-colors">100%</button>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">网络手续费</label>
+                    <div class="bg-gray-light p-3 rounded-lg">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-dark">手续费模式</span>
+                            <select class="text-sm bg-transparent border-none focus:outline-none focus:ring-0">
+                                <option>普通</option>
+                                <option>快速</option>
+                                <option>慢速</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-dark">预计手续费</span>
+                            <span class="font-medium" id="withdraw-fee">0.0001 BTC</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">安全验证 <span class="text-danger">*</span></label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-gray-dark mb-1">谷歌验证码</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-dark mb-1">短信验证码</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-4 bg-danger/10 rounded-lg border border-danger/20 mb-6">
+                    <div class="flex items-start">
+                        <i class="fa fa-exclamation-triangle text-danger mt-0.5 mr-3"></i>
+                        <div>
+                            <p class="text-sm font-medium text-danger">重要提示</p>
+                            <p class="text-sm text-gray-dark mt-1">1. 请务必确认提现地址正确无误，数字货币提现一旦发出无法撤回</p>
+                            <p class="text-sm text-gray-dark">2. 提现实时到账，具体到账时间取决于区块链网络确认速度</p>
+                            <p class="text-sm text-gray-dark">3. 不同链类型的地址不互通，错误选择链类型将导致资产丢失</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-light p-3 rounded-lg mb-6">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="text-gray-dark">实际到账数量</span>
+                        <span class="font-medium" id="actual-amount">0.0000 BTC</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-dark">当前估值 (USD)</span>
+                        <span class="font-medium" id="estimated-value">$0.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 border-t border-gray-200 flex justify-end">
+                <button class="close-modal px-6 py-2 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors mr-3">
+                    取消
+                </button>
+                <button class="px-6 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors">
+                    确认提现
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 30个主流国家列表（用于收款账号）
+        const receiveCountries = [
+            { name: "美国", code: "US" },
+            { name: "中国", code: "CN" },
+            { name: "日本", code: "JP" },
+            { name: "英国", code: "GB" },
+            { name: "加拿大", code: "CA" },
+            { name: "澳大利亚", code: "AU" },
+            { name: "德国", code: "DE" },
+            { name: "法国", code: "FR" },
+            { name: "意大利", code: "IT" },
+            { name: "西班牙", code: "ES" },
+            { name: "韩国", code: "KR" },
+            { name: "新加坡", code: "SG" },
+            { name: "瑞士", code: "CH" },
+            { name: "荷兰", code: "NL" },
+            { name: "比利时", code: "BE" },
+            { name: "瑞典", code: "SE" },
+            { name: "挪威", code: "NO" },
+            { name: "丹麦", code: "DK" },
+            { name: "芬兰", code: "FI" },
+            { name: "爱尔兰", code: "IE" },
+            { name: "新西兰", code: "NZ" },
+            { name: "马来西亚", code: "MY" },
+            { name: "泰国", code: "TH" },
+            { name: "印度", code: "IN" },
+            { name: "巴西", code: "BR" },
+            { name: "墨西哥", code: "MX" },
+            { name: "阿联酋", code: "AE" },
+            { name: "沙特阿拉伯", code: "SA" },
+            { name: "南非", code: "ZA" },
+            { name: "俄罗斯", code: "RU" }
+        ];
+        
+        // 100个国家列表（用于付款账号，这里展示部分作为示例）
+        const paymentCountries = [
+            ...receiveCountries,
+            { name: "阿根廷", code: "AR" },
+            { name: "奥地利", code: "AT" },
+            { name: "孟加拉国", code: "BD" },
+            { name: "保加利亚", code: "BG" },
+            { name: "智利", code: "CL" },
+            { name: "哥伦比亚", code: "CO" },
+            { name: "捷克共和国", code: "CZ" },
+            { name: "埃及", code: "EG" },
+            { name: "希腊", code: "GR" },
+            { name: "中国香港", code: "HK" },
+            { name: "匈牙利", code: "HU" },
+            { name: "冰岛", code: "IS" },
+            { name: "印度尼西亚", code: "ID" },
+            { name: "伊朗", code: "IR" },
+            { name: "以色列", code: "IL" },
+            { name: "约旦", code: "JO" },
+            { name: "哈萨克斯坦", code: "KZ" },
+            { name: "肯尼亚", code: "KE" },
+            { name: "科威特", code: "KW" },
+            { name: "黎巴嫩", code: "LB" },
+            { name: "卢森堡", code: "LU" },
+            { name: "中国澳门", code: "MO" },
+            { name: "摩洛哥", code: "MA" },
+            { name: "缅甸", code: "MM" },
+            { name: "尼泊尔", code: "NP" },
+            { name: "尼日利亚", code: "NG" },
+            { name: "阿曼", code: "OM" },
+            { name: "巴基斯坦", code: "PK" },
+            { name: "巴拿马", code: "PA" },
+            { name: "秘鲁", code: "PE" },
+            { name: "菲律宾", code: "PH" },
+            { name: "波兰", code: "PL" },
+            { name: "葡萄牙", code: "PT" },
+            { name: "卡塔尔", code: "QA" },
+            { name: "罗马尼亚", code: "RO" },
+            { name: "沙特阿拉伯", code: "SA" },
+            { name: "塞尔维亚", code: "RS" },
+            { name: "新加坡", code: "SG" },
+            { name: "斯洛伐克", code: "SK" },
+            { name: "斯洛文尼亚", code: "SI" },
+            { name: "南非", code: "ZA" },
+            { name: "韩国", code: "KR" },
+            { name: "西班牙", code: "ES" },
+            { name: "斯里兰卡", code: "LK" },
+            { name: "瑞典", code: "SE" },
+            { name: "瑞士", code: "CH" },
+            { name: "中国台湾", code: "TW" },
+            { name: "泰国", code: "TH" },
+            { name: "土耳其", code: "TR" },
+            { name: "乌克兰", code: "UA" },
+            { name: "阿联酋", code: "AE" },
+            { name: "英国", code: "GB" },
+            { name: "美国", code: "US" },
+            { name: "乌拉圭", code: "UY" },
+            { name: "乌兹别克斯坦", code: "UZ" },
+            { name: "越南", code: "VN" }
+            // 可以继续添加更多国家
+        ];
+        
+        // 银行数据 - 按国家分组
+        const banksByCountry = {
+            "美国": [
+                { name: "美国银行" },
+                { name: "摩根大通银行" },
+                { name: "花旗银行" },
+                { name: "富国银行" },
+                { name: "美国合众银行" }
+            ],
+            "中国": [
+                { name: "中国银行" },
+                { name: "工商银行" },
+                { name: "建设银行" },
+                { name: "农业银行" },
+                { name: "招商银行" }
+            ],
+            "日本": [
+                { name: "三菱日联银行" },
+                { name: "三井住友银行" },
+                { name: "瑞穗银行" }
+            ],
+            "英国": [
+                { name: "汇丰银行" },
+                { name: "巴克莱银行" },
+                { name: "劳埃德银行" },
+                { name: "苏格兰皇家银行" }
+            ],
+            "德国": [
+                { name: "德国商业银行" },
+                { name: "德意志银行" },
+                { name: "巴伐利亚州银行" }
+            ],
+            "默认": [
+                { name: "汇丰银行" },
+                { name: "花旗银行" },
+                { name: "渣打银行" },
+                { name: "摩根大通银行" }
+            ]
+        };
+        
+        // 数字货币链类型
+        const cryptoChains = {
+            "BTC": [
+                { name: "比特币链", code: "BTC" }
+            ],
+            "USDT": [
+                { name: "以太坊链(ERC20)", code: "ERC20" },
+                { name: "币安智能链(BEP20)", code: "BEP20" },
+                { name: "波场链(TRC20)", code: "TRC20" }
+            ],
+            "ETH": [
+                { name: "以太坊链", code: "ETH" }
+            ],
+            "BNB": [
+                { name: "币安智能链", code: "BSC" },
+                { name: "币安链", code: "BNB" }
+            ],
+            "SOL": [
+                { name: "Solana链", code: "SOL" }
+            ]
+        };
+        
+        // 初始化国家选择下拉框
+        function initCountrySelects() {
+            // 初始化收款国家选择
+            const receiveCountrySelect = document.getElementById('receive-country-select');
+            receiveCountries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = country.name;
+                receiveCountrySelect.appendChild(option);
+            });
+            
+            // 初始化付款国家选择
+            const paymentCountrySelect = document.getElementById('payment-country-select');
+            paymentCountries.forEach(country => {
+                // 避免重复添加
+                if (![...paymentCountrySelect.options].some(option => option.value === country.code)) {
+                    const option = document.createElement('option');
+                    option.value = country.code;
+                    option.textContent = country.name;
+                    paymentCountrySelect.appendChild(option);
+                }
+            });
+        }
+        
+        // 根据选择的国家加载银行列表
+        function loadBanksByCountry(countryName, selectElement) {
+            // 清空现有选项
+            selectElement.innerHTML = '<option value="">请选择银行</option>';
+            
+            // 获取对应国家的银行列表，没有则使用默认列表
+            const banks = banksByCountry[countryName] || banksByCountry['默认'];
+            
+            // 添加银行选项
+            banks.forEach(bank => {
+                const option = document.createElement('option');
+                option.value = bank.name;
+                option.textContent = bank.name;
+                selectElement.appendChild(option);
+            });
+        }
+        
+        // 根据选择的币种加载链类型
+        function loadChainsByCrypto(crypto, container) {
+            // 清空现有选项
+            container.innerHTML = '';
+            
+            // 获取对应币种的链类型
+            const chains = cryptoChains[crypto] || [];
+            
+            // 添加链类型选项
+            chains.forEach(chain => {
+                const chainEl = document.createElement('div');
+                chainEl.className = 'border border-gray-200 rounded-lg p-3 text-center hover:border-primary hover:bg-primary/5 cursor-pointer transition-all';
+                chainEl.textContent = chain.name;
+                chainEl.dataset.code = chain.code;
+                
+                chainEl.addEventListener('click', function() {
+                    // 清除其他选中状态
+                    container.querySelectorAll('div').forEach(el => {
+                        el.classList.remove('border-primary', 'bg-primary/5');
+                    });
+                    
+                    // 设置当前选中状态
+                    this.classList.add('border-primary', 'bg-primary/5');
+                });
+                
+                container.appendChild(chainEl);
+            });
+        }
+        
+        // 初始化侧边栏菜单
+        function initSidebarMenus() {
+            const menuItems = document.querySelectorAll('.sidebar-item.group');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 找到对应的子菜单
+                    const submenu = this.nextElementSibling;
+                    
+                    // 如果有子菜单，则切换显示状态
+                    if (submenu && submenu.classList.contains('sidebar-submenu')) {
+                        submenu.classList.toggle('hidden');
+                        
+                        // 切换箭头方向
+                        const arrow = this.querySelector('.fa-angle-down');
+                        if (arrow) {
+                            arrow.classList.toggle('rotate-180');
+                        }
+                    }
+                    
+                    // 处理三级子菜单
+                    const subsubmenuTriggers = document.querySelectorAll('.sidebar-subitem.group');
+                    subsubmenuTriggers.forEach(trigger => {
+                        trigger.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            
+                            const subsubmenu = this.nextElementSibling;
+                            if (subsubmenu && subsubmenu.classList.contains('sidebar-subsubmenu')) {
+                                subsubmenu.classList.toggle('hidden');
+                                
+                                const arrow = this.querySelector('.fa-angle-down');
+                                if (arrow) {
+                                    arrow.classList.toggle('rotate-180');
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+        }
+        
+        // 初始化账户类型选择
+        function initAccountTypeSelection() {
+            // 收款账号账户类型
+            const receivePersonal = document.getElementById('receive-personal-account');
+            const receiveCompany = document.getElementById('receive-company-account');
+            
+            receivePersonal.addEventListener('click', function() {
+                receiveCompany.querySelector('.account-radio').className = 'w-5 h-5 rounded-full border-2 border-gray-medium account-radio';
+                receiveCompany.classList.remove('border-primary', 'bg-primary/5');
+                
+                this.querySelector('.account-radio').className = 'w-5 h-5 rounded-full border-2 border-primary bg-primary flex items-center justify-center account-radio';
+                this.querySelector('.account-radio').innerHTML = '<i class="fa fa-check text-white text-xs"></i>';
+                this.classList.add('border-primary', 'bg-primary/5');
+            });
+            
+            receiveCompany.addEventListener('click', function() {
+                receivePersonal.querySelector('.account-radio').className = 'w-5 h-5 rounded-full border-2 border-gray-medium account-radio';
+                receivePersonal.classList.remove('border-primary', 'bg-primary/5');
+                
+                this.querySelector('.account-radio').className = 'w-5 h-5 rounded-full border-2 border-primary bg-primary flex items-center justify-center account-radio';
+                this.querySelector('.account-radio').innerHTML = '<i class="fa fa-check text-white text-xs"></i>';
+                this.classList.add('border-primary', 'bg-primary/5');
+            });
+            
+            // 付款账号收款人类型
+            const payeePersonal = document.getElementById('payee-personal');
+            const payeeCompany = document.getElementById('payee-company');
+            
+            payeePersonal.addEventListener('click', function() {
+                payeeCompany.classList.remove('border-primary', 'bg-primary/5');
+                this.classList.add('border-primary', 'bg-primary/5');
+            });
+            
+            payeeCompany.addEventListener('click', function() {
+                payeePersonal.classList.remove('border-primary', 'bg-primary/5');
+                this.classList.add('border-primary', 'bg-primary/5');
+            });
+        }
+        
+        // 初始化图表
+        function initCharts() {
+            // 资金趋势图表
+            const fundsCtx = document.getElementById('fundsChart').getContext('2d');
+            const fundsChart = new Chart(fundsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1日', '5日', '10日', '15日', '20日', '25日', '30日'],
+                    datasets: [
+                        {
+                            label: '法币',
+                            data: [150000, 155000, 162000, 170000, 168000, 175000, 186240],
+                            borderColor: '#165DFF',
+                            backgroundColor: 'rgba(22, 93, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '数字货币',
+                            data: [50000, 55000, 60000, 65000, 63000, 58000, 62320],
+                            borderColor: '#FF7D00',
+                            backgroundColor: 'rgba(255, 125, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 资产分布图表
+            const assetCtx = document.getElementById('assetDistributionChart').getContext('2d');
+            const assetChart = new Chart(assetCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['美元', '欧元', 'USDT', '其他'],
+                    datasets: [{
+                        data: [42, 28, 15, 15],
+                        backgroundColor: [
+                            '#165DFF',
+                            '#4080FF',
+                            '#FF7D00',
+                            '#00B42A'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 初始化模态框
+        function initModals() {
+            // 申请全球收款账号模态框
+            const applyReceiveBtns = [
+                document.getElementById('apply-receive-account-btn'),
+                document.getElementById('view-all-receive-accounts')
+            ];
+            const receiveAccountModal = document.getElementById('receiveAccountModal');
+            
+            applyReceiveBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', function() {
+                        receiveAccountModal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+            });
+            
+            // 添加全球付款账号模态框
+            const addPaymentBtns = [
+                document.getElementById('add-payment-account-btn'),
+                document.getElementById('view-all-payment-accounts')
+            ];
+            const paymentAccountModal = document.getElementById('paymentAccountModal');
+            
+            addPaymentBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', function() {
+                        paymentAccountModal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+            });
+            
+            // 数字货币提现模态框
+            const cryptoWithdrawBtns = [
+                document.getElementById('crypto-withdraw-btn'),
+                document.getElementById('usdt-withdraw-btn'),
+                document.getElementById('bep20-withdraw-btn')
+            ];
+            const cryptoWithdrawModal = document.getElementById('cryptoWithdrawModal');
+            
+            cryptoWithdrawBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', function() {
+                        cryptoWithdrawModal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                        
+                        // 根据点击的按钮设置默认币种
+                        if (this.id === 'crypto-withdraw-btn') {
+                            document.getElementById('withdraw-crypto-select').value = 'BTC';
+                            updateCryptoWithdrawInfo('BTC');
+                        } else if (this.id === 'usdt-withdraw-btn') {
+                            document.getElementById('withdraw-crypto-select').value = 'USDT';
+                            updateCryptoWithdrawInfo('USDT');
+                        } else if (this.id === 'bep20-withdraw-btn') {
+                            document.getElementById('withdraw-crypto-select').value = 'USDT';
+                            updateCryptoWithdrawInfo('USDT');
+                        }
+                    });
+                }
+            });
+            
+            // 关闭模态框
+            const closeModalBtns = document.querySelectorAll('.close-modal');
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    receiveAccountModal.classList.add('hidden');
+                    paymentAccountModal.classList.add('hidden');
+                    cryptoWithdrawModal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            // 点击模态框外部关闭
+            [receiveAccountModal, paymentAccountModal, cryptoWithdrawModal].forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+        }
+        
+        // 更新数字货币提现信息
+        function updateCryptoWithdrawInfo(crypto) {
+            const chainOptions = document.getElementById('chain-options');
+            const balanceEl = document.getElementById('crypto-balance');
+            const feeEl = document.getElementById('withdraw-fee');
+            
+            // 加载链类型
+            loadChainsByCrypto(crypto, chainOptions);
+            
+            // 更新余额和手续费信息
+            switch(crypto) {
+                case 'BTC':
+                    balanceEl.textContent = '0.8524 BTC';
+                    feeEl.textContent = '0.0001 BTC';
+                    break;
+                case 'USDT':
+                    balanceEl.textContent = '61,330.75 USDT';
+                    feeEl.textContent = '5 USDT';
+                    break;
+                case 'ETH':
+                    balanceEl.textContent = '12.563 ETH';
+                    feeEl.textContent = '0.01 ETH';
+                    break;
+                case 'BNB':
+                    balanceEl.textContent = '45.89 BNB';
+                    feeEl.textContent = '0.005 BNB';
+                    break;
+                case 'SOL':
+                    balanceEl.textContent = '125.34 SOL';
+                    feeEl.textContent = '0.01 SOL';
+                    break;
+                default:
+                    balanceEl.textContent = '0.0000';
+                    feeEl.textContent = '0.0000';
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化侧边栏菜单
+            initSidebarMenus();
+            
+            // 初始化国家选择下拉框
+            initCountrySelects();
+            
+            // 初始化账户类型选择
+            initAccountTypeSelection();
+            
+            // 初始化图表
+            initCharts();
+            
+            // 初始化模态框
+            initModals();
+            
+            // 收款国家选择变化事件
+            const receiveCountrySelect = document.getElementById('receive-country-select');
+            const receiveBankContainer = document.getElementById('receive-bank-container');
+            const receiveBankSelect = document.getElementById('receive-bank-select');
+            
+            receiveCountrySelect.addEventListener('change', function() {
+                const selectedCountry = receiveCountries.find(c => c.code === this.value);
+                if (selectedCountry) {
+                    receiveBankContainer.style.display = 'block';
+                    loadBanksByCountry(selectedCountry.name, receiveBankSelect);
+                } else {
+                    receiveBankContainer.style.display = 'none';
+                }
+            });
+            
+            // 付款国家选择变化事件
+            const paymentCountrySelect = document.getElementById('payment-country-select');
+            const paymentBankContainer = document.getElementById('payment-bank-container');
+            const paymentBankSelect = document.getElementById('payment-bank-select');
+            
+            paymentCountrySelect.addEventListener('change', function() {
+                const selectedCountry = paymentCountries.find(c => c.code === this.value);
+                if (selectedCountry) {
+                    paymentBankContainer.style.display = 'block';
+                    loadBanksByCountry(selectedCountry.name, paymentBankSelect);
+                } else {
+                    paymentBankContainer.style.display = 'none';
+                }
+            });
+            
+            // 数字货币选择变化事件
+            const withdrawCryptoSelect = document.getElementById('withdraw-crypto-select');
+            withdrawCryptoSelect.addEventListener('change', function() {
+                updateCryptoWithdrawInfo(this.value);
+            });
+            
+            // 移动端菜单按钮
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.querySelector('aside');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('hidden');
+                    sidebar.classList.toggle('fixed');
+                    sidebar.classList.toggle('z-50');
+                    sidebar.classList.toggle('h-full');
+                    sidebar.classList.toggle('w-64');
+                });
+            }
+        });
+    </script>
+
+
+</body></html>
