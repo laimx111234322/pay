@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寰球汇TikTok培训方案 - 五天实战课程</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F3460', // 深蓝主色
+                        secondary: '#1A73E8', // 亮蓝辅助色
+                        accent: '#E63946', // 强调色
+                        dark: '#16213E', // 深色
+                        light: '#F5F7FA', // 浅色
+                        neutral: '#5F6368' // 中性灰
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .timeline-item {
+                transition: all 0.3s ease;
+            }
+            .timeline-item:hover {
+                transform: translateX(5px);
+            }
+            .day-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .day-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(15, 52, 96, 0.1), 0 10px 10px -5px rgba(15, 52, 96, 0.04);
+            }
+            .section-fade {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+            .section-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .instructor-card {
+                transition: transform 0.3s ease;
+            }
+            .instructor-card:hover {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans text-gray-800">
+    <!-- 导航栏 -->
+    <nav class="bg-primary text-white sticky top-0 z-50 shadow-md transition-all duration-300" id="main-nav">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                        <i class="fa fa-globe text-primary text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold">寰球汇TikTok培训</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="hover:text-secondary transition-colors">课程概览</a>
+                    <a href="#day1" class="hover:text-secondary transition-colors">第一天</a>
+                    <a href="#day2" class="hover:text-secondary transition-colors">第二天</a>
+                    <a href="#day3" class="hover:text-secondary transition-colors">第三天</a>
+                    <a href="#day4" class="hover:text-secondary transition-colors">第四天</a>
+                    <a href="#day5" class="hover:text-secondary transition-colors">第五天</a>
+                </div>
+                <button class="bg-secondary hover:bg-opacity-90 text-white px-4 py-2 rounded-md transition-all hidden md:block transform hover:scale-105">
+                    报名参加
+                </button>
+                <button class="md:hidden text-white" id="mobile-menu-button">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+            <!-- 移动端菜单 -->
+            <div class="md:hidden hidden mt-4 pb-2" id="mobile-menu">
+                <div class="flex flex-col space-y-3">
+                    <a href="#overview" class="hover:text-secondary transition-colors">课程概览</a>
+                    <a href="#day1" class="hover:text-secondary transition-colors">第一天</a>
+                    <a href="#day2" class="hover:text-secondary transition-colors">第二天</a>
+                    <a href="#day3" class="hover:text-secondary transition-colors">第三天</a>
+                    <a href="#day4" class="hover:text-secondary transition-colors">第四天</a>
+                    <a href="#day5" class="hover:text-secondary transition-colors">第五天</a>
+                    <button class="bg-secondary hover:bg-opacity-90 text-white px-4 py-2 rounded-md transition-all w-full transform hover:scale-[1.02]">
+                        报名参加
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section class="py-16 md:py-24 bg-gradient-to-br from-primary to-dark text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://picsum.photos/1200/800?random=1')] bg-cover bg-center"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block bg-secondary/20 text-secondary px-4 py-1 rounded-full text-sm font-medium mb-6 animate-pulse">5天实战培训</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    TikTok电商实战训练营
+                </h1>
+                <p class="text-xl md:text-2xl mb-10 text-gray-300 max-w-3xl mx-auto">
+                    从0到1掌握TikTok运营全流程，实战教学+案例分析+动手实操，快速开启跨境电商新赛道
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button class="bg-secondary hover:bg-opacity-90 text-white px-8 py-3 rounded-md font-semibold transition-all transform hover:scale-105">
+                        查看课程详情
+                    </button>
+                    <button class="bg-transparent border-2 border-white hover:bg-white/10 px-8 py-3 rounded-md font-semibold transition-all">
+                        咨询报名 <i class="fa fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+                <div class="mt-12 flex justify-center">
+                    <div class="flex -space-x-2">
+                        <img src="https://picsum.photos/100/100?random=2" alt="学员头像" class="w-10 h-10 rounded-full border-2 border-white">
+                        <img src="https://picsum.photos/100/100?random=3" alt="学员头像" class="w-10 h-10 rounded-full border-2 border-white">
+                        <img src="https://picsum.photos/100/100?random=4" alt="学员头像" class="w-10 h-10 rounded-full border-2 border-white">
+                        <img src="https://picsum.photos/100/100?random=5" alt="学员头像" class="w-10 h-10 rounded-full border-2 border-white">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-secondary flex items-center justify-center text-xs font-bold">
+                            50+
+                        </div>
+                    </div>
+                    <p class="ml-4 text-sm text-gray-300">已有50+学员报名参加</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程亮点 -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-user-circle text-primary text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-sm">专业导师</h4>
+                </div>
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-laptop text-primary text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-sm">实战教学</h4>
+                </div>
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-comments text-primary text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-sm">社群交流</h4>
+                </div>
+                <div class="text-center p-4">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fa fa-graduation-cap text-primary text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-sm">结业认证</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程概览 -->
+    <section id="overview" class="py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">课程概览</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    五天系统化培训，从基础设置到高级运营，全方位掌握TikTok电商运营技巧
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-6 max-w-6xl mx-auto">
+                <div class="day-card bg-light rounded-xl p-6 border border-gray-100 shadow-sm">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-primary font-bold text-xl">D1</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3 text-primary">基础搭建日</h3>
+                    <p class="text-gray-600 text-sm">
+                        平台认知、账号设置、店铺搭建，打下坚实基础
+                    </p>
+                </div>
+
+                <div class="day-card bg-light rounded-xl p-6 border border-gray-100 shadow-sm">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-primary font-bold text-xl">D2</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3 text-primary">内容创作日</h3>
+                    <p class="text-gray-600 text-sm">
+                        文案撰写、AI工具使用、视频剪辑基础技巧
+                    </p>
+                </div>
+
+                <div class="day-card bg-light rounded-xl p-6 border border-gray-100 shadow-sm">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-primary font-bold text-xl">D3</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3 text-primary">视频实战日</h3>
+                    <p class="text-gray-600 text-sm">
+                        原创视频拍摄、剪辑进阶、视频发布与挂车
+                    </p>
+                </div>
+
+                <div class="day-card bg-light rounded-xl p-6 border border-gray-100 shadow-sm">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-primary font-bold text-xl">D4</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3 text-primary">选品策略日</h3>
+                    <p class="text-gray-600 text-sm">
+                        选品工具使用、选品技巧、测品方法与实操
+                    </p>
+                </div>
+
+                <div class="day-card bg-light rounded-xl p-6 border border-gray-100 shadow-sm">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-primary font-bold text-xl">D5</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3 text-primary">流量运营日</h3>
+                    <p class="text-gray-600 text-sm">
+                        达人营销、流量逻辑、商务中心运营与投放
+                    </p>
+                </div>
+            </div>
+
+            <!-- 讲师团队 -->
+            <div class="mt-20">
+                <h3 class="text-2xl font-bold mb-10 text-center text-primary">专业讲师团队</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                    <div class="instructor-card text-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden shadow-md">
+                            <img src="https://picsum.photos/200/200?random=10" alt="樊东来老师，寰球汇创始人" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <h4 class="font-bold text-lg">樊东来老师</h4>
+                        <p class="text-secondary text-sm">寰球汇创始人</p>
+                    </div>
+                    <div class="instructor-card text-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden shadow-md">
+                            <img src="https://picsum.photos/200/200?random=11" alt="唐堋程老师，资深运营专家" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <h4 class="font-bold text-lg">唐堋程老师</h4>
+                        <p class="text-secondary text-sm">资深运营专家</p>
+                    </div>
+                    <div class="instructor-card text-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden shadow-md">
+                            <img src="https://picsum.photos/200/200?random=12" alt="大胆老师，流量运营专家" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <h4 class="font-bold text-lg">大胆老师</h4>
+                        <p class="text-secondary text-sm">流量运营专家</p>
+                    </div>
+                    <div class="instructor-card text-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden shadow-md">
+                            <img src="https://picsum.photos/200/200?random=13" alt="百川老师，视频制作专家" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <h4 class="font-bold text-lg">百川老师</h4>
+                        <p class="text-secondary text-sm">视频制作专家</p>
+                    </div>
+                    <div class="instructor-card text-center md:col-start-2 lg:col-start-auto">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden shadow-md">
+                            <img src="https://picsum.photos/200/200?random=14" alt="鑫拓老师，拍摄剪辑专家" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <h4 class="font-bold text-lg">鑫拓老师</h4>
+                        <p class="text-secondary text-sm">拍摄剪辑专家</p>
+                    </div>
+                    <div class="instructor-card text-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden shadow-md">
+                            <img src="https://picsum.photos/200/200?random=15" alt="旭儿老师，广告账户专家" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <h4 class="font-bold text-lg">旭儿老师</h4>
+                        <p class="text-secondary text-sm">广告账户专家</p>
+                    </div>
+                    <div class="instructor-card text-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden shadow-md">
+                            <img src="https://picsum.photos/200/200?random=16" alt="周周老师，选品工具专家" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <h4 class="font-bold text-lg">周周老师</h4>
+                        <p class="text-secondary text-sm">选品工具专家</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第一天课程 -->
+    <section id="day1" class="py-16 md:py-20 bg-gray-50 section-fade">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-primary">第一天课程安排</h2>
+                    <p class="text-gray-600">基础搭建日 - 平台认知与店铺设置</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fa fa-calendar mr-2"></i>培训首日
+                    </span>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- 上午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-sun-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">上午（09:00~12:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 寰球汇创始人樊东来老师培训前讲话</h4>
+                            <p class="text-gray-600 text-sm mt-1">欢迎致辞、培训目标与期望、学习方法指导</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 学员自我介绍</h4>
+                            <p class="text-gray-600 text-sm mt-1">破冰环节，学员相互认识，建立学习社群</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 介绍TikTok的机会及风险（樊东来老师）</h4>
+                            <p class="text-gray-600 text-sm mt-1">包括店铺风险和账号风险的详细分析</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">4. 讲师团成员简单介绍</h4>
+                            <ul class="text-gray-600 text-sm mt-1 list-disc list-inside ml-2">
+                                <li>唐堋程老师：资深运营专家</li>
+                                <li>大胆老师：流量运营专家</li>
+                                <li>百川老师：视频制作专家</li>
+                                <li>鑫拓老师：拍摄剪辑专家</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">5. 学员分组</h4>
+                            <p class="text-gray-600 text-sm mt-1">按学员背景与经验进行合理分组，便于协作学习</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">6. 寰球汇商业模式简介（唐堋程老师）</h4>
+                            <p class="text-gray-600 text-sm mt-1">平台优势、服务内容及合作模式解析</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">7. 学员学习用硬件设备检查</h4>
+                            <p class="text-gray-600 text-sm mt-1">确保设备符合学习要求，当天后续课程由唐堋程老师讲解</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">8. 手机端设置与操作</h4>
+                            <ul class="text-gray-600 text-sm mt-1 list-disc list-inside ml-2">
+                                <li>TikTok手机的刷机操作</li>
+                                <li>TikTok运营的手机环境设置</li>
+                                <li>购买苹果手机海外ID的方法</li>
+                                <li>下载安装shadowrocket/TikTok等应用软件</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 下午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-cloud"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">下午（13:30~18:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 电脑端软件安装设置</h4>
+                            <ul class="text-gray-600 text-sm mt-1 list-disc list-inside ml-2">
+                                <li>TikTok店铺的注册/绑定/登录</li>
+                                <li>TikTok店铺的设置（美区）：
+                                    <ul class="list-circle list-inside ml-4 mt-1">
+                                        <li>A. 税务信息的验证</li>
+                                        <li>B. 发货、退货仓库的添加</li>
+                                        <li>C. 运费模板的设置</li>
+                                        <li>D. 美区本土店类别资质的申请</li>
+                                        <li>E. 品牌授权书的准备</li>
+                                        <li>F. TikTok视频账号和电脑端小店的关联</li>
+                                        <li>G. TikTok小店保证金充值</li>
+                                    </ul>
+                                </li>
+                                <li>TikTok店铺各业务板块介绍</li>
+                                <li>软件下载安装及使用功能介绍：
+                                    <ul class="list-circle list-inside ml-4 mt-1">
+                                        <li>A. V2rayN科学上网软件的安装和设置</li>
+                                        <li>B. 谷歌浏览器及插件安装：
+                                            <ul class="list-square list-inside ml-4 mt-1">
+                                                <li>（A）图片视频下载工具AIX</li>
+                                                <li>（B）1688采购助手插件</li>
+                                                <li>（C）谷歌以图搜物功能介绍</li>
+                                                <li>（D）亚马逊视频下载插件</li>
+                                            </ul>
+                                        </li>
+                                        <li>C. 亚马逊的以图搜物功能介绍</li>
+                                        <li>D. 美图秀秀基础功能介绍</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 商务中心的注册和广告账户的开设绑定</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师，旭儿老师联合讲解</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 晚上课程 -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-dark rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-moon-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">晚上（19:00~21:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 搜索电商和内容电商运营的底层逻辑</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. TikTok小店产品上架须知</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 产品上架演示</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">4. 学员产品上架实操</h4>
+                            <p class="text-gray-600 text-sm mt-1">动手实践，老师现场指导</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二天课程 -->
+    <section id="day2" class="py-16 md:py-20 bg-white section-fade">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-primary">第二天课程安排</h2>
+                    <p class="text-gray-600">内容创作日 - 文案与视频剪辑基础</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fa fa-calendar mr-2"></i>培训次日
+                    </span>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- 上午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-sun-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">上午（09:00~12:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 文案撰写要领</h4>
+                            <ul class="text-gray-600 text-sm mt-1 list-disc list-inside ml-2">
+                                <li>熟悉AI工具：美图秀秀，Deepseek，豆包和即梦</li>
+                                <li>熟悉亚马逊网站页面；掌握TikTok手机端商城以图搜物功能</li>
+                                <li>学习用AI工具修图，制图；撰写文案</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 学员在TikTok小店上架产品</h4>
+                            <p class="text-gray-600 text-sm mt-1">三款香水：粉色情趣香水，丘比特香水和巧克力香水</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 产品上架后秒杀促销设置</h4>
+                            <p class="text-gray-600 text-sm mt-1">设置促销活动，吸引首批客户</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">4. 学员上架的产品投流</h4>
+                            <p class="text-gray-600 text-sm mt-1">基础投流操作，获取初始流量</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 下午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-cloud"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">下午（13:30~18:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 爆单的底层逻辑（樊东来老师讲解）</h4>
+                            <p class="text-gray-600 text-sm mt-1">解析爆款产品的核心要素与运营逻辑</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 混剪/拼接法视频剪辑技巧和思路</h4>
+                            <p class="text-gray-600 text-sm mt-1">樊东来老师讲解，快速制作优质内容的方法</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 配音法视频剪辑技巧和思路</h4>
+                            <p class="text-gray-600 text-sm mt-1">樊东来老师讲解，提升视频转化率的技巧</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 晚上课程 -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-dark rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-moon-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">晚上（19:00~21:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 原创视频的拍摄和剪辑技巧讲解</h4>
+                            <p class="text-gray-600 text-sm mt-1">鑫拓老师讲解，提升内容原创性的方法</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 学员原创拍摄脚本撰写</h4>
+                            <p class="text-gray-600 text-sm mt-1">根据产品特点，撰写有效的营销视频脚本</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三天课程 -->
+    <section id="day3" class="py-16 md:py-20 bg-gray-50 section-fade">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-primary">第三天课程安排</h2>
+                    <p class="text-gray-600">视频实战日 - 原创拍摄与发布</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fa fa-calendar mr-2"></i>培训第三日
+                    </span>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- 上午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-sun-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">上午（09:00~12:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 原创视频素材拍摄：美区三款香水</h4>
+                            <p class="text-gray-600 text-sm mt-1">由鑫拓老师组织指导，分组进行实操</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 国内版剪映基础和常用功能讲解</h4>
+                            <p class="text-gray-600 text-sm mt-1">百川老师讲解，掌握视频剪辑的核心工具</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 下午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-cloud"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">下午（13:30~18:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 带货视频基础模板使用讲解</h4>
+                            <p class="text-gray-600 text-sm mt-1">百川老师讲解，美图秀秀基础模版/配音软件应用</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 学员用配音法剪辑一个视频（作业）</h4>
+                            <p class="text-gray-600 text-sm mt-1">完成后将视频作品分享到微信群，次日由老师点评</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 上传视频作品到TikTok手机端</h4>
+                            <p class="text-gray-600 text-sm mt-1">操作小黄车挂车和视频发布全流程</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">4. 寰球汇的战略布局及规划</h4>
+                            <p class="text-gray-600 text-sm mt-1">樊东来老师讲解，了解平台发展方向</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 晚上课程 -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-dark rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-moon-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">晚上（19:00~21:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 发货流程介绍</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解，订单处理全流程</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 收款账户连连的注册及绑定</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解，资金结算系统操作</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第四天课程 -->
+    <section id="day4" class="py-16 md:py-20 bg-white section-fade">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-primary">第四天课程安排</h2>
+                    <p class="text-gray-600">选品策略日 - 选品方法与实操</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fa fa-calendar mr-2"></i>培训第四日
+                    </span>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- 上午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-sun-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">上午（09:00~12:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 学员视频作品点评</h4>
+                            <p class="text-gray-600 text-sm mt-1">樊东来老师讲解，针对性指导改进</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 选品工具Echotik的讲解</h4>
+                            <p class="text-gray-600 text-sm mt-1">Echotik周周老师讲解，工具使用与数据分析</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 选品思路和技巧-1</h4>
+                            <p class="text-gray-600 text-sm mt-1">樊东来老师讲解，基础选品方法论</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 下午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-cloud"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">下午（13:30~18:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 选品思路和技巧-2（樊东来老师讲解）</h4>
+                            <ul class="text-gray-600 text-sm mt-1 list-disc list-inside ml-2">
+                                <li>（1）国内类比法</li>
+                                <li>（2）站外亚马逊选品法</li>
+                                <li>（3）TikTok榜单法</li>
+                                <li>（4）货盘铺货法</li>
+                                <li>（5）跟卖法</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 讲解正确的测品方式（樊东来老师）</h4>
+                            <ul class="text-gray-600 text-sm mt-1 list-disc list-inside ml-2">
+                                <li>（1）为什么要测品</li>
+                                <li>（2）测品的流程</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 选品成本核算</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解，利润测算方法</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">4. 选品报告撰写思路</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解，专业选品分析报告制作</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">5. 学员分组选品实操-1</h4>
+                            <p class="text-gray-600 text-sm mt-1">应用所学方法进行实际选品操作</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 晚上课程 -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-dark rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-moon-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">晚上（19:00~21:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">学员分组选品实操-2</h4>
+                            <ul class="text-gray-600 text-sm mt-1 list-disc list-inside ml-2">
+                                <li>（1）各小组通过大数据选出一款产品（表格管理）</li>
+                                <li>（2）各小组精选出来的产品做好如下工作：
+                                    <ul class="list-circle list-inside ml-4 mt-1">
+                                        <li>A. 文案制作</li>
+                                        <li>B. 图片设计</li>
+                                        <li>C. 视频素材收集和剪辑</li>
+                                        <li>D. 上架产品</li>
+                                        <li>E. 闪购促销设置</li>
+                                        <li>F. 挂车操作</li>
+                                        <li>G. 视频发布</li>
+                                        <li>H. 投流设置</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="bg-gray-100 p-4 rounded-lg mt-3 text-sm text-gray-700">
+                                <p class="font-medium mb-2">备注：</p>
+                                <p>各组员建立小组内协作关系，各司其职：</p>
+                                <p>选品后的文案制作，视频剪辑，上架产品，闪购促销，挂车，发布视频，这几项工作各小组落实到人，各司其职。各小组组长负责将选品思路进行总结，形成文字，次日早上在课上做分享。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第五天课程 -->
+    <section id="day5" class="py-16 md:py-20 bg-gray-50 section-fade">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2 text-primary">第五天课程安排</h2>
+                    <p class="text-gray-600">流量运营日 - 营销与投放</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
+                        <i class="fa fa-calendar mr-2"></i>培训第五日
+                    </span>
+                </div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- 上午课程 -->
+                <div class="mb-10">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-sun-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">上午（09:00~12:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. 品牌授权实操</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程老师讲解，品牌合规运营要点</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 选品小组的选品思路分析</h4>
+                            <p class="text-gray-600 text-sm mt-1">各小组代表分享，老师点评指导</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. 达人营销运营思路</h4>
+                            <p class="text-gray-600 text-sm mt-1">樊东来老师讲解，高效合作模式解析</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">4. 触达实操</h4>
+                            <p class="text-gray-600 text-sm mt-1">唐堋程、百川老师演示，达人沟通技巧</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 下午课程 -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-cloud"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary">下午（13:00~18:00）</h3>
+                    </div>
+                    
+                    <div class="pl-14 border-l-2 border-gray-200 space-y-6">
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">1. TikTok流量发散的底层逻辑</h4>
+                            <p class="text-gray-600 text-sm mt-1">大胆老师讲解，流量获取核心原理</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">2. 短视频爆款的底层逻辑</h4>
+                            <p class="text-gray-600 text-sm mt-1">大胆老师讲解，内容引爆机制解析</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-gray-800">3. GMV MAX商务中心运营思路介绍</h4>
+                            <p class="text-gray-600 text-sm mt-1">樊东来老师讲解</p>
+                            <ul class="text-gray-600 text-sm mt-2 list-disc list-inside ml-2">
+                                <li>(1) 如何开户</li>
+                                <li>(2) 如何绑定商务中心</li>
+                                <li>(3) 如何给达人投放视频</li>
+                                <li>(4) 广告结构学习</li>
+                                <li>(5) 实操投放</li>
+                                <li>(6) 合理规划预算</li>
+                                <li>(7) 赛马选择视频</li>
+                                <li>(8) 学会数据分析</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学员评价 -->
+    <section class="py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">学员反馈</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">
+                    听听往期学员怎么说，他们通过培训已经在TikTok电商领域取得了不错的成绩
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-light p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <img src="https://picsum.photos/100/100?random=20" alt="学员头像" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">张同学</h4>
+                            <p class="text-sm text-gray-500">跨境电商创业者</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        "五天的培训内容非常实用，从账号搭建到视频制作再到选品投放，全程实战教学。回去后按照老师教的方法操作，第一个月就出了500多单！"
+                    </p>
+                </div>
+
+                <div class="bg-light p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <img src="https://picsum.photos/100/100?random=21" alt="学员头像" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">李同学</h4>
+                            <p class="text-sm text-gray-500">外贸企业主</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        "之前自己摸索了很久都没什么效果，参加培训后才明白问题出在哪里。老师讲的选品方法和流量逻辑非常实用，现在我们公司已经组建了专门的TikTok运营团队。"
+                    </p>
+                </div>
+
+                <div class="bg-light p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <img src="https://picsum.photos/100/100?random=22" alt="学员头像" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">王同学</h4>
+                            <p class="text-sm text-gray-500">电商运营专员</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-3">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm">
+                        "作为新手，这个课程帮我快速入门TikTok电商。特别是视频制作和投流部分，老师讲得很细致，实操环节也有专人指导，现在我已经能独立运营账号了。"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 报名咨询 -->
+    <section class="py-16 md:py-20 bg-primary text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://picsum.photos/1200/800?random=6')] bg-cover bg-center"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">立即报名参加培训</h2>
+                <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+                    名额有限，先到先得。填写表单预约席位，我们将尽快与您联系确认详情
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden transform transition-transform hover:scale-[1.01] duration-300">
+                <div class="p-8">
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2" for="fullname">
+                                    姓名
+                                </label>
+                                <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all" 
+                                       type="text" id="fullname" placeholder="请输入您的姓名">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2" for="phone">
+                                    手机号码
+                                </label>
+                                <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all" 
+                                       type="tel" id="phone" placeholder="请输入您的手机号码">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="company">
+                                公司名称
+                            </label>
+                            <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all" 
+                                   type="text" id="company" placeholder="请输入您的公司名称">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="experience">
+                                电商经验
+                            </label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all" 
+                                    id="experience">
+                                <option value="">请选择您的电商经验</option>
+                                <option value="none">无经验，完全新手</option>
+                                <option value="basic">有基础，了解基本操作</option>
+                                <option value="experienced">有经验，正在做国内电商</option>
+                                <option value="crossborder">有跨境电商经验</option>
+                                <option value="tiktok">已有TikTok运营经验</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" for="expectation">
+                                您的学习期望
+                            </label>
+                            <textarea class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none transition-all" 
+                                      id="expectation" rows="3" placeholder="请简要描述您希望通过培训获得什么"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-secondary hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02]">
+                            预约培训席位
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                            <i class="fa fa-globe text-primary text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">寰球汇</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        专注于TikTok电商生态建设，为企业和个人提供从培训到供应链的全链路服务
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                            <i class="fa fa-weixin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                            <i class="fa fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-secondary transition-colors">
+                            <i class="fa fa-youtube-play"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#overview" class="text-gray-400 hover:text-white transition-colors">课程概览</a></li>
+                        <li><a href="#day1" class="text-gray-400 hover:text-white transition-colors">第一天</a></li>
+                        <li><a href="#day2" class="text-gray-400 hover:text-white transition-colors">第二天</a></li>
+                        <li><a href="#day3" class="text-gray-400 hover:text-white transition-colors">第三天</a></li>
+                        <li><a href="#day4" class="text-gray-400 hover:text-white transition-colors">第四天</a></li>
+                        <li><a href="#day5" class="text-gray-400 hover:text-white transition-colors">第五天</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">培训服务</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">TikTok基础培训</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">进阶运营课程</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">企业定制培训</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">代运营服务</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">供应链合作</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系方式</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-gray-400 mt-1 mr-3"></i>
+                            <span class="text-gray-400">上海市浦东新区环球金融中心28楼</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone text-gray-400 mr-3"></i>
+                            <span class="text-gray-400">400-888-9999</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope text-gray-400 mr-3"></i>
+                            <span class="text-gray-400">contact@huanqiuhui.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2023 寰球汇教育科技有限公司 版权所有 | 沪ICP备87654321号</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                // 关闭移动端菜单（如果打开）
+                document.getElementById('mobile-menu').classList.add('hidden');
+                // 滚动到目标位置
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 滚动显示动画
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有课程章节
+        document.querySelectorAll('.section-fade').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+                nav.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
+    
