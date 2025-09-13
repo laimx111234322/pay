@@ -1,0 +1,1014 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华伍股份 - 工业制动器B2B外贸解决方案</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF',
+                        secondary: '#3B82F6',
+                        accent: '#0EA5E9',
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                        accentOrange: '#FF7D00' // 突出行动重点的标识色
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            }
+            .gradient-overlay {
+                background: linear-gradient(to right, rgba(30, 64, 175, 0.9), rgba(59, 130, 246, 0.7));
+            }
+            .timeline-dot::before {
+                content: '';
+                position: absolute;
+                left: -31px;
+                top: 5px;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background-color: #FF7D00;
+                border: 3px solid white;
+                box-shadow: 0 0 0 2px rgba(255, 125, 0, 0.2);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-dark">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 bg-white shadow-md z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="text-primary text-2xl font-bold mr-2">华伍股份</div>
+                    <span class="text-gray-500 text-sm hidden md:inline-block">工业制动器专业制造商</span>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#solution" class="text-primary font-medium">获客方案</a>
+                    <a href="#channels" class="text-gray-600 hover:text-primary transition-colors">渠道策略</a>
+                    <a href="#action" class="text-gray-600 hover:text-primary transition-colors">精准获客行动计划</a>
+                    <a href="#case" class="text-gray-600 hover:text-primary transition-colors"></a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary transition-colors"></a>
+                </nav>
+                
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-gray-600 hover:text-primary">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 space-y-3">
+                <a href="#solution" class="block text-primary font-medium">获客方案</a>
+                <a href="#channels" class="block text-gray-600 hover:text-primary">渠道策略</a>
+                <a href="#action" class="block text-gray-600 hover:text-primary">精准获客行动计划</a>
+                <a href="#case" class="block text-gray-600 hover:text-primary">成功案例</a>
+                <a href="#contact" class="block text-gray-600 hover:text-primary"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="gradient-overlay text-white py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl">
+                <h1 class="text-3xl md:text-5xl font-bold mb-6">工业制动器B2B外贸精准获客方案</h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8">专为华伍股份定制的B2B外贸询盘获取策略，聚焦行业客户，避开C端平台误区，精准触达全球工业采购决策者</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#solution" class="bg-white text-primary px-6 py-3 rounded-lg font-medium text-center hover:bg-gray-100 transition-colors">
+                        
+                    </a>
+                    <a href="#contact" class="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-medium text-center hover:bg-white/10 transition-colors"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心问题分析 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">为何传统电商平台不适合工业制动器?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">工业制动器属于专业工业部件，采购流程复杂，客户群体特殊，需要针对性的B2B获客策略</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-xl card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-users text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">客户群体不匹配</h3>
+                    <p class="text-gray-600">亚马逊等平台以个人消费者为主，而工业制动器的采购方是工厂、机械制造商等企业客户，决策链长，非冲动消费</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-cogs text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">产品特性决定</h3>
+                    <p class="text-gray-600">工业制动器属于定制化、技术型产品，需要专业咨询和技术支持，标准化电商平台无法满足复杂沟通需求</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl card-hover">
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fa fa-line-chart text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">获客成本效益低</h3>
+                    <p class="text-gray-600">C端平台流量成本高，且大部分流量与工业产品无关，转化效率低，无法实现精准获客</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专属B2B获客方案 -->
+    <section id="solution" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">华伍股份专属B2B外贸获客方案</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">基于工业制动器行业特性，打造精准高效的外贸询盘获取体系</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">1</span>
+                        行业垂直平台布局
+                    </h3>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">全球工业零部件平台入驻</span>
+                                <p class="text-gray-600 text-sm mt-1">重点布局Thomasnet、IndustryNet等工业采购平台，直接触达欧美制造业采购决策者</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">行业细分平台优化</span>
+                                <p class="text-gray-600 text-sm mt-1">在工程机械、起重运输、港口机械等细分领域平台建立专业展示页面</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">平台数据优化</span>
+                                <p class="text-gray-600 text-sm mt-1">针对平台算法优化产品关键词、技术参数和应用案例，提高曝光率</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">2</span>
+                        精准数字营销体系
+                    </h3>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">LinkedIn定向推广</span>
+                                <p class="text-gray-600 text-sm mt-1">针对全球机械制造企业的采购经理、工程师等关键决策人进行精准营销</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">行业关键词竞价</span>
+                                <p class="text-gray-600 text-sm mt-1">针对"industrial brake"、"hydraulic brake system"等精准关键词进行Google Ads投放</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">行业展会数字推广</span>
+                                <p class="text-gray-600 text-sm mt-1">结合全球工业展会进行会前预热、会中引流和会后转化的全流程数字营销</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">3</span>
+                        技术内容营销战略
+                    </h3>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">多语言技术博客</span>
+                                <p class="text-gray-600 text-sm mt-1">创建英、德、日、西班牙等多语言技术博客，发布制动器应用案例和技术解决方案</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">行业白皮书发布</span>
+                                <p class="text-gray-600 text-sm mt-1">针对不同行业应用场景发布制动器选型、维护等专业白皮书，获取高质量留资</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">技术视频营销</span>
+                                <p class="text-gray-600 text-sm mt-1">制作产品安装、调试、应用案例等视频内容，在YouTube等平台精准投放</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <span class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-3">4</span>
+                        外贸询盘转化系统
+                    </h3>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">多语言智能询盘系统</span>
+                                <p class="text-gray-600 text-sm mt-1">7×24小时响应全球客户咨询，专业技术团队4小时内提供解决方案</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">客户关系管理系统</span>
+                                <p class="text-gray-600 text-sm mt-1">建立潜在客户分级管理机制，针对不同阶段客户提供定制化跟进策略</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-3"></i>
+                            <div>
+                                <span class="font-medium">数据分析优化</span>
+                                <p class="text-gray-600 text-sm mt-1">通过数据分析识别高价值渠道和客户特征，持续优化获客策略，提高ROI</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 渠道策略对比 -->
+    <section id="channels" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">B2B外贸渠道策略对比</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">选择最适合工业制动器产品的获客渠道，实现精准高效的询盘获取</p>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[768px] border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="py-4 px-6 text-left font-semibold">渠道类型</th>
+                            <th class="py-4 px-6 text-center font-semibold">适用性</th>
+                            <th class="py-4 px-6 text-center font-semibold">获客成本</th>
+                            <th class="py-4 px-6 text-center font-semibold">询盘质量</th>
+                            <th class="py-4 px-6 text-center font-semibold">推荐指数</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="py-4 px-6 font-medium">工业垂直平台</td>
+                            <td class="py-4 px-6 text-center text-green-600"><i class="fa fa-check-circle"></i> 高</td>
+                            <td class="py-4 px-6 text-center">中</td>
+                            <td class="py-4 px-6 text-center">高</td>
+                            <td class="py-4 px-6 text-center">
+                                <div class="flex justify-center text-yellow-500">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">LinkedIn营销</td>
+                            <td class="py-4 px-6 text-center text-green-600"><i class="fa fa-check-circle"></i> 高</td>
+                            <td class="py-4 px-6 text-center">中高</td>
+                            <td class="py-4 px-6 text-center">高</td>
+                            <td class="py-4 px-6 text-center">
+                                <div class="flex justify-center text-yellow-500">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">Google Ads</td>
+                            <td class="py-4 px-6 text-center text-green-600"><i class="fa fa-check-circle"></i> 高</td>
+                            <td class="py-4 px-6 text-center">中</td>
+                            <td class="py-4 px-6 text-center">中高</td>
+                            <td class="py-4 px-6 text-center">
+                                <div class="flex justify-center text-yellow-500">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">行业展会</td>
+                            <td class="py-4 px-6 text-center text-green-600"><i class="fa fa-check-circle"></i> 高</td>
+                            <td class="py-4 px-6 text-center">高</td>
+                            <td class="py-4 px-6 text-center">高</td>
+                            <td class="py-4 px-6 text-center">
+                                <div class="flex justify-center text-yellow-500">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">亚马逊等C端平台</td>
+                            <td class="py-4 px-6 text-center text-red-600"><i class="fa fa-times-circle"></i> 低</td>
+                            <td class="py-4 px-6 text-center">高</td>
+                            <td class="py-4 px-6 text-center">低</td>
+                            <td class="py-4 px-6 text-center">
+                                <div class="flex justify-center text-yellow-500">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-12">
+                <h3 class="text-xl font-semibold mb-6">各区域市场重点渠道策略</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-semibold mb-3 flex items-center">
+                            <i class="fa fa-map-marker text-primary mr-2"></i> 欧洲市场
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• IndustryStock平台入驻</li>
+                            <li>• 德国汉诺威工业展线上线下结合</li>
+                            <li>• 德语技术内容营销</li>
+                            <li>• LinkedIn德国制造业定向推广</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-semibold mb-3 flex items-center">
+                            <i class="fa fa-map-marker text-primary mr-2"></i> 北美市场
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• Thomasnet平台优化</li>
+                            <li>• 美国国际制造技术展(IMTS)</li>
+                            <li>• Google Ads精准投放</li>
+                            <li>• 行业协会会员营销</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-semibold mb-3 flex items-center">
+                            <i class="fa fa-map-marker text-primary mr-2"></i> 东南亚市场
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• 东盟工业展会深耕</li>
+                            <li>• 本地化代理渠道建设</li>
+                            <li>• 行业B2B平台联合推广</li>
+                            <li>• 重点客户上门拜访</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-semibold mb-3 flex items-center">
+                            <i class="fa fa-map-marker text-primary mr-2"></i> 中东市场
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• 迪拜五大行业展</li>
+                            <li>• 本地化技术支持团队</li>
+                            <li>• 行业合作伙伴关系建立</li>
+                            <li>• 多语言技术资料准备</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 精准获客行动计划 -->
+    <section id="action" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">精准获客六阶段行动计划</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">基于智能获客技术与数据驱动的系统化执行方案，确保询盘质量与数量双重提升</p>
+            </div>
+            
+            <div class="relative">
+                <!-- 时间线 -->
+                <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2"></div>
+                
+                <!-- 阶段1 -->
+                <div class="md:grid md:grid-cols-2 gap-8 mb-12 md:items-center">
+                    <div class="md:text-right md:pr-12 order-2 md:order-1">
+                        <span class="inline-block px-3 py-1 bg-accentOrange/10 text-accentOrange text-sm font-medium rounded-full mb-3">阶段一：市场与客户洞察</span>
+                        <h3 class="text-xl font-bold mb-3">智能客户画像构建</h3>
+                        <p class="text-gray-600 mb-4">通过全球工业数据挖掘，精准定位华伍股份工业制动器的核心客户群体，建立多维度客户画像</p>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm inline-block md:float-right">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>目标客户行业分布分析</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>采购决策者身份与特征识别</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>竞争对手客户群体交叉分析</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>采购需求与痛点深度挖掘</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="relative mb-6 md:mb-0 order-1 md:order-2">
+                        <div class="hidden md:block absolute left-0 top-5 w-16 h-1 bg-accentOrange -translate-x-1/2"></div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-accentOrange/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="text-accentOrange font-bold text-xl">01</span>
+                            </div>
+                            <h4 class="font-semibold mb-2">执行要点</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• 利用全球工业数据库筛选目标客户</li>
+                                <li>• 建立包含2000+潜在客户的初始名单</li>
+                                <li>• 提取客户技术需求与采购特征</li>
+                                <li>• 形成《精准客户画像分析报告》</li>
+                            </ul>
+                            <div class="mt-4 text-xs text-gray-500">
+                                <span class="font-medium">周期：</span>2周
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 阶段2 -->
+                <div class="md:grid md:grid-cols-2 gap-8 mb-12 md:items-center">
+                    <div class="relative mb-6 md:mb-0">
+                        <div class="hidden md:block absolute right-0 top-5 w-16 h-1 bg-accentOrange translate-x-1/2"></div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-accentOrange/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="text-accentOrange font-bold text-xl">02</span>
+                            </div>
+                            <h4 class="font-semibold mb-2">执行要点</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• 筛选5-8个高价值B2B平台进行入驻</li>
+                                <li>• 优化产品技术参数与应用场景描述</li>
+                                <li>• 建立多语言产品资料体系</li>
+                                <li>• 实现平台数据互通与统一管理</li>
+                            </ul>
+                            <div class="mt-4 text-xs text-gray-500">
+                                <span class="font-medium">周期：</span>3周
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pl-12 relative timeline-dot">
+                        <span class="inline-block px-3 py-1 bg-accentOrange/10 text-accentOrange text-sm font-medium rounded-full mb-3">阶段二：全球平台矩阵搭建</span>
+                        <h3 class="text-xl font-bold mb-3">多平台协同展示体系</h3>
+                        <p class="text-gray-600 mb-4">基于客户分布特征，在全球顶级工业B2B平台建立统一且精准的产品展示体系，实现信息同步与数据互通</p>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>平台选择与优先级排序</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>产品技术内容标准化处理</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>多语言产品信息同步发布</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>平台数据监测与快速响应机制</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 阶段3 -->
+                <div class="md:grid md:grid-cols-2 gap-8 mb-12 md:items-center">
+                    <div class="md:text-right md:pr-12 order-2 md:order-1">
+                        <span class="inline-block px-3 py-1 bg-accentOrange/10 text-accentOrange text-sm font-medium rounded-full mb-3">阶段三：精准流量获取</span>
+                        <h3 class="text-xl font-bold mb-3">智能定向引流系统</h3>
+                        <p class="text-gray-600 mb-4">通过AI算法优化的多渠道组合策略，将精准流量引导至企业展示平台，实现高质量潜客触达</p>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm inline-block md:float-right">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>关键词智能竞价与优化</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>行业决策者定向广告投放</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>展会与数字营销协同引流</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>流量质量动态评估与优化</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="relative mb-6 md:mb-0 order-1 md:order-2">
+                        <div class="hidden md:block absolute left-0 top-5 w-16 h-1 bg-accentOrange -translate-x-1/2"></div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-accentOrange/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="text-accentOrange font-bold text-xl">03</span>
+                            </div>
+                            <h4 class="font-semibold mb-2">执行要点</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• 建立500+精准关键词库并动态优化</li>
+                                <li>• 针对采购决策者的定向广告投放</li>
+                                <li>• 行业展会数字化引流方案实施</li>
+                                <li>• 建立流量质量评分模型与优化机制</li>
+                            </ul>
+                            <div class="mt-4 text-xs text-gray-500">
+                                <span class="font-medium">周期：</span>持续进行，首月搭建完成
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 阶段4 -->
+                <div class="md:grid md:grid-cols-2 gap-8 mb-12 md:items-center">
+                    <div class="relative mb-6 md:mb-0">
+                        <div class="hidden md:block absolute right-0 top-5 w-16 h-1 bg-accentOrange translate-x-1/2"></div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-accentOrange/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="text-accentOrange font-bold text-xl">04</span>
+                            </div>
+                            <h4 class="font-semibold mb-2">执行要点</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• 开发行业解决方案白皮书3-5份</li>
+                                <li>• 建立多语言技术博客与案例库</li>
+                                <li>• 制作产品应用与技术视频系列</li>
+                                <li>• 建立内容分发与效果评估体系</li>
+                            </ul>
+                            <div class="mt-4 text-xs text-gray-500">
+                                <span class="font-medium">周期：</span>2个月（基础内容），持续更新
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pl-12 relative timeline-dot">
+                        <span class="inline-block px-3 py-1 bg-accentOrange/10 text-accentOrange text-sm font-medium rounded-full mb-3">阶段四：技术内容营销</span>
+                        <h3 class="text-xl font-bold mb-3">行业价值内容体系</h3>
+                        <p class="text-gray-600 mb-4">围绕工业制动器应用场景与技术难点，构建多语言、多形式的专业内容矩阵，吸引高质量潜客主动关注</p>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>行业解决方案白皮书开发</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>技术博客与案例研究发布</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>产品应用视频与技术解析</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>内容效果追踪与优化机制</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 阶段5 -->
+                <div class="md:grid md:grid-cols-2 gap-8 mb-12 md:items-center">
+                    <div class="md:text-right md:pr-12 order-2 md:order-1">
+                        <span class="inline-block px-3 py-1 bg-accentOrange/10 text-accentOrange text-sm font-medium rounded-full mb-3">阶段五：智能询盘转化</span>
+                        <h3 class="text-xl font-bold mb-3">全流程客户响应系统</h3>
+                        <p class="text-gray-600 mb-4">通过AI辅助的智能响应系统，实现询盘快速分类、精准分配与专业跟进，最大化转化效率</p>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm inline-block md:float-right">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>询盘智能分级与快速响应</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>技术问题专业解答体系</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>客户跟进自动化与提醒</span>
+                                </li>
+                                <li class="flex md:justify-end">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1 md:order-2"></i>
+                                    <span>转化障碍识别与解决方案</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="relative mb-6 md:mb-0 order-1 md:order-2">
+                        <div class="hidden md:block absolute left-0 top-5 w-16 h-1 bg-accentOrange -translate-x-1/2"></div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-accentOrange/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="text-accentOrange font-bold text-xl">05</span>
+                            </div>
+                            <h4 class="font-semibold mb-2">执行要点</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• 建立询盘快速响应机制（≤4小时）</li>
+                                <li>• 开发常见技术问题解答库</li>
+                                <li>• 实施客户跟进SOP与自动化提醒</li>
+                                <li>• 建立转化障碍分析与优化机制</li>
+                            </ul>
+                            <div class="mt-4 text-xs text-gray-500">
+                                <span class="font-medium">周期：</span>1个月搭建，持续优化
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 阶段6 -->
+                <div class="md:grid md:grid-cols-2 gap-8 md:items-center">
+                    <div class="relative mb-6 md:mb-0">
+                        <div class="hidden md:block absolute right-0 top-5 w-16 h-1 bg-accentOrange translate-x-1/2"></div>
+                        <div class="bg-white p-6 rounded-xl shadow-md card-hover">
+                            <div class="w-12 h-12 bg-accentOrange/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="text-accentOrange font-bold text-xl">06</span>
+                            </div>
+                            <h4 class="font-semibold mb-2">执行要点</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• 建立全渠道数据整合分析平台</li>
+                                <li>• 开发获客效果可视化仪表盘</li>
+                                <li>• 实施A/B测试与策略优化机制</li>
+                                <li>• 建立周度、月度效果评估体系</li>
+                            </ul>
+                            <div class="mt-4 text-xs text-gray-500">
+                                <span class="font-medium">周期：</span>持续进行，首月完成基础搭建
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pl-12 relative timeline-dot">
+                        <span class="inline-block px-3 py-1 bg-accentOrange/10 text-accentOrange text-sm font-medium rounded-full mb-3">阶段六：数据驱动优化</span>
+                        <h3 class="text-xl font-bold mb-3">智能分析与持续优化</h3>
+                        <p class="text-gray-600 mb-4">通过多维度数据分析与智能算法，持续优化获客策略、渠道组合与内容方向，不断提升ROI</p>
+                        
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>全渠道数据整合与分析</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>获客效果实时监控仪表盘</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>策略A/B测试与快速迭代</span>
+                                </li>
+                                <li class="flex">
+                                    <i class="fa fa-angle-right text-accentOrange mr-2 mt-1"></i>
+                                    <span>投资回报率动态优化机制</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技术支撑体系 -->
+            <div class="mt-16 bg-white p-8 rounded-xl shadow-md">
+                <h3 class="text-xl font-bold mb-6 text-center">智能获客技术支撑体系</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-5 border border-gray-100 rounded-lg text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-database text-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">全球工业数据引擎</h4>
+                        <p class="text-sm text-gray-600">整合全球200+工业数据库，实时更新企业采购需求与决策者信息，精准定位潜在客户</p>
+                    </div>
+                    
+                    <div class="p-5 border border-gray-100 rounded-lg text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-line-chart text-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">AI智能分析系统</h4>
+                        <p class="text-sm text-gray-600">通过机器学习算法分析客户行为与转化路径，自动识别高价值渠道与最优营销策略</p>
+                    </div>
+                    
+                    <div class="p-5 border border-gray-100 rounded-lg text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-cogs text-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">自动化营销平台</h4>
+                        <p class="text-sm text-gray-600">实现多渠道内容分发、客户跟进与数据采集的自动化管理，提升团队效率300%+</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 预期效果与案例 -->
+    <section id="case" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">预期效果与成功案例</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">通过精准B2B获客策略，工业制造企业可实现询盘质量与数量的双重提升</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6">实施后预期效果</h3>
+                    
+                    <div class="mb-8">
+                        <canvas id="forecastChart" height="300"></canvas>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-primary">+150%</div>
+                            <div class="text-sm text-gray-600 mt-1">精准询盘增长</div>
+                        </div>
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <div class="text-2xl font-bold text-green-600">-40%</div>
+                            <div class="text-sm text-gray-600 mt-1">获客成本降低</div>
+                        </div>
+                        <div class="p-4 bg-purple-50 rounded-lg">
+                            <div class="text-2xl font-bold text-purple-600">+85%</div>
+                            <div class="text-sm text-gray-600 mt-1">转化率提升</div>
+                        </div>
+                        <div class="p-4 bg-amber-50 rounded-lg">
+                            <div class="text-2xl font-bold text-amber-600">+65%</div>
+                            <div class="text-sm text-gray-600 mt-1">客单价提升</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-6">同行业成功案例</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-primary pl-4">
+                            <h4 class="font-semibold text-lg">某重型机械制动系统企业</h4>
+                            <p class="text-gray-600 mt-2">通过工业垂直平台和LinkedIn定向营销，6个月内获取精准询盘127个，成交23笔，总金额达450万美元，ROI达320%。</p>
+                            <div class="mt-3 flex items-center text-sm text-gray-500">
+                                <span class="mr-4"><i class="fa fa-globe mr-1"></i> 主要市场：欧美</span>
+                                <span><i class="fa fa-calendar mr-1"></i> 实施时间：2025年</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-lg">某工业离合器制造商</h4>
+                            <p class="text-gray-600 mt-2">专注行业展会与技术内容营销，建立多语言技术博客，1年内新客户增长78%，外贸销售额提升650万美元，客户复购率提高至42%。</p>
+                            <div class="mt-3 flex items-center text-sm text-gray-500">
+                                <span class="mr-4"><i class="fa fa-globe mr-1"></i> 主要市场：全球</span>
+                                <span><i class="fa fa-calendar mr-1"></i> 实施时间：2024-2025年</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-lg">某液压制动系统企业</h4>
+                            <p class="text-gray-600 mt-2">放弃亚马逊等C端平台，转向行业B2B渠道，6个月内询盘质量提升80%，无效沟通减少65%，销售团队效率提升40%，成交周期缩短35%。</p>
+                            <div class="mt-3 flex items-center text-sm text-gray-500">
+                                <span class="mr-4"><i class="fa fa-globe mr-1"></i> 主要市场：欧洲、中东</span>
+                                <span><i class="fa fa-calendar mr-1"></i> 实施时间：2025年</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+                              
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">华伍股份</h3>
+                    <p class="text-gray-400 text-sm">专业工业制动器制造商，专注于为全球工业客户提供高品质制动解决方案</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#solution" class="hover:text-white transition-colors"></a></li>
+                        <li><a href="#channels" class="hover:text-white transition-colors">渠道策略</a></li>
+                        <li><a href="#action" class="hover:text-white transition-colors">精准获客行动计划</a></li>
+                        <li><a href="#case" class="hover:text-white transition-colors"></a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors"></a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mt-1 mr-2"></i>
+                            <span>江西省丰城市高新技术产业园区</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-2"></i>
+                            <span></span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-2"></i>
+                            <span>export@huawu.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">关注我们</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-youtube-play"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">订阅我们的外贸资讯</p>
+                    <div class="mt-2 flex">
+                        <input type="email" placeholder="您的邮箱" class="px-3 py-2 bg-gray-700 text-white rounded-l-lg focus:outline-none text-sm flex-1">
+                        <button class="bg-primary px-3 py-2 rounded-r-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2025 华伍股份有限公司 版权所有 | 专注工业制动器研发与制造</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动菜单
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+        
+        // 预期效果图表
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('forecastChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['实施前', '1个月', '2个月', '3个月', '4个月', '5个月', '6个月'],
+                    datasets: [
+                        {
+                            label: '精准询盘数量',
+                            data: [30, 42, 58, 75, 92, 115, 135],
+                            borderColor: '#1E40AF',
+                            backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '获客成本(元/询盘)',
+                            data: [280, 260, 230, 200, 180, 160, 150],
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'transparent',
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '询盘数量'
+                            }
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: '获客成本(元/询盘)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+
+</body></html>
