@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球支付3.0 - 数字人民币出海战略</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0052CC',
+                        secondary: '#2383E2',
+                        accent: '#00B8D9',
+                        dark: '#172B4D',
+                        light: '#F5F7FA',
+                        success: '#00B578',
+                        warning: '#FFAB00',
+                        danger: '#F53F3F'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, #0052CC 0%, #00B8D9 100%);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 82, 204, 0.1), 0 10px 10px -5px rgba(0, 82, 204, 0.04);
+            }
+            .progress-bar {
+                height: 3px;
+                background: linear-gradient(90deg, #0052CC 0%, #00B8D9 100%);
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 50;
+                transition: width 0.2s ease;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark font-sans overflow-x-hidden">
+    <!-- 进度条 -->
+    <div id="progress-bar" class="progress-bar w-0"></div>
+
+    <!-- 导航 -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-40 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-globe text-primary text-2xl"></i>
+                <span class="text-xl font-bold text-primary">全球支付3.0</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#section-1" class="hover:text-primary transition-colors">战略定位</a>
+                <a href="#section-2" class="hover:text-primary transition-colors">核心战略</a>
+                <a href="#section-3" class="hover:text-primary transition-colors">生态构建</a>
+                <a href="#section-4" class="hover:text-primary transition-colors">传播叙事</a>
+                <a href="#section-5" class="hover:text-primary transition-colors">总结展望</a>
+            </div>
+            <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#section-1" class="py-2 hover:text-primary transition-colors">战略定位</a>
+                <a href="#section-2" class="py-2 hover:text-primary transition-colors">核心战略</a>
+                <a href="#section-3" class="py-2 hover:text-primary transition-colors">生态构建</a>
+                <a href="#section-4" class="py-2 hover:text-primary transition-colors">传播叙事</a>
+                <a href="#section-5" class="py-2 hover:text-primary transition-colors">总结展望</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 幻灯片容器 -->
+    <div class="pt-16">
+        <!-- 封面页 -->
+        <section class="min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/10 p-4 relative overflow-hidden">
+            <!-- 背景装饰 -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+                <div class="absolute -top-20 -left-20 w-96 h-96 rounded-full bg-primary"></div>
+                <div class="absolute bottom-10 right-10 w-72 h-72 rounded-full bg-accent"></div>
+            </div>
+            
+            <div class="text-center max-w-4xl mx-auto relative z-10">
+                <div class="inline-block px-4 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
+                    从商业到战略的维度升级
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-dark text-shadow leading-tight">
+                    全球支付3.0<br>数字人民币出海战略
+                </h1>
+                <p class="text-xl md:text-2xl text-dark/70 mb-10 max-w-2xl mx-auto">
+                    从"做支付业务"到"配合国家战略，做数字人民币出海"
+                </p>
+                <div class="flex justify-center">
+                    <a href="#section-1" class="bg-primary hover:bg-primary/90 text-white font-medium px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all flex items-center">
+                        了解更多 <i class="fa fa-arrow-down ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 一、重新定义“跨境支付3.0” -->
+        <section id="section-1" class="py-20 px-4 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-12 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">一、重新定义“跨境支付3.0”</h2>
+                    <p class="text-lg text-dark/70">国家战略的毛细血管与神经网络</p>
+                    <div class="w-24 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-8 md:p-10 mb-12">
+                    <p class="text-xl md:text-2xl font-semibold text-dark leading-relaxed">
+                        平台不再只是一个支付工具，而是中国数字主权和金融基础设施的延伸，是数字人民币流向全球的
+                        <span class="text-primary font-bold">"毛细血管"</span>
+                        和新一代全球贸易的
+                        <span class="text-primary font-bold">"神经网络"</span>
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-10">
+                    <!-- 使命升级 -->
+                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-primary card-hover">
+                        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa fa-compass text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-dark">使命升级</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-dark/60 text-sm">原使命</p>
+                                <p class="font-medium">"实现高效的跨境支付"</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-long-arrow-down text-accent mx-2"></i>
+                            </div>
+                            <div>
+                                <p class="text-dark/60 text-sm">新使命</p>
+                                <p class="font-medium text-primary">"构建服务于数字人民币计价、结算的新一代全球金融基础设施"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 价值主张升级 -->
+                    <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-accent card-hover">
+                        <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fa fa-lightbulb-o text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-dark">价值主张升级</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-dark/60 text-sm">原主张</p>
+                                <p class="font-medium">"为客户节省成本和时间"</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-long-arrow-down text-accent mx-2"></i>
+                            </div>
+                            <div>
+                                <p class="text-dark/60 text-sm">新主张</p>
+                                <p class="font-medium text-accent">"赋能企业抓住数字人民币国际化红利，进入下一代全球贸易网络"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 支付3.0演进图示 -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-6 text-center">支付体系的演进</h3>
+                    <div class="relative">
+                        <!-- 连接线 -->
+                        <div class="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
+                        
+                        <div class="space-y-8 md:space-y-0 md:grid md:grid-cols-3 relative z-10">
+                            <!-- 1.0 -->
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-gray-700 font-bold">1.0</span>
+                                </div>
+                                <h4 class="font-semibold mb-2">传统代理行</h4>
+                                <p class="text-sm text-dark/70">SWIFT主导<br>高成本·低效率·多中间环节</p>
+                            </div>
+                            
+                            <!-- 2.0 -->
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-gray-700 font-bold">2.0</span>
+                                </div>
+                                <h4 class="font-semibold mb-2">跨境支付工具</h4>
+                                <p class="text-sm text-dark/70">互联网支付<br>降低成本·提升效率·仍是工具属性</p>
+                            </div>
+                            
+                            <!-- 3.0 -->
+                            <div class="bg-primary/5 p-4 rounded-lg text-center border-2 border-primary">
+                                <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span class="font-bold">3.0</span>
+                                </div>
+                                <h4 class="font-semibold mb-2 text-primary">数字人民币出海</h4>
+                                <p class="text-sm text-dark/70">国家战略载体<br>金融基础设施·数字主权延伸</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 二、核心战略：四大支柱 -->
+        <section id="section-2" class="py-20 px-4 bg-gray-50">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-12 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">二、核心战略</h2>
+                    <p class="text-lg text-dark/70">与国家战略同频共振的四大支柱</p>
+                    <div class="w-24 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <p class="text-center text-lg mb-16 max-w-3xl mx-auto">
+                    要成为国家战略的有机组成部分，业务必须与数字人民币出海的顶层设计深度耦合。
+                </p>
+
+                <!-- 支柱一：核心场景 -->
+                <div class="mb-16">
+                    <div class="flex items-center mb-8">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="font-bold">1</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-dark">支柱一：锚定“中国优势”产业，开拓核心场景</h3>
+                    </div>
+                    
+                    <p class="mb-6 text-dark/80">
+                        数字人民币出海不可能凭空发生，必须依托于中国强大的实体产业和供应链优势。支付网络应优先服务于这些“王牌”：
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- 新质生产力出口 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-t-4 border-primary">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-rocket text-primary"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold">新质生产力出口</h4>
+                                <span class="ml-2 px-2 py-0.5 bg-primary/10 text-primary text-xs rounded-full">重中之重</span>
+                            </div>
+                            <p class="text-dark/70">
+                                为新能源汽车、锂电池、光伏产品的海外贸易提供以数字人民币计价和结算的全套支付解决方案。这些行业中国全球领先，拥有定价权和话语权，是推广本币结算的最佳突破口。
+                            </p>
+                        </div>
+                        
+                        <!-- 数字贸易与算力服务 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-t-4 border-secondary">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-cloud text-secondary"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold">数字贸易与算力服务</h4>
+                            </div>
+                            <p class="text-dark/70">
+                                为云服务、AI模型调用、游戏充值、在线娱乐等数字产品出口提供小额、高频、实时的微支付清算。数字人民币的可编程性在此领域具有无可比拟的优势。
+                            </p>
+                        </div>
+                        
+                        <!-- 跨境电商 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-t-4 border-secondary">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-shopping-cart text-secondary"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold">跨境电商</h4>
+                            </div>
+                            <p class="text-dark/70">
+                                赋能中国品牌出海。当海外消费者购买中国商品时，提供“数字人民币支付”选项，背后由网络提供清算服务。这能从消费端培育人民币的使用习惯。
+                            </p>
+                        </div>
+                        
+                        <!-- 一带一路与大宗商品 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-t-4 border-secondary">
+                            <div class="flex items-center mb-4">
+                                <div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fa fa-ship text-secondary"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold">一带一路与大宗商品</h4>
+                            </div>
+                            <p class="text-dark/70">
+                                探索在“一带一路”沿线国家的基础设施建设、工程项目中使用数字人民币进行支付和清算。同时，探索如何利用智能合约，在矿产资源、农产品等大宗商品贸易中实现“交易即结算”。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 支柱二：用户体验与生态壁垒 -->
+                <div class="mb-16">
+                    <div class="flex items-center mb-8">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="font-bold">2</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-dark">支柱二：打造“杀手级”用户体验，构建生态壁垒</h3>
+                    </div>
+                    
+                    <p class="mb-6 text-dark/80">
+                        技术是基础，体验是关键。让使用数字人民币支付像使用现金一样简单，像使用Swift一样可靠。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- 零感觉接入 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fa fa-plug text-accent text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-3">“零感觉”接入</h4>
+                            <p class="text-dark/70">
+                                为海外商户和企业提供API、SDK和SaaS化工具，让他们能像接入PayPal一样轻松地接入数字人民币支付网络，背后复杂的汇率、兑换、清算由平台完成。
+                            </p>
+                        </div>
+                        
+                        <!-- 成本优势 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fa fa-line-chart text-accent text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-3">成本优势</h4>
+                            <p class="text-dark/70">
+                                利用数字人民币点对点交易、清算效率极高的特点，将成本降至远低于传统代理行模式的程度，形成降维打击。
+                            </p>
+                        </div>
+                        
+                        <!-- 智能合约赋能 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-2 border-accent">
+                            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fa fa-key text-accent text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-3">智能合约赋能 <span class="text-xs bg-accent/10 text-accent px-2 py-0.5 rounded-full">核武器</span></h4>
+                            <p class="text-dark/70 mb-2">开发基于智能合约的贸易金融产品，如：</p>
+                            <ul class="text-dark/70 space-y-1 pl-5 list-disc text-sm">
+                                <li>自动执行合同：货物提单物权数字化，收货后自动触发付款</li>
+                                <li>供应链金融：资金流向可追溯，确保信贷资金用于指定用途</li>
+                                <li>政府补贴与退税：条件触发式支付，防止欺诈</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 支柱三：全球生态 -->
+                <div class="mb-16">
+                    <div class="flex items-center mb-8">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="font-bold">3</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-dark">支柱三：共建全球生态，成为关键连接器</h3>
+                    </div>
+                    
+                    <p class="mb-6 text-dark/80">
+                        独木不成林。需要成为连接各方力量的“连接器”和“催化剂”。
+                    </p>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                        <div class="flex flex-col md:flex-row md:items-center justify-center mb-8">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-8">
+                                <i class="fa fa-building text-primary text-2xl"></i>
+                            </div>
+                            <div class="md:text-left max-w-lg">
+                                <h4 class="text-xl font-semibold mb-2">紧密对接官方</h4>
+                                <p class="text-dark/70">
+                                    与央行数字货币研究所、外汇管理局、商务部门等保持密切沟通，理解政策意图，参与试点项目，争取成为“官方推荐”的合规出海通道。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full h-px bg-gray-200 my-6"></div>
+                        
+                        <div class="flex flex-col md:flex-row md:items-center justify-center mb-8">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-8">
+                                <i class="fa fa-handshake-o text-primary text-2xl"></i>
+                            </div>
+                            <div class="md:text-left max-w-lg">
+                                <h4 class="text-xl font-semibold mb-2">“抱紧”产业链巨头</h4>
+                                <p class="text-dark/70">
+                                    与宁德时代、比亚迪、华为、阿里云、字节跳动等中国优势产业巨头结成战略合作，成为他们指定的全球数字人民币支付解决方案提供商。他们的海外贸易流量是平台的基石。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full h-px bg-gray-200 my-6"></div>
+                        
+                        <div class="flex flex-col md:flex-row md:items-center justify-center">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-8">
+                                <i class="fa fa-globe text-primary text-2xl"></i>
+                            </div>
+                            <div class="md:text-left max-w-lg">
+                                <h4 class="text-xl font-semibold mb-2">发展海外盟友</h4>
+                                <p class="text-dark/70">
+                                    与海外本地的银行、支付机构、金融科技公司合作，由他们担任海外“节点”，共同推广数字人民币解决方案，解决最后一公里的落地问题。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 生态图示 -->
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <h4 class="text-center text-lg font-semibold mb-6">全球生态网络</h4>
+                        <div class="relative py-8">
+                            <!-- 中心节点 -->
+                            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-primary text-white rounded-full flex items-center justify-center flex-col z-10">
+                                <span class="font-bold text-center">支付3.0平台</span>
+                                <span class="text-xs mt-1">核心连接器</span>
+                            </div>
+                            
+                            <!-- 连接线 -->
+                            <div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-1 bg-gray-200 z-0"></div>
+                            <div class="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-full bg-gray-200 z-0"></div>
+                            
+                            <!-- 周围节点 -->
+                            <div class="absolute left-1/4 top-1/4 transform -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-primary rounded-lg p-3 shadow-md z-10">
+                                <div class="text-center">
+                                    <i class="fa fa-university text-primary mb-1"></i>
+                                    <p class="text-sm font-medium">央行与监管机构</p>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute right-1/4 top-1/4 transform -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-primary rounded-lg p-3 shadow-md z-10">
+                                <div class="text-center">
+                                    <i class="fa fa-industry text-primary mb-1"></i>
+                                    <p class="text-sm font-medium">中国产业巨头</p>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute left-1/4 bottom-1/4 transform -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-primary rounded-lg p-3 shadow-md z-10">
+                                <div class="text-center">
+                                    <i class="fa fa-bank text-primary mb-1"></i>
+                                    <p class="text-sm font-medium">海外金融机构</p>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute right-1/4 bottom-1/4 transform -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-primary rounded-lg p-3 shadow-md z-10">
+                                <div class="text-center">
+                                    <i class="fa fa-shopping-bag text-primary mb-1"></i>
+                                    <p class="text-sm font-medium">全球商户与用户</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 支柱四：合规与风控 -->
+                <div>
+                    <div class="flex items-center mb-8">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                            <span class="font-bold">4</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-dark">支柱四：坚守合规与风控的生命线</h3>
+                    </div>
+                    
+                    <p class="mb-6 text-dark/80">
+                        越是涉及国家战略，越是如履薄冰。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- 合规先行 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                            <div class="w-12 h-12 bg-danger/10 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fa fa-check-circle text-danger text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-3">合规先行</h4>
+                            <p class="text-dark/70">
+                                在全球各运营地获取必要的支付牌照（PI/EMI）、MSO等。将KYC（了解你的客户）、AML（反洗钱）、CFT（反恐融资）置于最高优先级。
+                            </p>
+                        </div>
+                        
+                        <!-- 数据主权与安全 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                            <div class="w-12 h-12 bg-danger/10 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fa fa-shield text-danger text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-3">数据主权与安全</h4>
+                            <p class="text-dark/70">
+                                设计清晰、合规的数据跨境流动方案，确保符合中国和所在国的数据安全法规。
+                            </p>
+                        </div>
+                        
+                        <!-- 应对制裁风险 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                            <div class="w-12 h-12 bg-danger/10 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fa fa-shelter text-danger text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-3">应对制裁风险</h4>
+                            <p class="text-dark/70">
+                                设计具有韧性的网络架构，准备好应对潜在的地缘政治摩擦和长臂管辖。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 三、生态构建 -->
+        <section id="section-3" class="py-20 px-4 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-12 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">三、生态构建路径</h2>
+                    <p class="text-lg text-dark/70">从试点到规模化的发展阶段</p>
+                    <div class="w-24 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="relative">
+                    <!-- 时间线 -->
+                    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gray-200 transform -translate-x-1/2"></div>
+                    
+                    <!-- 阶段1 -->
+                    <div class="mb-16 md:mb-24 relative">
+                        <div class="md:flex items-center">
+                            <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+                                <h3 class="text-xl font-bold text-primary mb-3">阶段一：试点验证（0-6个月）</h3>
+                                <p class="text-dark/70 mb-4">选择1-2个重点行业和1-2个“一带一路”国家进行试点，验证模式可行性。</p>
+                                <div class="inline-block bg-primary/10 text-primary text-sm font-medium px-3 py-1 rounded-full">
+                                    目标：完成3-5个标杆客户上线
+                                </div>
+                            </div>
+                            
+                            <div class="hidden md:block absolute left-1/2 w-8 h-8 bg-primary rounded-full transform -translate-x-1/2 z-10"></div>
+                            
+                            <div class="md:w-1/2 md:pl-12">
+                                <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-primary">
+                                    <h4 class="font-semibold mb-2">关键任务</h4>
+                                    <ul class="space-y-2 text-dark/70">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>与央行数字货币研究所对接，获取试点资格</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>完成核心系统开发，支持数字人民币跨境支付</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>签约2-3家行业龙头企业作为种子用户</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>在1个海外国家完成支付牌照申请</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 阶段2 -->
+                    <div class="mb-16 md:mb-24 relative">
+                        <div class="md:flex items-center">
+                            <div class="md:w-1/2 md:pr-12 md:text-right order-1 md:order-1 mb-8 md:mb-0">
+                                <div class="bg-white rounded-xl shadow-md p-5 border-r-4 border-primary md:ml-auto">
+                                    <h4 class="font-semibold mb-2">关键任务</h4>
+                                    <ul class="space-y-2 text-dark/70">
+                                        <li class="flex items-start md:justify-end">
+                                            <span class="md:order-2">拓展至5个重点行业，覆盖10个海外国家</span>
+                                            <i class="fa fa-angle-left text-primary mt-1 ml-2 md:mr-2 md:ml-0 md:order-1"></i>
+                                        </li>
+                                        <li class="flex items-start md:justify-end">
+                                            <span class="md:order-2">完成智能合约平台开发并上线3个核心产品</span>
+                                            <i class="fa fa-angle-left text-primary mt-1 ml-2 md:mr-2 md:ml-0 md:order-1"></i>
+                                        </li>
+                                        <li class="flex items-start md:justify-end">
+                                            <span class="md:order-2">签约50+家企业客户，月交易流水达10亿元</span>
+                                            <i class="fa fa-angle-left text-primary mt-1 ml-2 md:mr-2 md:ml-0 md:order-1"></i>
+                                        </li>
+                                        <li class="flex items-start md:justify-end">
+                                            <span class="md:order-2">建立5个海外节点，形成初步网络</span>
+                                            <i class="fa fa-angle-left text-primary mt-1 ml-2 md:mr-2 md:ml-0 md:order-1"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="hidden md:block absolute left-1/2 w-8 h-8 bg-primary rounded-full transform -translate-x-1/2 z-10"></div>
+                            
+                            <div class="md:w-1/2 md:pl-12 order-0 md:order-1">
+                                <h3 class="text-xl font-bold text-primary mb-3">阶段二：规模扩张（7-18个月）</h3>
+                                <p class="text-dark/70 mb-4">扩大覆盖行业和国家范围，完善产品矩阵，建立初步的全球网络。</p>
+                                <div class="inline-block bg-primary/10 text-primary text-sm font-medium px-3 py-1 rounded-full">
+                                    目标：月交易流水突破100亿元
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 阶段3 -->
+                    <div class="relative">
+                        <div class="md:flex items-center">
+                            <div class="md:w-1/2 md:pr-12 md:text-right mb-8 md:mb-0">
+                                <h3 class="text-xl font-bold text-primary mb-3">阶段三：生态成熟（19-36个月）</h3>
+                                <p class="text-dark/70 mb-4">成为数字人民币出海的主要通道，形成完整的生态系统和网络效应。</p>
+                                <div class="inline-block bg-primary/10 text-primary text-sm font-medium px-3 py-1 rounded-full">
+                                    目标：月交易流水突破1000亿元，成为行业标准
+                                </div>
+                            </div>
+                            
+                            <div class="hidden md:block absolute left-1/2 w-8 h-8 bg-primary rounded-full transform -translate-x-1/2 z-10"></div>
+                            
+                            <div class="md:w-1/2 md:pl-12">
+                                <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-primary">
+                                    <h4 class="font-semibold mb-2">关键任务</h4>
+                                    <ul class="space-y-2 text-dark/70">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>覆盖所有重点行业，建立30+海外节点</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>月交易流水突破1000亿元，服务1000+企业客户</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>参与国际数字货币支付标准制定</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                            <span>完成上市融资，成为全球领先的数字支付网络</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 市场规模预测 -->
+                <div class="mt-20 bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-6 text-center">数字人民币跨境支付市场规模预测</h3>
+                    <div class="h-80">
+                        <canvas id="marketSizeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 四、叙事与传播 -->
+        <section id="section-4" class="py-20 px-4 bg-gray-50">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-12 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">四、叙事与传播</h2>
+                    <p class="text-lg text-dark/70">讲好“未来之路”的故事</p>
+                    <div class="w-24 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <p class="text-center text-lg mb-16 max-w-3xl mx-auto">
+                    故事不仅是商业故事，更是时代故事。讲好中国故事。
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- 对外 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="bg-primary text-white p-4">
+                            <h3 class="text-xl font-semibold flex items-center">
+                                <i class="fa fa-globe mr-2"></i> 对外（全球客户）
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-semibold mb-3 text-dark">“效率、成本与未来”的故事</h4>
+                            <p class="text-dark/70 mb-4">
+                                强调使用我们的服务，就是接入下一代全球贸易网络，能获得更高效、更廉价、更智能的支付体验。
+                            </p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-sm text-dark/80 italic">
+                                    "选择数字人民币支付，就是选择未来的贸易方式 — 更低成本、更高效率、更安全可靠。"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 对内 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="bg-secondary text-white p-4">
+                            <h3 class="text-xl font-semibold flex items-center">
+                                <i class="fa fa-handshake-o mr-2"></i> 对内（合作伙伴、政府）
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-semibold mb-3 text-dark">“服务战略、赋能产业”的故事</h4>
+                            <p class="text-dark/70 mb-4">
+                                清晰地阐述业务如何具体地帮助中国优势产业出海，如何为数字人民币国际化提供真实的应用场景和流量数据。
+                            </p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-sm text-dark/80 italic">
+                                    "我们不仅是一家支付公司，更是国家数字经济战略的践行者，助力中国企业在全球市场赢得竞争优势。"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 对行业 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="bg-accent text-white p-4">
+                            <h3 class="text-xl font-semibold flex items-center">
+                                <i class="fa fa-book mr-2"></i> 对行业
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-lg font-semibold mb-3 text-dark">“标准与生态”的故事</h4>
+                            <p class="text-dark/70 mb-4">
+                                积极参与国际标准制定，输出中国在数字货币支付领域的最佳实践，成为行业的定义者之一。
+                            </p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-sm text-dark/80 italic">
+                                    "我们正在与全球伙伴共同定义下一代跨境支付标准，让数字人民币成为全球贸易的重要基础设施。"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 五、总结与展望 -->
+        <section id="section-5" class="py-20 px-4 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-12 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">五、总结与展望</h2>
+                    <p class="text-lg text-dark/70">我们的角色与未来</p>
+                    <div class="w-24 h-1 bg-accent mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl p-8 md:p-10 mb-16">
+                    <p class="text-xl md:text-2xl font-semibold text-dark leading-relaxed text-center">
+                        当跨境支付3.0平台成功锚定数字人民币并实现万亿流水时，将不再是简单的支付服务商，而是：
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white rounded-xl shadow-md p-6 text-center card-hover border-t-4 border-primary">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa fa-road text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-dark">数字人民币全球流动的“主干道”</h3>
+                        <p class="text-dark/70">
+                            成为数字人民币在国际市场流通的主要通道，支撑每日数十亿甚至上百亿元的交易规模。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 text-center card-hover border-t-4 border-secondary">
+                        <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa fa-bridge text-secondary text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-dark">中国数字经济对外输出的“金融桥梁”</h3>
+                        <p class="text-dark/70">
+                            帮助中国企业更便捷地参与全球贸易，同时将中国的金融科技标准和实践推向世界。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md p-6 text-center card-hover border-t-4 border-accent">
+                        <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fa fa-balance-scale text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-dark">全球下一代贸易金融规则的“重要制定参与者”</h3>
+                        <p class="text-dark/70">
+                            从规则的遵循者转变为制定者，参与塑造公平、高效、包容的全球数字金融新秩序。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-primary text-white p-8 rounded-2xl shadow-lg">
+                    <h3 class="text-2xl font-bold mb-6 text-center">宏大且激动人心的事业</h3>
+                    <p class="text-lg mb-6 text-white/90 text-center max-w-3xl mx-auto">
+                        成功的关键在于：深度理解国家战略意图，并用顶尖的商业和技术能力，将其转化为全球客户无法拒绝的产品和服务。
+                    </p>
+                    <p class="text-xl font-semibold text-center">
+                        这条路注定充满挑战，但我们正在开辟的，是一条通向未来的新航道、新桥梁。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 投资亮点页 -->
+        <section class="py-20 px-4 bg-gray-900 text-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">投资亮点</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
+                                <i class="fa fa-line-chart"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">万亿级市场空间</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            数字人民币跨境支付市场规模预计未来5年将达到数十万亿元，我们将占据可观的市场份额。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
+                                <i class="fa fa-shield"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">国家战略背书</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            业务深度契合国家数字人民币国际化战略，将获得政策支持和资源倾斜。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
+                                <i class="fa fa-lock"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">高壁垒商业模式</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            牌照壁垒、生态壁垒和技术壁垒构筑护城河，先发优势明显。
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-3">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">顶级团队配置</h3>
+                        </div>
+                        <p class="text-gray-300">
+                            团队兼具金融监管、跨境支付、数字货币和国际贸易等多领域经验。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href="#" class="inline-block bg-primary hover:bg-primary/90 text-white font-medium px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all">
+                        预约深入交流 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动端菜单
+                document.getElementById('mobile-menu').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 滚动时导航栏样式变化
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2', 'shadow');
+                nav.classList.remove('py-3');
+            } else {
+                nav.classList.add('py-3');
+                nav.classList.remove('py-2', 'shadow');
+            }
+            
+            // 进度条更新
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        });
+
+        // 滚动动画
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // 为所有section添加动画类
+        document.querySelectorAll('section > div').forEach(section => {
+            section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+
+        // 市场规模预测图表
+        window.addEventListener('load', function() {
+            const ctx = document.getElementById('marketSizeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2024', '2025', '2026', '2027', '2028', '2029'],
+                    datasets: [
+                        {
+                            label: '数字人民币跨境支付规模(万亿元)',
+                            data: [0.2, 1.5, 3.8, 8.5, 15.2, 25.6],
+                            borderColor: '#0052CC',
+                            backgroundColor: 'rgba(0, 82, 204, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: '我们的目标市场份额(%)',
+                            data: [15, 20, 25, 30, 35, 40],
+                            borderColor: '#00B8D9',
+                            backgroundColor: 'transparent',
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '交易规模(万亿元)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: '市场份额(%)'
+                            },
+                            min: 0,
+                            max: 50,
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    
