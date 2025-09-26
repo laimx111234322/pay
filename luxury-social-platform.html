@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>奢享 - 高端社交体验一站式解决方案</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0A0A0A', // 纯黑主色
+            secondary: '#D4AF37', // 金色辅助色
+            accent: '#9E2A2B', // 酒红强调色
+            dark: '#121212', // 深色背景
+            light: '#F5F5F5', // 浅色文本
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Playfair Display', 'serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+      }
+      .bg-texture {
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      }
+      .gold-gradient {
+        background: linear-gradient(135deg, #D4AF37 0%, #F9F292 50%, #D4AF37 100%);
+      }
+      .slide-transition {
+        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="bg-primary text-light overflow-hidden font-sans">
+  <!-- 主容器 -->
+  <div class="relative w-full h-screen">
+    <!-- 所有幻灯片容器 -->
+    <div id="slides-container" class="relative w-full h-full">
+      <!-- 幻灯片1: 封面页 -->
+      <div class="slide absolute inset-0 opacity-100 slide-transition" data-slide="1">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <!-- 装饰元素 -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-1/3 left-1/3 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
+          
+          <!-- 网格装饰 -->
+          <div class="absolute inset-0 border-t border-b border-white/5"></div>
+          <div class="absolute inset-0 border-l border-r border-white/5" style="left: 25%; right: 25%;"></div>
+          <div class="absolute inset-0 border-l border-r border-white/5" style="left: 50%; transform: translateX(-50%);"></div>
+        </div>
+        
+        <div class="relative h-full flex flex-col items-center justify-center px-6 text-center z-10">
+          <div class="mb-6 opacity-0 reveal" style="transition-delay: 0.2s">
+            <div class="w-20 h-1 bg-secondary mx-auto mb-2"></div>
+            <p class="text-secondary tracking-widest text-sm uppercase">重新定义高端社交体验</p>
+          </div>
+          
+          <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-display font-bold mb-6 text-shadow-lg leading-tight reveal" style="transition-delay: 0.4s">
+            奢享<span class="text-secondary">·</span>
+            <span class="block mt-2">首席娱乐官</span>
+          </h1>
+          
+          <p class="text-[clamp(1.1rem,3vw,1.5rem)] max-w-3xl mb-12 opacity-80 reveal" style="transition-delay: 0.6s">
+            从场地安排到氛围营造，从酒水供应到无缝转场<br>
+            一站式高端社交体验解决方案，让每一场活动都尽善尽美
+          </p>
+          
+          <div class="mt-6 opacity-0 reveal" style="transition-delay: 0.8s">
+            <p class="text-sm opacity-60">点击或按方向键浏览 <i class="fa fa-long-arrow-right ml-2 text-secondary"></i></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 幻灯片2: 平台定位 -->
+      <div class="slide absolute inset-0 opacity-0 translate-x-full slide-transition" data-slide="2">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <div class="relative h-full flex flex-col px-8 py-12 z-10">
+          <div class="mb-12 reveal">
+            <div class="w-16 h-1 bg-secondary mb-4"></div>
+            <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-display font-bold text-shadow">
+              我们的定位
+            </h2>
+          </div>
+          
+          <div class="flex-grow flex flex-col lg:flex-row gap-10 items-center justify-center">
+            <div class="lg:w-1/2 reveal">
+              <div class="relative">
+                <img src="https://picsum.photos/id/1082/800/600" alt="高端社交体验场景" class="w-full h-auto rounded-lg shadow-2xl">
+                <div class="absolute -bottom-5 -right-5 w-32 h-32 gold-gradient rounded-lg flex items-center justify-center shadow-lg">
+                  <span class="text-primary font-display font-bold text-lg text-center px-2">私人派对总监</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="lg:w-1/2 space-y-8 reveal">
+              <div>
+                <h3 class="text-2xl font-display font-bold mb-4 text-secondary">不只是服务，更是体验的艺术</h3>
+                <p class="opacity-80 text-lg">
+                  我们从"陪酒平台"升级为您的专属"首席娱乐官"，
+                  客户只需提出需求，从场地、人员、酒水、娱乐到交通，
+                  全部由平台无缝安排，让您专注于社交本身。
+                </p>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-dark/50 backdrop-blur-sm p-5 rounded-lg border border-white/10 hover-lift">
+                  <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mb-4">
+                    <i class="fa fa-check text-primary text-xl"></i>
+                  </div>
+                  <h4 class="font-bold mb-2">省心</h4>
+                  <p class="text-sm opacity-70">全程无忧，一键搞定所有安排</p>
+                </div>
+                
+                <div class="bg-dark/50 backdrop-blur-sm p-5 rounded-lg border border-white/10 hover-lift">
+                  <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mb-4">
+                    <i class="fa fa-star text-primary text-xl"></i>
+                  </div>
+                  <h4 class="font-bold mb-2">有面</h4>
+                  <p class="text-sm opacity-70">彰显品味，打造令人难忘的体验</p>
+                </div>
+                
+                <div class="bg-dark/50 backdrop-blur-sm p-5 rounded-lg border border-white/10 hover-lift">
+                  <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mb-4">
+                    <i class="fa fa-trophy text-primary text-xl"></i>
+                  </div>
+                  <h4 class="font-bold mb-2">超值</h4>
+                  <p class="text-sm opacity-70">整合资源，提供高性价比解决方案</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 幻灯片3: 产品套餐矩阵 -->
+      <div class="slide absolute inset-0 opacity-0 translate-x-full slide-transition" data-slide="3">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <div class="relative h-full flex flex-col px-8 py-12 z-10">
+          <div class="mb-12 text-center max-w-3xl mx-auto reveal">
+            <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+            <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-display font-bold text-shadow mb-6">
+              社交场产品矩阵
+            </h2>
+            <p class="opacity-80">标准化套餐，满足不同场景需求，同时支持高度定制化服务</p>
+          </div>
+          
+          <div class="flex-grow overflow-y-auto pb-10">
+            <div class="space-y-12 max-w-5xl mx-auto">
+              <!-- 基础套餐 -->
+              <div class="bg-gradient-to-br from-dark to-primary/70 rounded-xl overflow-hidden border border-white/10 shadow-xl hover-lift reveal">
+                <div class="flex flex-col md:flex-row">
+                  <div class="md:w-1/3 relative overflow-hidden">
+                    <img src="https://picsum.photos/id/1060/600/800" alt="微醺雅集套餐" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 bg-secondary text-primary px-4 py-1 rounded-full text-sm font-bold">
+                      基础套餐
+                    </div>
+                  </div>
+                  <div class="md:w-2/3 p-8">
+                    <h3 class="text-2xl font-display font-bold mb-2">微醺雅集</h3>
+                    <p class="text-accent mb-6">适合简单朋友小聚，商务破冰</p>
+                    
+                    <ul class="space-y-4 mb-6">
+                      <li class="flex items-start">
+                        <i class="fa fa-user text-secondary mt-1 mr-3"></i>
+                        <span>1名氛围主理人全程陪伴</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-clock-o text-secondary mt-1 mr-3"></i>
+                        <span>2小时核心服务时长</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-glass text-secondary mt-1 mr-3"></i>
+                        <span>基础酒水建议与代点服务</span>
+                      </li>
+                    </ul>
+                    
+                    <div class="pt-4 border-t border-white/10">
+                      <div class="flex items-center justify-between">
+                        <span class="text-lg font-bold">起价：<span class="text-secondary">¥1,980</span></span>
+                        <button class="px-6 py-2 border border-secondary text-secondary hover:bg-secondary hover:text-primary transition-colors rounded">
+                          了解详情
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 进阶套餐 -->
+              <div class="bg-gradient-to-br from-dark to-primary/70 rounded-xl overflow-hidden border border-white/10 shadow-xl hover-lift reveal">
+                <div class="flex flex-col md:flex-row">
+                  <div class="md:w-1/3 relative overflow-hidden">
+                    <img src="https://picsum.photos/id/1062/600/800" alt="悦享之夜套餐" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 bg-accent text-white px-4 py-1 rounded-full text-sm font-bold">
+                      进阶套餐
+                    </div>
+                  </div>
+                  <div class="md:w-2/3 p-8">
+                    <h3 class="text-2xl font-display font-bold mb-2">悦享之夜</h3>
+                    <p class="text-accent mb-6">适合重要的商务宴请、生日庆祝</p>
+                    
+                    <ul class="space-y-4 mb-6">
+                      <li class="flex items-start">
+                        <i class="fa fa-user text-secondary mt-1 mr-3"></i>
+                        <span>1名氛围主理人 + 1名主题专家（如威士忌品鉴师）</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-clock-o text-secondary mt-1 mr-3"></i>
+                        <span>3小时尊享服务时长</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-music text-secondary mt-1 mr-3"></i>
+                        <span>专属歌单/游戏策划，活跃现场气氛</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-truck text-secondary mt-1 mr-3"></i>
+                        <span>"即时补给"服务（酒水、香烟快速送达）</span>
+                      </li>
+                    </ul>
+                    
+                    <div class="pt-4 border-t border-white/10">
+                      <div class="flex items-center justify-between">
+                        <span class="text-lg font-bold">起价：<span class="text-secondary">¥3,980</span></span>
+                        <button class="px-6 py-2 border border-secondary text-secondary hover:bg-secondary hover:text-primary transition-colors rounded">
+                          了解详情
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 尊享套餐 -->
+              <div class="bg-gradient-to-br from-dark to-primary/70 rounded-xl overflow-hidden border border-secondary/30 shadow-xl hover-lift reveal">
+                <div class="flex flex-col md:flex-row">
+                  <div class="md:w-1/3 relative overflow-hidden">
+                    <img src="https://picsum.photos/id/1076/600/800" alt="全能局王套餐" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 gold-gradient text-primary px-4 py-1 rounded-full text-sm font-bold">
+                      尊享套餐
+                    </div>
+                  </div>
+                  <div class="md:w-2/3 p-8">
+                    <h3 class="text-2xl font-display font-bold mb-2">全能局王</h3>
+                    <p class="text-accent mb-6">适合顶级商务接待、庆典、需要极致体验的场合</p>
+                    
+                    <ul class="space-y-4 mb-6">
+                      <li class="flex items-start">
+                        <i class="fa fa-user-circle text-secondary mt-1 mr-3"></i>
+                        <span>1名资深氛围主理人全程把控</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-music text-secondary mt-1 mr-3"></i>
+                        <span>1名特定才艺者（民谣吉他手、爵士乐手等）30-45分钟现场表演</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-car text-secondary mt-1 mr-3"></i>
+                        <span>埃尔法级商务车定时接送服务</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-random text-secondary mt-1 mr-3"></i>
+                        <span>无缝转场安排，预订并安排下一场KTV/酒吧</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-glass text-secondary mt-1 mr-3"></i>
+                        <span>高端酒水定制与现场服务</span>
+                      </li>
+                    </ul>
+                    
+                    <div class="pt-4 border-t border-white/10">
+                      <div class="flex items-center justify-between">
+                        <span class="text-lg font-bold">起价：<span class="text-secondary">¥8,880</span></span>
+                        <button class="px-6 py-2 border border-secondary text-secondary hover:bg-secondary hover:text-primary transition-colors rounded">
+                          了解详情
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 定制套餐 -->
+              <div class="bg-gradient-to-br from-dark to-primary/70 rounded-xl overflow-hidden border border-white/10 shadow-xl hover-lift reveal">
+                <div class="flex flex-col md:flex-row">
+                  <div class="md:w-1/3 relative overflow-hidden">
+                    <img src="https://picsum.photos/id/1083/600/800" alt="总裁定制套餐" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 bg-accent/80 text-white px-4 py-1 rounded-full text-sm font-bold">
+                      定制套餐
+                    </div>
+                  </div>
+                  <div class="md:w-2/3 p-8">
+                    <h3 class="text-2xl font-display font-bold mb-2">总裁定制版</h3>
+                    <p class="text-accent mb-6">完全根据客户需求定制，打造专属极致体验</p>
+                    
+                    <ul class="space-y-4 mb-6">
+                      <li class="flex items-start">
+                        <i class="fa fa-check-circle text-secondary mt-1 mr-3"></i>
+                        <span>专属策划团队一对一服务</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-cutlery text-secondary mt-1 mr-3"></i>
+                        <span>可包含私人厨师定制晚宴</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-calendar text-secondary mt-1 mr-3"></i>
+                        <span>可延长至整晚的超级体验</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-star text-secondary mt-1 mr-3"></i>
+                        <span>包含所有尊享套餐服务并可升级</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fa fa-magic text-secondary mt-1 mr-3"></i>
+                        <span>满足特殊主题与个性化需求</span>
+                      </li>
+                    </ul>
+                    
+                    <div class="pt-4 border-t border-white/10">
+                      <div class="flex items-center justify-between">
+                        <span class="text-lg font-bold">价格：<span class="text-secondary">专属定制</span></span>
+                        <button class="px-6 py-2 border border-secondary text-secondary hover:bg-secondary hover:text-primary transition-colors rounded">
+                          立即咨询
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 幻灯片4: 商业模式 -->
+      <div class="slide absolute inset-0 opacity-0 translate-x-full slide-transition" data-slide="4">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <div class="relative h-full flex flex-col px-8 py-12 z-10">
+          <div class="mb-12 reveal">
+            <div class="w-16 h-1 bg-secondary mb-4"></div>
+            <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-display font-bold text-shadow">
+              商业模式与盈利模式
+            </h2>
+          </div>
+          
+          <div class="flex-grow grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <!-- 核心收入 -->
+            <div class="bg-dark/50 backdrop-blur-sm rounded-xl p-8 border border-white/10 reveal">
+              <div class="flex items-center mb-8">
+                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center mr-4">
+                  <i class="fa fa-money text-primary text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-display font-bold">核心收入</h3>
+              </div>
+              
+              <div class="space-y-6">
+                <div class="p-6 bg-primary/50 rounded-lg border border-white/5">
+                  <h4 class="text-xl font-bold mb-3 text-secondary">服务套餐费</h4>
+                  <p class="opacity-80">按不同套餐类型和服务时长收费，这是平台的主要收入来源。根据服务等级和定制程度差异化定价。</p>
+                </div>
+                
+                <div class="p-6 bg-primary/50 rounded-lg border border-white/5">
+                  <h4 class="text-xl font-bold mb-3 text-secondary">会员费</h4>
+                  <p class="opacity-80">设置年度或季度会员制度，会员享有优先预订权、服务折扣、专属定制服务等特权，提供稳定的现金流。</p>
+                  <div class="mt-4 flex space-x-3">
+                    <span class="px-3 py-1 bg-secondary/20 text-secondary text-sm rounded-full">钻石会员</span>
+                    <span class="px-3 py-1 bg-white/10 text-white text-sm rounded-full">铂金会员</span>
+                    <span class="px-3 py-1 bg-white/10 text-white text-sm rounded-full">黄金会员</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 增值与平台收入 -->
+            <div class="bg-dark/50 backdrop-blur-sm rounded-xl p-8 border border-white/10 reveal">
+              <div class="flex items-center mb-8">
+                <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center mr-4">
+                  <i class="fa fa-line-chart text-primary text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-display font-bold">增值与平台收入</h3>
+              </div>
+              
+              <div class="space-y-6">
+                <div class="p-6 bg-primary/50 rounded-lg border border-white/5">
+                  <h4 class="text-xl font-bold mb-3 text-secondary">资源整合佣金</h4>
+                  <p class="opacity-80 mb-4">与优质供应商建立合作，不直接经营实体业务，通过平台交易抽取佣金：</p>
+                  <ul class="space-y-2 opacity-80">
+                    <li class="flex items-start">
+                      <i class="fa fa-angle-right text-secondary mt-1 mr-2"></i>
+                      <span>酒水、香烟预订：15-20%佣金</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fa fa-angle-right text-secondary mt-1 mr-2"></i>
+                      <span>KTV/场所预订：10-15%销售分成</span>
+                    </li>
+                    <li class="flex items-start">
+                      <i class="fa fa-angle-right text-secondary mt-1 mr-2"></i>
+                      <span>车辆服务：10%分成</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div class="p-6 bg-primary/50 rounded-lg border border-white/5">
+                  <h4 class="text-xl font-bold mb-3 text-secondary">广告与赞助</h4>
+                  <p class="opacity-80">成为高端品牌的精准营销渠道，进行品牌植入或联合活动，如：</p>
+                  <div class="mt-4 flex flex-wrap gap-3">
+                    <span class="px-3 py-1 bg-white/10 text-white text-sm rounded-full">高端洋酒</span>
+                    <span class="px-3 py-1 bg-white/10 text-white text-sm rounded-full">豪华汽车</span>
+                    <span class="px-3 py-1 bg-white/10 text-white text-sm rounded-full">男士奢侈品</span>
+                    <span class="px-3 py-1 bg-white/10 text-white text-sm rounded-full">高端腕表</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 幻灯片5: 运营体系 -->
+      <div class="slide absolute inset-0 opacity-0 translate-x-full slide-transition" data-slide="5">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <div class="relative h-full flex flex-col px-8 py-12 z-10">
+          <div class="mb-12 text-center max-w-3xl mx-auto reveal">
+            <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+            <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-display font-bold text-shadow mb-6">
+              运营体系：体验中台
+            </h2>
+            <p class="opacity-80">构建强大的运营中台，确保无缝衔接的高端体验</p>
+          </div>
+          
+          <div class="flex-grow">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+              <!-- 人才库管理 -->
+              <div class="bg-dark/50 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover-lift reveal">
+                <div class="h-40 overflow-hidden">
+                  <img src="https://picsum.photos/id/1074/600/400" alt="人才库管理" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-display font-bold mb-4 text-secondary">人才库管理</h3>
+                  
+                  <div class="space-y-4">
+                    <div>
+                      <h4 class="font-bold mb-1">核心团队</h4>
+                      <p class="text-sm opacity-70">全职资深"派对策划师"，负责客户对接与方案设计</p>
+                    </div>
+                    
+                    <div>
+                      <h4 class="font-bold mb-1">专家网络</h4>
+                      <p class="text-sm opacity-70">兼职"氛围营造师"、"品鉴师"、"乐手"等，动态评级管理</p>
+                    </div>
+                    
+                    <div>
+                      <h4 class="font-bold mb-1">供应商网络</h4>
+                      <p class="text-sm opacity-70">认证的白名单供应商库，确保服务质量与响应速度</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 技术平台 -->
+              <div class="bg-dark/50 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover-lift reveal">
+                <div class="h-40 overflow-hidden">
+                  <img src="https://picsum.photos/id/180/600/400" alt="技术平台" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-display font-bold mb-4 text-secondary">技术平台</h3>
+                  
+                  <div class="space-y-4">
+                    <div>
+                      <h4 class="font-bold mb-1">小程序/App</h4>
+                      <p class="text-sm opacity-70">集成下单、选择服务、实时沟通等功能的体验仪表盘</p>
+                    </div>
+                    
+                    <div>
+                      <h4 class="font-bold mb-1">服务展示</h4>
+                      <p class="text-sm opacity-70">查看"氛围营造师"资料，预览才艺者表演视频</p>
+                    </div>
+                    
+                    <div>
+                      <h4 class="font-bold mb-1">一站式预订</h4>
+                      <p class="text-sm opacity-70">直接在线选择酒水、车辆等增值服务，便捷高效</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 标准化流程 -->
+              <div class="bg-dark/50 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover-lift reveal">
+                <div class="h-40 overflow-hidden">
+                  <img src="https://picsum.photos/id/48/600/400" alt="标准化流程" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                  <h3 class="text-xl font-display font-bold mb-4 text-secondary">标准化流程</h3>
+                  
+                  <div class="space-y-4">
+                    <div>
+                      <h4 class="font-bold mb-1">服务前</h4>
+                      <p class="text-sm opacity-70">深度沟通 → 输出《个性化体验方案》→ 锁定所有资源</p>
+                    </div>
+                    
+                    <div>
+                      <h4 class="font-bold mb-1">服务中</h4>
+                      <p class="text-sm opacity-70">氛围营造师总协调，确保各环节无缝衔接</p>
+                    </div>
+                    
+                    <div>
+                      <h4 class="font-bold mb-1">服务后</h4>
+                      <p class="text-sm opacity-70">体验反馈 → 服务优化 → 结算与关系维护</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 服务流程图示 -->
+            <div class="max-w-5xl mx-auto mt-12 p-6 bg-dark/30 rounded-xl border border-white/10 reveal">
+              <h3 class="text-xl font-display font-bold mb-6 text-center">服务流程闭环</h3>
+              
+              <div class="relative">
+                <!-- 连接线 -->
+                <div class="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-secondary/30 -translate-y-1/2 z-0"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
+                  <div class="bg-primary p-5 rounded-lg text-center border border-white/10">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span class="text-primary font-bold">01</span>
+                    </div>
+                    <h4 class="font-bold mb-2">需求沟通</h4>
+                    <p class="text-sm opacity-70">了解客户需求与期望</p>
+                  </div>
+                  
+                  <div class="bg-primary p-5 rounded-lg text-center border border-white/10">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span class="text-primary font-bold">02</span>
+                    </div>
+                    <h4 class="font-bold mb-2">方案定制</h4>
+                    <p class="text-sm opacity-70">制定个性化体验方案</p>
+                  </div>
+                  
+                  <div class="bg-primary p-5 rounded-lg text-center border border-white/10">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span class="text-primary font-bold">03</span>
+                    </div>
+                    <h4 class="font-bold mb-2">资源整合</h4>
+                    <p class="text-sm opacity-70">预订与协调所有资源</p>
+                  </div>
+                  
+                  <div class="bg-primary p-5 rounded-lg text-center border border-white/10">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span class="text-primary font-bold">04</span>
+                    </div>
+                    <h4 class="font-bold mb-2">执行优化</h4>
+                    <p class="text-sm opacity-70">全程执行与实时优化</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 幻灯片6: 风险控制 -->
+      <div class="slide absolute inset-0 opacity-0 translate-x-full slide-transition" data-slide="6">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <div class="relative h-full flex flex-col px-8 py-12 z-10">
+          <div class="mb-12 reveal">
+            <div class="w-16 h-1 bg-secondary mb-4"></div>
+            <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-display font-bold text-shadow">
+              风险控制与品质保障
+            </h2>
+          </div>
+          
+          <div class="flex-grow flex flex-col lg:flex-row gap-10 items-center justify-center">
+            <div class="lg:w-1/2 reveal">
+              <img src="https://picsum.photos/id/1048/800/600" alt="品质保障体系" class="w-full h-auto rounded-lg shadow-2xl">
+            </div>
+            
+            <div class="lg:w-1/2 space-y-8 reveal">
+              <div class="p-6 bg-dark/50 backdrop-blur-sm rounded-xl border border-white/10">
+                <h3 class="text-xl font-display font-bold mb-4 flex items-center">
+                  <i class="fa fa-shield text-secondary mr-3"></i>
+                  合法性保障
+                </h3>
+                <p class="opacity-80">
+                  明确平台提供"活动策划"、"社交陪伴"、"知识分享"等合法服务，
+                  与酒水销售等实体服务严格切割，由有资质的合作方提供，确保合规经营。
+                </p>
+              </div>
+              
+              <div class="p-6 bg-dark/50 backdrop-blur-sm rounded-xl border border-white/10">
+                <h3 class="text-xl font-display font-bold mb-4 flex items-center">
+                  <i class="fa fa-lock text-secondary mr-3"></i>
+                  安全与边界管理
+                </h3>
+                <p class="opacity-80 mb-3">
+                  所有服务人员签署严格的保密协议和行为准则，明确服务边界：
+                </p>
+                <ul class="space-y-2 opacity-80">
+                  <li class="flex items-start">
+                    <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                    <span>严格的背景调查与筛选机制</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                    <span>服务全程可追溯，确保安全</span>
+                  </li>
+                  <li class="flex items-start">
+                    <i class="fa fa-check text-secondary mt-1 mr-2"></i>
+                    <span>合作司机专业培训，成为安全链条一环</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="p-6 bg-dark/50 backdrop-blur-sm rounded-xl border border-white/10">
+                <h3 class="text-xl font-display font-bold mb-4 flex items-center">
+                  <i class="fa fa-certificate text-secondary mr-3"></i>
+                  严格品控体系
+                </h3>
+                <p class="opacity-80">
+                  对所有合作资源设立高标准准入机制，宁缺毋滥，
+                  确保酒水真伪、车辆新旧、场所环境等符合高端定位，
+                  一次不良体验可能毁掉整个品牌。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 幻灯片7: 总结与愿景 -->
+      <div class="slide absolute inset-0 opacity-0 translate-x-full slide-transition" data-slide="7">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <!-- 装饰元素 -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-secondary/5 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
+        </div>
+        
+        <div class="relative h-full flex flex-col items-center justify-center px-8 text-center z-10">
+          <div class="max-w-4xl mx-auto">
+            <div class="mb-10 reveal">
+              <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+              <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-display font-bold text-shadow">
+                我们的愿景
+              </h2>
+            </div>
+            
+            <div class="mb-12 reveal">
+              <p class="text-[clamp(1.2rem,3vw,1.8rem)] italic font-display mb-8 leading-relaxed">
+                "打造专注于'线下高端社交体验'的、资源强大的、有审美品味的<br>
+                <span class="text-secondary">生活方式服务集团</span>"
+              </p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <div class="bg-dark/30 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                  <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa fa-user text-primary text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-bold mb-3">对客户</h3>
+                  <p class="opacity-80">
+                    提供"绝对的控制感"和"effortless的潇洒"，
+                    无需为琐事费心，只需对接一个接口，
+                    即可享受完美编排的夜晚，彰显最高级的"有面子"。
+                  </p>
+                </div>
+                
+                <div class="bg-dark/30 backdrop-blur-sm p-6 rounded-xl border border-white/10">
+                  <div class="w-14 h-14 gold-gradient rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fa fa-balance-scale text-primary text-2xl"></i>
+                  </div>
+                  <h3 class="text-xl font-bold mb-3">对平台</h3>
+                  <p class="opacity-80">
+                    从"人力中介"升级为"资源整合者和价值分配者"，
+                    商业模式更轻，利润点更多，护城河更深，
+                    成为高端社交服务领域的标杆。
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="reveal">
+              <p class="text-secondary text-lg mb-6">这个模式不仅可行，而且具有极大的想象空间</p>
+              <div class="inline-block">
+                <button class="px-8 py-3 gold-gradient text-primary font-bold rounded-lg shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1 transition-transform">
+                  加入我们，共创未来
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 幻灯片8: 联系与合作 -->
+      <div class="slide absolute inset-0 opacity-0 translate-x-full slide-transition" data-slide="8">
+        <div class="absolute inset-0 bg-dark bg-texture"></div>
+        
+        <div class="relative h-full flex flex-col items-center justify-center px-8 text-center z-10">
+          <div class="max-w-5xl w-full">
+            <div class="mb-12 reveal">
+              <div class="w-16 h-1 bg-secondary mx-auto mb-4"></div>
+              <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-display font-bold text-shadow">
+                联系我们
+              </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+              <div class="reveal">
+                <div class="bg-dark/50 backdrop-blur-sm p-8 rounded-xl border border-white/10">
+                  <h3 class="text-2xl font-display font-bold mb-6 text-secondary">合作咨询</h3>
+                  
+                  <div class="space-y-6">
+                    <div class="flex items-center">
+                      <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 border border-white/10">
+                        <i class="fa fa-phone text-secondary"></i>
+                      </div>
+                      <div class="text-left">
+                        <p class="opacity-60 text-sm">预约热线</p>
+                        <p class="text-xl font-bold">400-888-9999</p>
+                      </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                      <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 border border-white/10">
+                        <i class="fa fa-envelope text-secondary"></i>
+                      </div>
+                      <div class="text-left">
+                        <p class="opacity-60 text-sm">商务邮箱</p>
+                        <p class="text-xl font-bold">business@s享.com</p>
+                      </div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                      <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 border border-white/10">
+                        <i class="fa fa-map-marker text-secondary"></i>
+                      </div>
+                      <div class="text-left">
+                        <p class="opacity-60 text-sm">总部地址</p>
+                        <p class="text-xl font-bold">上海市黄浦区外滩金融中心</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-8 pt-6 border-t border-white/10">
+                    <h4 class="font-bold mb-4">关注我们</h4>
+                    <div class="flex space-x-4 justify-center">
+                      <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center border border-white/10 hover:bg-secondary hover:text-primary transition-colors">
+                        <i class="fa fa-weixin"></i>
+                      </a>
+                      <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center border border-white/10 hover:bg-secondary hover:text-primary transition-colors">
+                        <i class="fa fa-weibo"></i>
+                      </a>
+                      <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center border border-white/10 hover:bg-secondary hover:text-primary transition-colors">
+                        <i class="fa fa-instagram"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="reveal">
+                <div class="bg-dark/50 backdrop-blur-sm p-8 rounded-xl border border-white/10">
+                  <h3 class="text-2xl font-display font-bold mb-6 text-secondary">加入我们的资源网络</h3>
+                  
+                  <form class="space-y-4">
+                    <div>
+                      <label class="block text-left text-sm opacity-70 mb-1">您的姓名</label>
+                      <input type="text" class="w-full bg-primary border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-secondary">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-left text-sm opacity-70 mb-1">联系方式</label>
+                      <input type="text" class="w-full bg-primary border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-secondary">
+                    </div>
+                    
+                    <div>
+                      <label class="block text-left text-sm opacity-70 mb-1">您的资源类型</label>
+                      <select class="w-full bg-primary border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-secondary">
+                        <option>高端餐饮场所</option>
+                        <option>KTV/酒吧</option>
+                        <option>高端酒水供应商</option>
+                        <option>豪华车辆服务</option>
+                        <option>才艺表演者</option>
+                        <option>其他</option>
+                      </select>
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 gold-gradient text-primary font-bold rounded-lg shadow hover:shadow-lg transition-shadow">
+                      提交合作申请
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-16 text-sm opacity-50 reveal">
+              <p>© 2025 奢享高端社交服务平台 版权所有 | 沪ICP备12345678号</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 导航控制 -->
+    <div class="absolute bottom-8 left-0 right-0 flex justify-center z-20">
+      <div class="flex space-x-3">
+        <button class="slide-dot w-3 h-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors" data-slide="1"></button>
+        <button class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-secondary transition-colors" data-slide="2"></button>
+        <button class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-secondary transition-colors" data-slide="3"></button>
+        <button class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-secondary transition-colors" data-slide="4"></button>
+        <button class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-secondary transition-colors" data-slide="5"></button>
+        <button class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-secondary transition-colors" data-slide="6"></button>
+        <button class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-secondary transition-colors" data-slide="7"></button>
+        <button class="slide-dot w-3 h-3 rounded-full bg-white/30 hover:bg-secondary transition-colors" data-slide="8"></button>
+      </div>
+    </div>
+    
+    <!-- 前后按钮 -->
+    <button id="prev-btn" class="absolute left-8 top-1/2 -translate-y-1/2 w-12 h-12 bg-dark/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:border-secondary hover:bg-dark/80 transition-all z-20">
+      <i class="fa fa-angle-left text-2xl"></i>
+    </button>
+    <button id="next-btn" class="absolute right-8 top-1/2 -translate-y-1/2 w-12 h-12 bg-dark/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:border-secondary hover:bg-dark/80 transition-all z-20">
+      <i class="fa fa-angle-right text-2xl"></i>
+    </button>
+    
+    <!-- 全屏按钮 -->
+    <button id="fullscreen-btn" class="absolute top-8 right-8 w-10 h-10 bg-dark/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:border-secondary hover:bg-dark/80 transition-all z-20">
+      <i class="fa fa-expand text-lg"></i>
+    </button>
+  </div>
+
+  <script>
+    // 当前幻灯片索引
+    let currentSlide = 1;
+    const totalSlides = 8;
+    
+    // DOM元素
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slide-dot');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    
+    // 显示指定幻灯片
+    function showSlide(n) {
+      // 获取当前和目标幻灯片
+      const current = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      const target = document.querySelector(`.slide[data-slide="${n}"]`);
+      
+      // 设置离开动画
+      if (current) {
+        current.style.opacity = '0';
+        if (n > currentSlide) {
+          current.style.transform = 'translateX(-100%)';
+        } else {
+          current.style.transform = 'translateX(100%)';
+        }
+        // 移除当前幻灯片的reveal动画类
+        current.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('active');
+        });
+      }
+      
+      // 重置所有dots
+      dots.forEach(dot => {
+        dot.classList.remove('bg-secondary');
+        dot.classList.add('bg-white/30');
+      });
+      
+      // 准备目标幻灯片
+      target.style.transform = n > currentSlide ? 'translateX(100%)' : 'translateX(-100%)';
+      target.style.opacity = '0';
+      
+      // 触发重排
+      void target.offsetWidth;
+      
+      // 显示目标幻灯片
+      currentSlide = n;
+      target.style.opacity = '1';
+      target.style.transform = 'translateX(0)';
+      
+      // 激活当前dot
+      document.querySelector(`.slide-dot[data-slide="${currentSlide}"]`).classList.remove('bg-white/30');
+      document.querySelector(`.slide-dot[data-slide="${currentSlide}"]`).classList.add('bg-secondary');
+      
+      // 触发目标幻灯片的reveal动画
+      setTimeout(() => {
+        const reveals = target.querySelectorAll('.reveal');
+        reveals.forEach((el, index) => {
+          setTimeout(() => {
+            el.classList.add('active');
+          }, index * 150);
+        });
+      }, 300);
+    }
+    
+    // 下一张幻灯片
+    function nextSlide() {
+      let next = currentSlide + 1;
+      if (next > totalSlides) next = 1;
+      showSlide(next);
+    }
+    
+    // 上一张幻灯片
+    function prevSlide() {
+      let prev = currentSlide - 1;
+      if (prev < 1) prev = totalSlides;
+      showSlide(prev);
+    }
+    
+    // 点击dots切换幻灯片
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const slideNum = parseInt(dot.getAttribute('data-slide'));
+        showSlide(slideNum);
+      });
+    });
+    
+    // 按钮事件
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    
+    // 键盘导航
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === ' ') { // 空格键
+        e.preventDefault();
+        nextSlide();
+      }
+    });
+    
+    // 全屏切换
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.error(`无法进入全屏模式: ${err.message}`);
+        });
+        fullscreenBtn.innerHTML = '<i class="fa fa-compress text-lg"></i>';
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+          fullscreenBtn.innerHTML = '<i class="fa fa-expand text-lg"></i>';
+        }
+      }
+    });
+    
+    // 初始化显示第一张幻灯片
+    window.addEventListener('load', () => {
+      showSlide(1);
+    });
+  </script>
+</body>
+</html>
