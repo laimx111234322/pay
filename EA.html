@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跨欧亚 × 怡亚通 - 中欧数字贸易新走廊</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0A3D62',
+            secondary: '#3C6382',
+            accent: '#60A3BC',
+            light: '#F8FAFC',
+            dark: '#1E293B',
+            'te-blue': '#165DFF',
+            'ea-blue': '#0070C0'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+      }
+      .bg-gradient-primary {
+        background: linear-gradient(135deg, #0A3D62 0%, #3C6382 100%);
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+      }
+      .timeline-dot::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: currentColor;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+      .timeline-line::before {
+        content: '';
+        position: absolute;
+        width: 2px;
+        background-color: #e2e8f0;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-50%);
+        z-index: 1;
+      }
+    }
+  </style>
+</head>
+
+<body class="font-inter bg-gray-50 text-dark antialiased">
+  <!-- 导航栏 -->
+  <header id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center space-x-2">
+          <div class="flex items-center justify-center w-10 h-10 bg-te-blue rounded-md">
+            <span class="text-white font-bold text-lg">TE</span>
+          </div>
+          <span class="text-white font-bold text-xl hidden sm:inline-block">×</span>
+          <div class="flex items-center justify-center w-10 h-10 bg-ea-blue rounded-md">
+            <span class="text-white font-bold text-lg">EA</span>
+          </div>
+          <span class="ml-3 text-white font-semibold text-lg hidden md:block">战略合作方案</span>
+        </div>
+        
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#overview" class="text-white hover:text-accent transition-colors">合作概述</a>
+          <a href="#advantages" class="text-white hover:text-accent transition-colors">优势互补</a>
+          <a href="#solutions" class="text-white hover:text-accent transition-colors">解决方案</a>
+          <a href="#implementation" class="text-white hover:text-accent transition-colors">实施路径</a>
+        </nav>
+        
+        <button class="md:hidden text-white focus:outline-none" id="menu-toggle">
+          <i class="fa fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+      <div class="container mx-auto px-4 py-3 space-y-3">
+        <a href="#overview" class="block py-2 text-primary hover:text-te-blue transition-colors">合作概述</a>
+        <a href="#advantages" class="block py-2 text-primary hover:text-te-blue transition-colors">优势互补</a>
+        <a href="#solutions" class="block py-2 text-primary hover:text-te-blue transition-colors">解决方案</a>
+        <a href="#implementation" class="block py-2 text-primary hover:text-te-blue transition-colors">实施路径</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区域 -->
+  <section class="relative h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src="https://picsum.photos/id/1036/1920/1080" alt="中欧班列与全球贸易" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-primary/70"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex justify-center items-center mb-6 space-x-4">
+          <div class="h-px bg-white/30 flex-grow max-w-xs"></div>
+          <span class="text-white/90 uppercase tracking-wider text-sm font-medium">战略合作发布会</span>
+          <div class="h-px bg-white/30 flex-grow max-w-xs"></div>
+        </div>
+        
+        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white leading-tight text-shadow-lg mb-6">
+          共建中欧数字贸易新走廊
+        </h1>
+        
+        <p class="text-[clamp(1.1rem,2vw,1.3rem)] text-white/90 mb-10 max-w-3xl mx-auto">
+          北京跨欧亚 × 怡亚通集团<br>
+          打造"中欧班列+供应链金融+数字支付"三位一体的跨境供应链基础设施高维方案
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="#solutions" class="px-8 py-3 bg-te-blue hover:bg-te-blue/90 text-white font-medium rounded-md transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            探索解决方案
+          </a>
+          <a href="#implementation" class="px-8 py-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-medium rounded-md border border-white/30 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            实施路径
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+      <a href="#overview" class="flex flex-col items-center">
+        <span class="text-sm mb-2">了解更多</span>
+        <i class="fa fa-chevron-down"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- 合作概述 -->
+  <section id="overview" class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-4">合作概述</h2>
+        <div class="w-20 h-1 bg-te-blue mx-auto mb-6"></div>
+        <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+          本次战略合作并非简单的业务叠加，而是两大领域领军企业核心能力的化学反应，旨在共同定义中欧跨境供应链的新标准。
+        </p>
+      </div>
+      
+      <div class="max-w-5xl mx-auto">
+        <div class="bg-light rounded-2xl shadow-xl p-8 md:p-10 relative overflow-hidden">
+          <div class="absolute -right-20 -top-20 w-64 h-64 bg-te-blue/5 rounded-full"></div>
+          <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-ea-blue/5 rounded-full"></div>
+          
+          <h3 class="text-2xl font-bold text-primary mb-6 relative z-10">核心定位升级</h3>
+          
+          <div class="relative z-10">
+            <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+              不再将自身定位为"运输服务提供商"，而是升级为"全球供应链的控货中枢与金融科技赋能平台"。通过整合双方核心优势，为出海客户提供超越传统物流的、安全、高效、且具备强大金融流动性的终极解决方案。
+            </p>
+            
+            <div class="flex flex-col md:flex-row gap-6 mt-10">
+              <div class="flex-1 bg-white p-6 rounded-xl shadow-md border border-gray-100 card-hover">
+                <div class="w-12 h-12 bg-te-blue/10 rounded-lg flex items-center justify-center mb-4">
+                  <i class="fa fa-globe text-te-blue text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-lg mb-2">全球化视野</h4>
+                <p class="text-gray-600">依托遍布欧亚的实体网络，构建跨境贸易新通道</p>
+              </div>
+              
+              <div class="flex-1 bg-white p-6 rounded-xl shadow-md border border-gray-100 card-hover">
+                <div class="w-12 h-12 bg-ea-blue/10 rounded-lg flex items-center justify-center mb-4">
+                  <i class="fa fa-link text-ea-blue text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-lg mb-2">生态化协同</h4>
+                <p class="text-gray-600">打通物流、金融、支付全链条，形成商业闭环</p>
+              </div>
+              
+              <div class="flex-1 bg-white p-6 rounded-xl shadow-md border border-gray-100 card-hover">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                  <i class="fa fa-rocket text-primary text-xl"></i>
+                </div>
+                <h4 class="font-semibold text-lg mb-2">数字化赋能</h4>
+                <p class="text-gray-600">以数据为核心驱动力，提升供应链效率与价值</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 公司简介与优势互补 -->
+  <section id="advantages" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-4">优势互补，定义新标准</h2>
+        <div class="w-20 h-1 bg-te-blue mx-auto mb-6"></div>
+        <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+          两大行业领军企业强强联合，整合核心资源，打造不可复制的竞争优势
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <!-- 跨欧亚优势 -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div class="bg-te-blue h-3"></div>
+          <div class="p-8">
+            <div class="flex items-center mb-6">
+              <div class="w-14 h-14 bg-te-blue/10 rounded-lg flex items-center justify-center mr-4">
+                <span class="text-te-blue font-bold text-2xl">TE</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-primary">跨欧亚核心贡献</h3>
+                <p class="text-gray-500">北京跨欧亚国际货运代理有限公司</p>
+              </div>
+            </div>
+            
+            <ul class="space-y-6">
+              <li class="flex">
+                <div class="mr-4 mt-1 flex-shrink-0">
+                  <div class="w-6 h-6 bg-te-blue/10 rounded-full flex items-center justify-center">
+                    <i class="fa fa-check text-te-blue text-sm"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-lg mb-1">开创性的物流网络</h4>
+                  <p class="text-gray-600">作为中欧班列的先行者，拥有成熟的、多元化的（包括跨里海、黑海等南通道）铁路运输网络，提供稳定、绿色、可预期的运力保障。</p>
+                </div>
+              </li>
+              
+              <li class="flex">
+                <div class="mr-4 mt-1 flex-shrink-0">
+                  <div class="w-6 h-6 bg-te-blue/10 rounded-full flex items-center justify-center">
+                    <i class="fa fa-check text-te-blue text-sm"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-lg mb-1">境外资产与控货能力</h4>
+                  <p class="text-gray-600">自有机车、车板、集装箱及欧洲分拨网络，确保了货物从启运到目的地全程的可视化、可控制、可干预，为金融介入提供了至关重要的风控基石。</p>
+                </div>
+              </li>
+              
+              <li class="flex">
+                <div class="mr-4 mt-1 flex-shrink-0">
+                  <div class="w-6 h-6 bg-te-blue/10 rounded-full flex items-center justify-center">
+                    <i class="fa fa-check text-te-blue text-sm"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-lg mb-1">数据抓手</h4>
+                  <p class="text-gray-600">全球定位系统与GPS设备产生全程、无缝、真实的物流数据，为供应链可视化和金融服务提供数据支持。</p>
+                </div>
+              </li>
+            </ul>
+            
+            <div class="mt-8 pt-6 border-t border-gray-100">
+              <div class="grid grid-cols-2 gap-4 text-center">
+                <div class="p-3 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-te-blue">15</div>
+                  <div class="text-gray-600 text-sm">全球子公司</div>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-te-blue">200+</div>
+                  <div class="text-gray-600 text-sm">本地员工</div>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-te-blue">2000+</div>
+                  <div class="text-gray-600 text-sm">集装箱</div>
+                </div>
+                <div class="p-3 bg-gray-50 rounded-lg">
+                  <div class="text-2xl font-bold text-te-blue">42万</div>
+                  <div class="text-gray-600 text-sm">2019-2023年运量(TEU)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 怡亚通优势 -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div class="bg-ea-blue h-3"></div>
+          <div class="p-8">
+            <div class="flex items-center mb-6">
+              <div class="w-14 h-14 bg-ea-blue/10 rounded-lg flex items-center justify-center mr-4">
+                <span class="text-ea-blue font-bold text-2xl">EA</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-primary">怡亚通核心贡献</h3>
+                <p class="text-gray-500">怡亚通集团</p>
+              </div>
+            </div>
+            
+            <ul class="space-y-6">
+              <li class="flex">
+                <div class="mr-4 mt-1 flex-shrink-0">
+                  <div class="w-6 h-6 bg-ea-blue/10 rounded-full flex items-center justify-center">
+                    <i class="fa fa-check text-ea-blue text-sm"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-lg mb-1">最高阶的海关资质与保税仓资源</h4>
+                  <p class="text-gray-600">提供进出口通关、保税仓储、加工等一站式服务。保税仓成为供应链的"缓冲池"和"监管仓"，极大增强了金融服务的灵活性和安全性。</p>
+                </div>
+              </li>
+              
+              <li class="flex">
+                <div class="mr-4 mt-1 flex-shrink-0">
+                  <div class="w-6 h-6 bg-ea-blue/10 rounded-full flex items-center justify-center">
+                    <i class="fa fa-check text-ea-blue text-sm"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-lg mb-1">成熟的供应链金融模型</h4>
+                  <p class="text-gray-600">拥有完整的金融产品设计与风险定价体系，能将传统的物流服务转化为金融资产，为客户提供灵活的资金解决方案。</p>
+                </div>
+              </li>
+              
+              <li class="flex">
+                <div class="mr-4 mt-1 flex-shrink-0">
+                  <div class="w-6 h-6 bg-ea-blue/10 rounded-full flex items-center justify-center">
+                    <i class="fa fa-check text-ea-blue text-sm"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-lg mb-1">庞大的客户生态网络</h4>
+                  <p class="text-gray-600">服务大量有出海需求的中国品牌客户，为班列提供稳定的货源，为金融产品提供精准的客户群体，形成生态协同效应。</p>
+                </div>
+              </li>
+            </ul>
+            
+            <div class="mt-8 pt-6 border-t border-gray-100">
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-medium mb-2 text-center">核心优势领域</h4>
+                <div class="flex flex-wrap gap-2 justify-center">
+                  <span class="px-3 py-1 bg-ea-blue/10 text-ea-blue text-sm rounded-full">供应链金融</span>
+                  <span class="px-3 py-1 bg-ea-blue/10 text-ea-blue text-sm rounded-full">跨境支付</span>
+                  <span class="px-3 py-1 bg-ea-blue/10 text-ea-blue text-sm rounded-full">保税仓储</span>
+                  <span class="px-3 py-1 bg-ea-blue/10 text-ea-blue text-sm rounded-full">进出口通关</span>
+                  <span class="px-3 py-1 bg-ea-blue/10 text-ea-blue text-sm rounded-full">客户生态</span>
+                  <span class="px-3 py-1 bg-ea-blue/10 text-ea-blue text-sm rounded-full">金融科技</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 绿色物流优势 -->
+      <div class="mt-16 max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="p-8 md:p-10">
+          <h3 class="text-2xl font-bold text-primary mb-6 text-center">绿色物流优势</h3>
+          
+          <div class="flex flex-col md:flex-row gap-8 items-center">
+            <div class="flex-1">
+              <p class="text-gray-700 mb-4">
+                中欧班列相比其他运输方式具有显著的环保优势，是可持续发展的优选方案。以西安-曼海姆线路100TEU(1000吨)货物为例：
+              </p>
+              
+              <div class="space-y-4 mt-6">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="font-medium">铁路运输</span>
+                    <span class="text-te-blue font-semibold">67吨 CO₂</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-te-blue h-2.5 rounded-full" style="width: 3%"></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="font-medium">海运</span>
+                    <span class="text-blue-500 font-semibold">240吨 CO₂</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: 11%"></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="font-medium">公路运输</span>
+                    <span class="text-orange-500 font-semibold">850吨 CO₂</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-orange-500 h-2.5 rounded-full" style="width: 39%"></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="font-medium">空运</span>
+                    <span class="text-red-500 font-semibold">5290吨 CO₂</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="bg-red-500 h-2.5 rounded-full" style="width: 100%"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <p class="text-gray-500 text-sm mt-4">数据来源: EcoTransIT World (www.ecotransit.org)</p>
+            </div>
+            
+            <div class="flex-1 w-full md:w-auto">
+              <canvas id="emissionsChart" width="400" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 解决方案 -->
+  <section id="solutions" class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-4">三位一体的可落地产品体系</h2>
+        <div class="w-20 h-1 bg-te-blue mx-auto mb-6"></div>
+        <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+          我们共同向市场推出的，不是一项服务，而是一个解决方案平台
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- 解决方案1 -->
+        <div class="bg-light rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100">
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/1043/800/600" alt="仓轨联动·控货融资" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <div class="inline-block px-3 py-1 bg-te-blue/10 text-te-blue text-sm font-medium rounded-full mb-4">
+              产品一
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">仓轨联动·控货融资</h3>
+            <p class="text-gray-600 mb-5">
+              客户商品进入监管仓库即视为进入"金库"，基于"在库/在途"的控货能力，为客户提供动产质押融资。
+            </p>
+            
+            <h4 class="font-semibold text-gray-800 mb-2">核心价值：</h4>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">解决中小出海企业资金占用问题</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">将"货"瞬间盘活为"钱"，加速资金周转</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">全程定位和数据监控，降低金融风险</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- 解决方案2 -->
+        <div class="bg-light rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100">
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/180/800/600" alt="中欧快线·订单融资" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <div class="inline-block px-3 py-1 bg-ea-blue/10 text-ea-blue text-sm font-medium rounded-full mb-4">
+              产品二
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">中欧快线·订单融资</h3>
+            <p class="text-gray-600 mb-5">
+              针对已获得欧洲订单的客户，将其未来订单收益权作为质押物，提供发运前或在途的采购融资。
+            </p>
+            
+            <h4 class="font-semibold text-gray-800 mb-2">核心价值：</h4>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">凭"订单"即可融资，提前锁定生产资金</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">物流数据实时同步，确保贸易背景真实</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">保障履约能力，提升客户竞争力</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- 解决方案3 -->
+        <div class="bg-light rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100 relative">
+          <div class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+            方案亮点
+          </div>
+          <div class="h-48 overflow-hidden">
+            <img src="https://picsum.photos/id/237/800/600" alt="支付3.0·代收代付" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+          </div>
+          <div class="p-6">
+            <div class="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
+              产品三
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3">支付3.0·代收代付</h3>
+            <p class="text-gray-600 mb-5">
+              打造嵌入式数字结算平台，实现资金流、信息流、物流"三流合一"的合规闭环。
+            </p>
+            
+            <h4 class="font-semibold text-gray-800 mb-2">核心价值：</h4>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">极简跨境收款流程，规避外汇风险</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">灵活结算，解决"何时收款、如何回款"焦虑</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span class="text-gray-600 text-sm">形成"物流牵引支付，支付固化物流"的飞轮效应</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 解决方案亮点 -->
+      <div class="mt-16 max-w-5xl mx-auto">
+        <div class="bg-gradient-primary rounded-2xl p-8 md:p-10 text-white shadow-xl">
+          <h3 class="text-2xl font-bold mb-6 text-center">方案核心亮点</h3>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl text-center">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa fa-shield text-xl"></i>
+              </div>
+              <h4 class="font-semibold mb-2">风控壁垒</h4>
+              <p class="text-white/80 text-sm">双方数据互锁，共同验证贸易真实性，风险降至最低</p>
+            </div>
+            
+            <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl text-center">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa fa-leaf text-xl"></i>
+              </div>
+              <h4 class="font-semibold mb-2">绿色标签</h4>
+              <p class="text-white/80 text-sm">利用中欧班列环保优势，吸引注重ESG的合作伙伴</p>
+            </div>
+            
+            <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl text-center">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa fa-certificate text-xl"></i>
+              </div>
+              <h4 class="font-semibold mb-2">品牌公信力</h4>
+              <p class="text-white/80 text-sm">行业领军企业强强联合，带来显著的品牌增信效应</p>
+            </div>
+            
+            <div class="bg-white/10 backdrop-blur-sm p-5 rounded-xl text-center">
+              <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa fa-line-chart text-xl"></i>
+              </div>
+              <h4 class="font-semibold mb-2">模式创新</h4>
+              <p class="text-white/80 text-sm">从一次性服务费升级为持续性服务，商业模式质变</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 实施路径 -->
+  <section id="implementation" class="py-20 bg-gray-50 relative timeline-line">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-4">实施路径：四步走，快速落地</h2>
+        <div class="w-20 h-1 bg-te-blue mx-auto mb-6"></div>
+        <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+          清晰的实施路线图，确保战略合作有序推进，快速见效
+        </p>
+      </div>
+      
+      <div class="max-w-6xl mx-auto relative">
+        <!-- 阶段1 -->
+        <div class="relative z-10 mb-20 md:mb-32 timeline-dot text-te-blue">
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-10 md:mt-0">
+              <div class="bg-white p-6 rounded-xl shadow-md inline-block md:float-right">
+                <div class="inline-block px-3 py-1 bg-te-blue/10 text-te-blue text-xs font-medium rounded-full mb-3">
+                  1-3个月
+                </div>
+                <h3 class="text-xl font-bold text-primary mb-2">试点与系统对接</h3>
+                <ul class="space-y-2 text-gray-600">
+                  <li class="flex items-center md:justify-end">
+                    <span class="md:order-2">选择1-2条TE的优势线路和怡亚通的1-2个核心保税仓作为试点</span>
+                    <i class="fa fa-check-circle text-te-blue mr-2 md:mr-0 md:ml-2 md:order-1"></i>
+                  </li>
+                  <li class="flex items-center md:justify-end">
+                    <span class="md:order-2">打通物流OMS系统与供应链金融系统的API接口</span>
+                    <i class="fa fa-check-circle text-te-blue mr-2 md:mr-0 md:ml-2 md:order-1"></i>
+                  </li>
+                  <li class="flex items-center md:justify-end">
+                    <span class="md:order-2">实现关键数据（舱单、定位、仓单）的实时共享</span>
+                    <i class="fa fa-check-circle text-te-blue mr-2 md:mr-0 md:ml-2 md:order-1"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-center w-12 h-12 bg-te-blue rounded-full z-10 shadow-md order-1 md:order-2 text-white font-bold text-xl">
+                1
+            </div>
+            
+            <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+          </div>
+        </div>
+        
+        <!-- 阶段2 -->
+        <div class="relative z-10 mb-20 md:mb-32 timeline-dot text-ea-blue">
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+            
+            <div class="flex items-center justify-center w-12 h-12 bg-ea-blue rounded-full z-10 shadow-md order-1 md:order-2 text-white font-bold text-xl">
+                2
+            </div>
+            
+            <div class="md:w-1/2 md:pl-12 order-2 md:order-1 mt-10 md:mt-0">
+              <div class="bg-white p-6 rounded-xl shadow-md inline-block">
+                <div class="inline-block px-3 py-1 bg-ea-blue/10 text-ea-blue text-xs font-medium rounded-full mb-3">
+                  3-6个月
+                </div>
+                <h3 class="text-xl font-bold text-primary mb-2">产品包设计与联合推广</h3>
+                <ul class="space-y-2 text-gray-600">
+                  <li class="flex items-center">
+                    <i class="fa fa-check-circle text-ea-blue mr-2"></i>
+                    <span>共同设计标准化产品套餐，明确服务标准、收费模式和风控流程</span>
+                  </li>
+                  <li class="flex items-center">
+                    <i class="fa fa-check-circle text-ea-blue mr-2"></i>
+                    <span>组建联合销售团队，面向现有客户群进行精准推介</span>
+                  </li>
+                  <li class="flex items-center">
+                    <i class="fa fa-check-circle text-ea-blue mr-2"></i>
+                    <span>收集市场反馈，迭代优化产品与服务</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 阶段3 -->
+        <div class="relative z-10 mb-20 md:mb-32 timeline-dot text-primary">
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1 mt-10 md:mt-0">
+              <div class="bg-white p-6 rounded-xl shadow-md inline-block md:float-right">
+                <div class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full mb-3">
+                  6-12个月
+                </div>
+                <h3 class="text-xl font-bold text-primary mb-2">金融联盟扩容与平台化</h3>
+                <ul class="space-y-2 text-gray-600">
+                  <li class="flex items-center md:justify-end">
+                    <span class="md:order-2">引入更多银行、保理公司等金融机构入驻平台</span>
+                    <i class="fa fa-check-circle text-primary mr-2 md:mr-0 md:ml-2 md:order-1"></i>
+                  </li>
+                  <li class="flex items-center md:justify-end">
+                    <span class="md:order-2">丰富金融产品供给，满足多样化客户需求</span>
+                    <i class="fa fa-check-circle text-primary mr-2 md:mr-0 md:ml-2 md:order-1"></i>
+                  </li>
+                  <li class="flex items-center md:justify-end">
+                    <span class="md:order-2">开发独立的客户门户网站或小程序，实现全流程可视化管理</span>
+                    <i class="fa fa-check-circle text-primary mr-2 md:mr-0 md:ml-2 md:order-1"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-center w-12 h-12 bg-primary rounded-full z-10 shadow-md order-1 md:order-2 text-white font-bold text-xl">
+                3
+            </div>
+            
+            <div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+          </div>
+        </div>
+        
+        <!-- 阶段4 -->
+        <div class="relative z-10 timeline-dot text-dark">
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+            
+            <div class="flex items-center justify-center w-12 h-12 bg-dark rounded-full z-10 shadow-md order-1 md:order-2 text-white font-bold text-xl">
+                4
+            </div>
+            
+            <div class="md:w-1/2 md:pl-12 order-2 md:order-1 mt-10 md:mt-0">
+              <div class="bg-white p-6 rounded-xl shadow-md inline-block">
+                <div class="inline-block px-3 py-1 bg-dark/10 text-dark text-xs font-medium rounded-full mb-3">
+                  12个月以上
+                </div>
+                <h3 class="text-xl font-bold text-primary mb-2">数据智能与生态构建</h3>
+                <ul class="space-y-2 text-gray-600">
+                  <li class="flex items-center">
+                    <i class="fa fa-check-circle text-dark mr-2"></i>
+                    <span>利用积累的数据，开发供应链智能预警、市场需求预测等增值服务</span>
+                  </li>
+                  <li class="flex items-center">
+                    <i class="fa fa-check-circle text-dark mr-2"></i>
+                    <span>从服务客户延伸到服务客户的客户，构建中欧贸易数字生态</span>
+                  </li>
+                  <li class="flex items-center">
+                    <i class="fa fa-check-circle text-dark mr-2"></i>
+                    <span>成为中欧跨境贸易不可或缺的基础设施平台</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 总结与愿景 -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-primary mb-6">携手引领中欧贸易进入新时代</h2>
+        
+        <div class="bg-light rounded-2xl p-8 md:p-10 shadow-lg border border-gray-100 mb-10">
+          <p class="text-gray-700 text-lg leading-relaxed mb-6">
+            此方案旨在跳出"价格战"的红海，共同开辟一个价值竞争的蓝海。我们不再只是帮客户"运货"，而是帮客户"盘活资产、快速回款、安全出海"。
+          </p>
+          
+          <p class="text-gray-700 text-lg leading-relaxed">
+            通过这次合作，跨欧亚将从一流的铁路运营商，升级为领先的跨境供应链综合解决方案提供商，其商业模式将从"运输费"升级为"运输费+金融科技服务费"，市场估值逻辑将彻底改变。
+          </p>
+        </div>
+        
+        <div class="inline-flex items-center justify-center px-8 py-4 bg-gradient-primary text-white font-semibold rounded-md shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+          <span>期待与您共创中欧贸易新未来</span>
+          <i class="fa fa-arrow-right ml-2"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-primary text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <div class="flex items-center justify-center w-10 h-10 bg-white rounded-md">
+              <span class="text-te-blue font-bold text-lg">TE</span>
+            </div>
+            <span class="font-bold text-xl">×</span>
+            <div class="flex items-center justify-center w-10 h-10 bg-white rounded-md">
+              <span class="text-ea-blue font-bold text-lg">EA</span>
+            </div>
+          </div>
+          <p class="text-white/70 mb-6">
+            打造"中欧班列+供应链金融+数字支付"三位一体的新一代跨境供应链基础设施
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-white/70 hover:text-white transition-colors">
+              <i class="fa fa-linkedin-square text-xl"></i>
+            </a>
+            <a href="#" class="text-white/70 hover:text-white transition-colors">
+              <i class="fa fa-twitter-square text-xl"></i>
+            </a>
+            <a href="#" class="text-white/70 hover:text-white transition-colors">
+              <i class="fa fa-facebook-square text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-6">快速链接</h4>
+          <ul class="space-y-3">
+            <li><a href="#overview" class="text-white/70 hover:text-white transition-colors">合作概述</a></li>
+            <li><a href="#advantages" class="text-white/70 hover:text-white transition-colors">优势互补</a></li>
+            <li><a href="#solutions" class="text-white/70 hover:text-white transition-colors">解决方案</a></li>
+            <li><a href="#implementation" class="text-white/70 hover:text-white transition-colors">实施路径</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-6">相关资源</h4>
+          <ul class="space-y-3">
+            <li><a href="http://www.trans-eurasia.com" class="text-white/70 hover:text-white transition-colors" target="_blank">跨欧亚官方网站</a></li>
+            <li><a href="#" class="text-white/70 hover:text-white transition-colors" target="_blank">怡亚通官方网站</a></li>
+            <li><a href="#" class="text-white/70 hover:text-white transition-colors">中欧班列服务指南</a></li>
+            <li><a href="#" class="text-white/70 hover:text-white transition-colors">供应链金融解决方案</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-12 pt-8 border-t border-white/10 text-center text-white/50 text-sm">
+        <p>© 2025 北京跨欧亚国际货运代理有限公司与怡亚通集团战略合作. 保留所有权利.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-primary', 'shadow-md');
+        navbar.classList.remove('bg-transparent');
+      } else {
+        navbar.classList.remove('bg-primary', 'shadow-md');
+        navbar.classList.add('bg-transparent');
+      }
+    });
+    
+    // 移动端菜单切换
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 关闭移动菜单
+          document.getElementById('mobile-menu').classList.add('hidden');
+        }
+      });
+    });
+    
+    // 碳排放图表
+    window.addEventListener('load', function() {
+      const ctx = document.getElementById('emissionsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['铁路运输', '海运', '公路运输', '空运'],
+          datasets: [{
+            label: 'CO₂排放量 (吨)',
+            data: [67, 240, 850, 5290],
+            backgroundColor: [
+              '#165DFF',
+              '#3B82F6',
+              '#F97316',
+              '#EF4444'
+            ],
+            borderWidth: 0,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `CO₂排放量: ${context.raw} 吨`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    });
+    
+    // 滚动动画
+    const animateOnScroll = function() {
+      const elements = document.querySelectorAll('.card-hover');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementPosition < windowHeight - 100) {
+          element.classList.add('opacity-100');
+          element.classList.remove('opacity-0', 'translate-y-10');
+        }
+      });
+    };
+    
+    // 初始化元素状态
+    document.querySelectorAll('.card-hover').forEach(element => {
+      element.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+    });
+    
+    // 监听滚动事件
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>
