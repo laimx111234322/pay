@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 手机自动适配核心：width=设备宽度，初始1倍缩放 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">{insert\_element\_0\_}
+    <!-- 彻底适配：width=设备宽，初始1倍，禁止自动缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>出海领航外综服务 - 模拟</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -17,34 +17,35 @@
             background: radial-gradient(circle, rgba(255,182,193,0.4) 0%, rgba(255,255,255,0) 70%);
             border-radius: 50%; z-index: 0;
         }
-        /* 简单响应式优化：小屏头部导航可横向滚动 */
-        @media (max-width: 768px) {
-            .header-nav { overflow-x: auto; white-space: nowrap; }
-        }
+        /* 手机导航可横向滚动 */
+        .header-nav { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+        .header-nav::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="text-gray-700">
 
-<header class="bg-[#1e2d3e] text-gray-300 h-12 flex items-center justify-between px-6 text-sm">
-    <div class="flex items-center space-x-6 h-full header-nav">
-        <div class="bg-orange-500 text-white px-4 h-full flex items-center font-bold">工作台</div>
-        <div class="nav-item cursor-pointer flex items-center">通关申报 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
-        <div class="nav-item cursor-pointer flex items-center">票务管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
-        <div class="nav-item cursor-pointer flex items-center">收结汇管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
-        <div class="nav-item cursor-pointer">财务管理</div>
-        <div class="nav-item cursor-pointer border-b-2 border-white text-white">单证备案</div>
-        <div class="nav-item cursor-pointer flex items-center">退税管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
-        <div class="nav-item cursor-pointer flex items-center">企业管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
+<!-- 顶部导航：手机可滚 -->
+<header class="bg-[#1e2d3e] text-gray-300 h-12 flex items-center justify-between px-3 sm:px-6 text-sm">
+    <div class="flex items-center h-full header-nav">
+        <div class="bg-orange-500 text-white px-3 sm:px-4 h-full flex items-center font-bold">工作台</div>
+        <div class="nav-item cursor-pointer flex items-center px-3">通关申报 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
+        <div class="nav-item cursor-pointer flex items-center px-3">票务管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
+        <div class="nav-item cursor-pointer flex items-center px-3">收结汇管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
+        <div class="nav-item cursor-pointer px-3">财务管理</div>
+        <div class="nav-item cursor-pointer border-b-2 border-white text-white px-3">单证备案</div>
+        <div class="nav-item cursor-pointer flex items-center px-3">退税管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
+        <div class="nav-item cursor-pointer flex items-center px-3">企业管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
     </div>
-    <div class="flex items-center space-x-3">
+    <div class="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
         <div class="bg-gray-500 rounded-full w-6 h-6 flex items-center justify-center text-[10px]">
             <i data-lucide="user" class="w-4 h-4 text-white"></i>
         </div>
-        <span class="text-xs">深圳市出海领航企业管理有限公司</span>
+        <span class="text-xs hidden sm:inline">深圳市出海领航企业管理有限公司</span>
     </div>
 </header>
 
-<div class="bg-white border-b border-gray-200 flex px-8 py-2.5 space-x-8 text-sm">
+<!-- 二级标签：手机也可滚 -->
+<div class="bg-white border-b border-gray-200 flex px-3 sm:px-8 py-2.5 space-x-4 sm:space-x-8 text-sm overflow-x-auto">
     <span class="tab-active font-medium cursor-pointer">首页</span>
     <span class="text-gray-500 cursor-pointer">新增电商关单采集单</span>
     <span class="text-gray-500 cursor-pointer">电商清单通关</span>
@@ -52,9 +53,11 @@
     <span class="text-gray-500 cursor-pointer">电商关单通关</span>
 </div>
 
-<main class="max-w-[1400px] mx-auto p-6 grid grid-cols-1 md:grid-cols-12 gap-6">
-    <div class="md:col-span-8 space-y-6">
-        <section class="bg-white rounded-sm p-5 shadow-sm border-t-2 border-orange-500 relative overflow-hidden">
+<!-- 主内容：手机1列，桌面12列 -->
+<main class="w-full p-3 sm:p-6 grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
+    <!-- 左侧：手机100%，桌面8列 -->
+    <div class="md:col-span-8 space-y-4 sm:space-y-6">
+        <section class="bg-white rounded-sm p-4 sm:p-5 shadow-sm border-t-2 border-orange-500 relative overflow-hidden">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none">通知公告</h3>
                 <span class="text-xs text-gray-400 cursor-pointer">查看更多 ></span>
@@ -65,76 +68,78 @@
             </div>
         </section>
 
-        <section class="bg-white rounded-sm p-5 shadow-sm">
-            <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none mb-6">快捷申报</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-[#fff7f6] p-4 border border-red-50 rounded-md hover:shadow-md transition-all group cursor-pointer">
-                    <p class="text-[#e66a5c] font-medium mb-4">电商清单通关</p>
+        <section class="bg-white rounded-sm p-4 sm:p-5 shadow-sm">
+            <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none mb-4 sm:mb-6">快捷申报</h3>
+            <!-- 手机2列，平板4列 -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                <div class="bg-[#fff7f6] p-3 sm:p-4 border border-red-50 rounded-md hover:shadow-md transition-all group cursor-pointer">
+                    <p class="text-[#e66a5c] font-medium mb-2 sm:mb-4 text-sm sm:text-base">电商清单通关</p>
                     <div class="flex justify-between items-end">
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-red-200 group-hover:translate-x-1 transition-transform"></i>
-                        <img src="https://cdn-icons-png.flaticon.com/128/3045/3045613.png" class="w-12 h-12 opacity-80" alt="icon">
+                        <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 text-red-200 group-hover:translate-x-1 transition-transform"></i>
+                        <img src="https://cdn-icons-png.flaticon.com/128/3045/3045613.png" class="w-8 h-8 sm:w-12 sm:h-12 opacity-80" alt="icon">
                     </div>
                 </div>
-                <div class="bg-[#f0f7ff] p-4 border border-blue-50 rounded-md hover:shadow-md group cursor-pointer">
-                    <p class="text-[#5b96f5] font-medium mb-4">电商关单通关</p>
+                <div class="bg-[#f0f7ff] p-3 sm:p-4 border border-blue-50 rounded-md hover:shadow-md group cursor-pointer">
+                    <p class="text-[#5b96f5] font-medium mb-2 sm:mb-4 text-sm sm:text-base">电商关单通关</p>
                     <div class="flex justify-between items-end">
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-blue-200 group-hover:translate-x-1"></i>
-                        <img src="https://cdn-icons-png.flaticon.com/128/2897/2897832.png" class="w-12 h-12 opacity-80" alt="icon">
+                        <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-200 group-hover:translate-x-1"></i>
+                        <img src="https://cdn-icons-png.flaticon.com/128/2897/2897832.png" class="w-8 h-8 sm:w-12 sm:h-12 opacity-80" alt="icon">
                     </div>
                 </div>
-                <div class="bg-[#fffcf0] p-4 border border-yellow-50 rounded-md hover:shadow-md group cursor-pointer">
-                    <p class="text-[#d4a017] font-medium mb-4">一般贸易通关</p>
+                <div class="bg-[#fffcf0] p-3 sm:p-4 border border-yellow-50 rounded-md hover:shadow-md group cursor-pointer">
+                    <p class="text-[#d4a017] font-medium mb-2 sm:mb-4 text-sm sm:text-base">一般贸易通关</p>
                     <div class="flex justify-between items-end">
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-yellow-200 group-hover:translate-x-1"></i>
-                        <img src="https://cdn-icons-png.flaticon.com/128/2331/2331941.png" class="w-12 h-12 opacity-80" alt="icon">
+                        <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-200 group-hover:translate-x-1"></i>
+                        <img src="https://cdn-icons-png.flaticon.com/128/2331/2331941.png" class="w-8 h-8 sm:w-12 sm:h-12 opacity-80" alt="icon">
                     </div>
                 </div>
-                <div class="bg-[#f0fff9] p-4 border border-green-50 rounded-md hover:shadow-md group cursor-pointer">
-                    <p class="text-[#3eb370] font-medium mb-4">市场采购通关</p>
+                <div class="bg-[#f0fff9] p-3 sm:p-4 border border-green-50 rounded-md hover:shadow-md group cursor-pointer">
+                    <p class="text-[#3eb370] font-medium mb-2 sm:mb-4 text-sm sm:text-base">市场采购通关</p>
                     <div class="flex justify-between items-end">
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-green-200 group-hover:translate-x-1"></i>
-                        <img src="https://cdn-icons-png.flaticon.com/128/1162/1162456.png" class="w-12 h-12 opacity-80" alt="icon">
+                        <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 text-green-200 group-hover:translate-x-1"></i>
+                        <img src="https://cdn-icons-png.flaticon.com/128/1162/1162456.png" class="w-8 h-8 sm:w-12 sm:h-12 opacity-80" alt="icon">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="bg-white rounded-sm p-5 shadow-sm">
-            <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none mb-8">快捷入口</h3>
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
+        <section class="bg-white rounded-sm p-4 sm:p-5 shadow-sm">
+            <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none mb-4 sm:mb-8">快捷入口</h3>
+            <!-- 手机3列，平板6列 -->
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-8 text-center">
                 <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="package-plus" class="text-orange-500 w-7 h-7"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-orange-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="package-plus" class="text-orange-500 w-5 h-5 sm:w-7 sm:h-7"></i>
                     </div>
                     <span class="text-xs">新增商品</span>
                 </div>
                 <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="users" class="text-blue-500 w-7 h-7"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-blue-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="users" class="text-blue-500 w-5 h-5 sm:w-7 sm:h-7"></i>
                     </div>
                     <span class="text-xs">关联企业</span>
                 </div>
                 <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="file-text" class="text-indigo-500 w-7 h-7"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-indigo-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="file-text" class="text-indigo-500 w-5 h-5 sm:w-7 sm:h-7"></i>
                     </div>
                     <span class="text-xs">单证备案</span>
                 </div>
                 <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="wallet" class="text-red-500 w-7 h-7"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-red-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="wallet" class="text-red-500 w-5 h-5 sm:w-7 sm:h-7"></i>
                     </div>
                     <span class="text-xs">收汇核销</span>
                 </div>
                 <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-14 h-14 bg-yellow-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="file-signature" class="text-yellow-600 w-7 h-7"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-yellow-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="file-signature" class="text-yellow-600 w-5 h-5 sm:w-7 sm:h-7"></i>
                     </div>
                     <span class="text-xs">开票申请</span>
                 </div>
                 <div class="flex flex-col items-center group cursor-pointer">
-                    <div class="w-14 h-14 bg-cyan-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                        <i data-lucide="folder-kanban" class="text-cyan-600 w-7 h-7"></i>
+                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-cyan-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                        <i data-lucide="folder-kanban" class="text-cyan-600 w-5 h-5 sm:w-7 sm:h-7"></i>
                     </div>
                     <span class="text-xs">退税配单</span>
                 </div>
@@ -142,12 +147,12 @@
         </section>
     </div>
 
-    <div class="md:col-span-4 space-y-6">
-        <div class="bg-white rounded-sm p-6 shadow-sm relative overflow-hidden">
+    <!-- 右侧：手机100%，桌面4列 -->
+    <div class="md:col-span-4 space-y-4 sm:space-y-6">
+        <div class="bg-white rounded-sm p-4 sm:p-6 shadow-sm relative overflow-hidden">
             <div class="decoration-blob"></div>
             <div class="relative z-10">
-                <h2 class="font-bold text-gray-800 mb-1">深圳市出海领航企业管理有限公司</h2>
-                <!-- 已改新统一社会信用代码 -->
+                <h2 class="font-bold text-gray-800 mb-1 text-sm sm:text-base">深圳市出海领航企业管理有限公司</h2>
                 <p class="text-gray-400 text-xs font-mono mb-4">91440300MAK521E00A</p>
                 <div class="flex gap-2">
                     <span class="bg-orange-50 text-orange-600 border border-orange-100 text-[10px] px-2 py-0.5 rounded shadow-sm flex items-center">
@@ -160,10 +165,10 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-sm p-5 shadow-sm min-h-[320px] flex flex-col">
-            <div class="flex justify-between items-center mb-6">
+        <div class="bg-white rounded-sm p-4 sm:p-5 shadow-sm min-h-[250px] sm:min-h-[320px] flex flex-col">
+            <div class="flex justify-between items-center mb-4 sm:mb-6">
                 <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none">代办事项</h3>
-                <div class="flex space-x-3 text-xs text-gray-400">
+                <div class="flex space-x-2 sm:space-x-3 text-xs text-gray-400">
                     <span class="text-blue-500 border-b border-blue-500 cursor-pointer">全部</span>
                     <span class="hover:text-blue-500 cursor-pointer">单证</span>
                     <span class="hover:text-blue-500 cursor-pointer">开票</span>
@@ -171,20 +176,21 @@
                 </div>
             </div>
             <div class="flex-grow flex flex-col items-center justify-center opacity-30">
-                <i data-lucide="layers" class="w-16 h-16 mb-2"></i>
+                <i data-lucide="layers" class="w-12 h-12 sm:w-16 sm:h-16 mb-2"></i>
                 <p class="text-sm">暂无数据</p>
             </div>
         </div>
     </div>
 </main>
 
-<div class="px-6 pb-12">
-    <div class="max-w-[1400px] mx-auto h-36 rounded-xl bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 p-8 flex items-center relative overflow-hidden shadow-xl">
+<!-- 底部Banner：手机全宽 -->
+<div class="px-3 sm:px-6 pb-8 sm:pb-12">
+    <div class="w-full h-24 sm:h-36 rounded-xl bg-gradient-to-r from-red-500 via-orange-500 to-yellow-400 p-4 sm:p-8 flex items-center relative overflow-hidden shadow-xl">
         <div class="relative z-10 text-white">
-            <h1 class="text-4xl font-black italic tracking-widest mb-1">出海领航外综服务</h1>
-            <p class="text-white/80 font-light tracking-[0.2em] text-sm uppercase">One-Stop Solution for Compliance Export</p>
+            <h1 class="text-xl sm:text-4xl font-black italic tracking-widest mb-1">出海领航外综服务</h1>
+            <p class="text-white/80 font-light tracking-[0.1em] sm:tracking-[0.2em] text-xs sm:text-sm uppercase">One-Stop Solution for Compliance Export</p>
         </div>
-        <div class="absolute -right-10 bottom-0 text-[12rem] text-white/10 italic font-black">BEST</div>
+        <div class="absolute -right-6 sm:-right-10 bottom-0 text-6xl sm:text-[12rem] text-white/10 italic font-black">BEST</div>
     </div>
 </div>
 
