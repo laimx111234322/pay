@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 手机自动适配核心：width=设备宽度，初始1倍缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">{insert\_element\_0\_}
     <title>出海领航外综服务 - 模拟</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -16,12 +17,16 @@
             background: radial-gradient(circle, rgba(255,182,193,0.4) 0%, rgba(255,255,255,0) 70%);
             border-radius: 50%; z-index: 0;
         }
+        /* 简单响应式优化：小屏头部导航可横向滚动 */
+        @media (max-width: 768px) {
+            .header-nav { overflow-x: auto; white-space: nowrap; }
+        }
     </style>
 </head>
 <body class="text-gray-700">
 
 <header class="bg-[#1e2d3e] text-gray-300 h-12 flex items-center justify-between px-6 text-sm">
-    <div class="flex items-center space-x-6 h-full">
+    <div class="flex items-center space-x-6 h-full header-nav">
         <div class="bg-orange-500 text-white px-4 h-full flex items-center font-bold">工作台</div>
         <div class="nav-item cursor-pointer flex items-center">通关申报 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
         <div class="nav-item cursor-pointer flex items-center">票务管理 <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i></div>
@@ -47,8 +52,8 @@
     <span class="text-gray-500 cursor-pointer">电商关单通关</span>
 </div>
 
-<main class="max-w-[1400px] mx-auto p-6 grid grid-cols-12 gap-6">
-    <div class="col-span-8 space-y-6">
+<main class="max-w-[1400px] mx-auto p-6 grid grid-cols-1 md:grid-cols-12 gap-6">
+    <div class="md:col-span-8 space-y-6">
         <section class="bg-white rounded-sm p-5 shadow-sm border-t-2 border-orange-500 relative overflow-hidden">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none">通知公告</h3>
@@ -62,7 +67,7 @@
 
         <section class="bg-white rounded-sm p-5 shadow-sm">
             <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none mb-6">快捷申报</h3>
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-[#fff7f6] p-4 border border-red-50 rounded-md hover:shadow-md transition-all group cursor-pointer">
                     <p class="text-[#e66a5c] font-medium mb-4">电商清单通关</p>
                     <div class="flex justify-between items-end">
@@ -96,7 +101,7 @@
 
         <section class="bg-white rounded-sm p-5 shadow-sm">
             <h3 class="font-bold border-l-4 border-orange-500 pl-3 leading-none mb-8">快捷入口</h3>
-            <div class="grid grid-cols-6 gap-8 text-center">
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
                 <div class="flex flex-col items-center group cursor-pointer">
                     <div class="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                         <i data-lucide="package-plus" class="text-orange-500 w-7 h-7"></i>
@@ -137,11 +142,12 @@
         </section>
     </div>
 
-    <div class="col-span-4 space-y-6">
+    <div class="md:col-span-4 space-y-6">
         <div class="bg-white rounded-sm p-6 shadow-sm relative overflow-hidden">
             <div class="decoration-blob"></div>
             <div class="relative z-10">
                 <h2 class="font-bold text-gray-800 mb-1">深圳市出海领航企业管理有限公司</h2>
+                <!-- 已改新统一社会信用代码 -->
                 <p class="text-gray-400 text-xs font-mono mb-4">91440300MAK521E00A</p>
                 <div class="flex gap-2">
                     <span class="bg-orange-50 text-orange-600 border border-orange-100 text-[10px] px-2 py-0.5 rounded shadow-sm flex items-center">
