@@ -1,10 +1,13 @@
-<!<html lang="zh-CN">
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    AI多租户智能调度中台 | RAG精准
-   <script src="https://cdn.tailwindcss.com"></script>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>AI多租户智能调度中台 | RAG精准</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min</script>
-   <script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
         tailwind.config={
             theme:{
                 extend:{
@@ -19,8 +22,9 @@
                     }
                 }
             }
-</script>
-   <style>
+        }
+    </script>
+    <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#0F172A;color:#E2E8F0;font-family:'Microsoft YaHei',sans-serif}
         ::-webkit-scrollbar{width:6px;height:6px}
@@ -39,216 +43,378 @@
         .page{display:none}
         .page.active{display:block}
     </style>
+</head>
 <body>
 <div class="flex h-screen overflow-hidden">
-<aside class="w-[240px] bg-darkbg border-r border-gray-700 hidden lg:block overflow-auto">
-<div class="px-5 py-6 border-b border-gray-700 flex items-center gap-<div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><i class="fa fa-cube text-white</i>
-</div>
-                <div>
-                    <h2 class="text-white font-bold text-base">AI</h2<p class="text-gray-400 text-xs">RAG精准网关 V3.0</p>
-                </div<nav class="px-2 py-<div class="text-gray-500 text-xs px-3 py-2">总</div>
-<div onclick="switchPage('dashboard')" class="sidebar-active nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer mb-1"><i class="fa fa-dashboard w-</i>
-                   <span class="text-sm ml-2">数据大盘</span>
-</div>
-               <div onclick="switchPage('chat')" class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
-<i class="fa fa-comments w-5"></i>
-                    <span class="text-sm ml-2">AI智能对话</span>
-                <div class="text-gray-500 text-xs px-3 py-2 mt-</div<div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1"><i class="fa fa-users w-5"></i>
-                    <span class="text-sm ml-2">多租户列表</span>
-                <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1<i class="fa fa-user-circle w</i>
-<span class="text-sm ml-2">员工</span>
-</div>
-               <div class="text-gray-500 text-xs px-3 py-2 mt-3">模型调度</div>
-               <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
-                    <i class="fa fa-magic w-5"><span class="text-sm ml-2</span</div><div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
-<i class="fa fa-cogs w-5"></i>
-                    <span class="text-sm ml-2">模型集群管理</span>
-                <div class="text-gray-500 text-xs px-3 py-2 mt-</div<div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1"><i class="fa fa-database w-</i>
-                   <span class="text-sm ml-2">租户R</span>
-</div>
-               <div class="text-gray-500 text-xs px-3 py-2 mt-3">安全管控</div>
-                <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
-                    <i class="fa fa-shield</i><span class="text-sm ml-2"></span</div><div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
-<i class="fa fa-history w-5"></i>
-                    <span class="text-sm ml-2">全流程审计</span>
+    <aside class="w-[240px] bg-darkbg border-r border-gray-700 hidden lg:block overflow-auto">
+        <div class="px-5 py-6 border-b border-gray-700 flex items-center gap-2">
+            <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
+                <i class="fa fa-cube text-white"></i>
+            </div>
+            <div>
+                <h2 class="text-white font-bold text-base">AI</h2>
+                <p class="text-gray-400 text-xs">RAG精准网关 V3.0</p>
+            </div>
+        </div>
+        <nav class="px-2 py-4">
+            <div class="text-gray-500 text-xs px-3 py-2">总览</div>
+            <div onclick="switchPage('dashboard')" class="sidebar-active nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer mb-1">
+                <i class="fa fa-dashboard w-5"></i>
+                <span class="text-sm ml-2">数据大盘</span>
+            </div>
+            <div onclick="switchPage('chat')" class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-comments w-5"></i>
+                <span class="text-sm ml-2">AI智能对话</span>
+            </div>
+            <div class="text-gray-500 text-xs px-3 py-2 mt-3">租户管理</div>
+            <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-users w-5"></i>
+                <span class="text-sm ml-2">多租户列表</span>
+            </div>
+            <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-user-circle w-5"></i>
+                <span class="text-sm ml-2">员工管理</span>
+            </div>
+            <div class="text-gray-500 text-xs px-3 py-2 mt-3">模型调度</div>
+            <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-magic w-5"></i>
+                <span class="text-sm ml-2">智能路由调度</span>
+            </div>
+            <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-cogs w-5"></i>
+                <span class="text-sm ml-2">模型集群管理</span>
+            </div>
+            <div class="text-gray-500 text-xs px-3 py-2 mt-3">知识库</div>
+            <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-database w-5"></i>
+                <span class="text-sm ml-2">租户RAG知识库</span>
+            </div>
+            <div class="text-gray-500 text-xs px-3 py-2 mt-3">安全管控</div>
+            <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-shield w-5"></i>
+                <span class="text-sm ml-2">权限安全</span>
+            </div>
+            <div class="nav-item flex items-center px-3 py-2.5 rounded-md cursor-pointer text-gray-400 hover:bg-gray-800 mb-1">
+                <i class="fa fa-history w-5"></i>
+                <span class="text-sm ml-2">全流程审计</span>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="flex-1 overflow-hidden flex flex-col">
+        <header class="card-dark px-6 py-3 flex items-center justify-between shrink-0">
+            <div class="flex items-center">
+                <i class="fa fa-bars text-gray-400 text-xl lg:hidden mr-4"></i>
+                <span id="navTitle" class="text-gray-300 text-sm">首页 / 数据大盘总览</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden sm:flex items-center gap-2">
+                    <span class="tag-green text-xs px-2 py-1 rounded">VPN固定IP已连通</span>
+                    <span class="tag-blue text-xs px-2 py-1 rounded">主账号运行正常</span>
                 </div>
-            </aside<main class="flex-1 overflow-hidden flex flex-col">
-           <header class="card-dark px-6 py-3 flex items-center justify-between shrink-0">
-                <div class="flex items-center<i class="fa fa-bars text-gray-400 text-xl lg:hidden mr-4"></i>
-                    <span id="navTitle" class="text-gray-300 text-sm">首页 / 数据大盘总览</span>
-                <div class="flex items-center gap-6">
-                    <div class="hidden sm:flex items-center gap-2"><span class="tag-green text-xs px-2 py-1 rounded">VPN固定IP已连通<span class="tag-blue text-xs px-2 py-1 rounded">主账号运行正常</span>
-                    <div class="flex items-center gap-3">
-                        <img src="https://picsum.photos/id/1005/200/200" class="w-8 h-8 rounded-full object-cover border border-primary"><div class="hidden md:block">
-                           <p class="text-sm font-medium">系统管理员</p>
-                            <p class="text-[10px] text-gray-400">Laimaoxuan</p></div>
-</div>
-                </div>
-            <div id="dashboard" class="page active flex-1 overflow-auto p-6">
-<div class="mb-6">
-                    <h1 class="text-[22px] font-bold gradient-text">企业级AI多租户智能调度 + R</h1<p class="text-gray-400 text-sm mt-1">单主账号虚拟化切割 | 零串数据 | 智能模型路由 | 租户隔离知识库 | 全局</p></div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-<div class="card-dark p-5 num-animate">
-<div class="flex justify-between items-start">
-<div>
-                               <p class="text-gray-400 text-xs">当前在线租户<h3 class="text-[26px] font-bold mt-</h3<p class="text-success text-xs mt<i class="fa fa-arrow-up"></i> 正常隔离运行</div<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                               <i class="fa fa</i></div>
-</div>
+                <div class="flex items-center gap-3">
+                    <img src="https://picsum.photos/id/1005/200/200" class="w-8 h-8 rounded-full object-cover border border-primary">
+                    <div class="hidden md:block">
+                        <p class="text-sm font-medium">系统管理员</p>
+                        <p class="text-[10px] text-gray-400">Laimaoxuan</p>
                     </div>
-                    <div class="card-dark p-5 num-animate"><div class="flex justify-between items-start"><div>
-<p class="text-gray-400 text-xs">今日消耗Token<h3 class="text-[26px] font-bold mt-2">156</h3>
-                                <p class="text-success text-xs<i class="fa fa-arrow-down"></i> 节省47</p>
-</div>
-                           <div class="w-10 h-10 rounded-lg bg-purple/20 flex items-center justify-center">
-                                <i class="fa fa-code text</i>
-</div>
-                        </div>
-                    <div class="card-dark p-5 num-animate">
-<div class="flex justify-between items-start">
-<div>
-                               <p class="text-gray-400 text-xs">租户知识库总量<h3 class="text-[26px] font-bold mt-2">218</h3>
-                                <p class="text-primary text-xs mt-2"><i class="fa fa-check"></i> 独立向量库</p>
-                            </div>
-                            <div class="w-10 h-10 rounded-lg bg-success/20 flex items-center justify-center"><i class="fa fa-database text-success"></i>
-                            </div</div><div class="card-dark p-5 num-animate">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-gray-400 text-xs">账号</p>
-<h3 class="text-[26px] font-bold mt-2 text</h3<p class="text-success text-xs mt<i class="fa fa-shield"></i> 单一固定IP出口</p>
-                            <div class="w-10 h-10 rounded-lg bg-warning/20 flex items-center justify-center">
-<i class="fa fa-lock text-warning"></div></div>
-</div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
-<div class="card-dark p-5 lg:col-span-2">
-<div class="flex justify-between items-center mb-<h4 class="font-medium">Token消耗 &amp; </h4><div class="text-xs text-gray-400">近30</div>
-</div>
-                       <div style="height:240px">
-<canvas id="token</canvas>
-                        </div>
-                    <div class="card-dark p-<div class="flex justify-between items-center mb-4">
-<h4 class="font-medium">模型调用占</h4>
-</div>
-                       <div style="height:240px">
-<canvas id="model</canvas>
-                        </div>
-                    </div<div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
-                    <div class="card-dark p-5">
-                        <h4 class="font-medium mb-4 flex items-center<i class="fa fa-sitemap text-primary mr-</i>系统链路</h4><div class="text-sm text-gray-300 leading-loose"><div class="py-2 px-3 bg-gray-800 rounded mb-2 text-center</div<div class="text-center text-gray-500">↓<div class="py-2 px-3 bg-primary/20 rounded mb-2 text-center border border-primary/40">多租户网关层（租户ID隔离）<div class="text-center text-gray-500">↓</div>
-                            <div class="py-2 px-3 bg-purple/20 rounded mb-2 text-center border border-purple/40">智能</div><div class="text-center text-gray-5</div<div class="py-2 px-3 bg-success/20 rounded mb-2 text-center border border-success/40">RAG租户专属知识库</div>
-                            <div class="text-center text-gray-500"></div>
-                           <div class="py-2 px-3 bg-warning/20 rounded mb-2 text-center border border-warning/40">VPN固定</div><div class="text-center text-gray-5</div<div class="py-2 px-3 bg-gray-700 rounded text-center">统一</div</div></div>
-<div class="card-dark p-5">
-<h4 class="font-medium mb-4 flex<i class="fa fa-magic text-warning</i></h<div class="space-y-3<div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg"><div class="flex items-center gap-2<span class="w-3 h-3 rounded-full bg-blue-</span><span class="text-sm">ChatGPT</div<span class="text-xs text-gray-400">通用办公</span><span class="tag-blue text-[10px] px-2 py-0.5 rounded"></span>
-                            </div>
-                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded<div class="flex items-center gap-2">
-                                    <span class="w-3 h-3 rounded-full bg-purple-500"></span>
-                                    <span class="text-sm"></span>
-</div>
-                               <span class="text-xs text-gray-400">长文本/总结/</span>
-                               <span class="tag-purple text-[10px] px-2 py-0.5 rounded">启用</span>
-                            <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg<div class="flex items-center gap-<span class="w-3 h-3 rounded-full bg-green</span<span class="text-sm">Gemini</span>
-                                <span class="text-xs text-gray-400">图文</span>
-<span class="tag-green text-[10px] px-2 py-0.5 rounded">启用</span>
-                            <div class="mt-3 text-xs text-gray-400">✅ 禁止员工手动切换 · 系统全自动</div>
-</div>
-                    </div>
-                </div<div id="chat" class="page flex-1 overflow-hidden flex<div class="w-[260px] border-r border-gray-700 h-full overflow-auto p-4 hidden md:block">
-                    <div class="flex justify-between items-center mb-4"><span class="font-medium">会话列表<button class="text-xs bg-primary px-2 py-1<i class="fa</i> </button>
-</div>
-                   <div class="space-y-2">
-                        <div class="p-3 bg-primary/20 rounded-md cursor-pointer text-sm border-l-2 border-primary"></div><div class="p-3 bg-gray-800 rounded-md cursor-pointer text-sm hover:bg-gray-700"></div><div class="p-3 bg-gray-800 rounded-md cursor-pointer text-sm hover:bg-gray-700"></div><div class="p-3 bg-gray-800 rounded-md cursor-pointer text-sm hover:bg-gray-700"></div>
-</div>
-                   <div class="mt-6 pt-4 border-t border-gray-700<p class="text-xs text-gray-400 mb-2">当前租户信息<div class="p-3 bg-gray-800 rounded text<div class="flex justify-between text-gray-400"><span class="text-white">T202605150</div><div class="flex justify-between text-gray-400 mt-2<span class="text-white">运营部</div>
-                           <div class="flex justify-between text-gray-400 mt-2">R<span class="tag-green px-1 rounded"></div</div></div>
-</div>
-               <div class="flex-1 flex flex-col h-full<div class="flex-1 p-6 overflow-auto" id="chatBox">
-                        <div class="flex gap-3 mb-6">
-<div class="w-9 h-9 rounded-full bg-primary flex shrink-0 items-center justify-center"><i class="fa fa-robot text-white"></i>
-                            <div class="max-w-[85%]">
-                               <div class="flex gap-2 items-center">
-<span class="text-sm font-medium">AI智能</span>
-                                   <span class="tag-blue text-[10px] rounded">自动调度模型<span class="tag-green text-[10px] rounded"></span</div><div class="mt-2 text-sm text-gray-300 leading-relaxed card-dark p-4">
-                                    您好，我是企业级多租户AI智能调度网关<br/>
-                                    ✅ 当前为单主<br/>
-                                    ✅ 本次对话<br/>
-                                    ✅ 租户知识库已挂载，回答贴合企业<br/>
-                                    ✅ 不会串会话、不会<br/><br/>
-                                    请输入您的问题，系统自动智能处理</div></div>
-</div>
-                    </div>
-                    <div class="p-4 border-t border-gray-700">
-                        <div class="flex items-center gap-3 mb-2<span class="text-xs text-gray-400">本次自动<span class="text-primary">ChatGPT(通用办公)</span><span class="text-xs text-gray-400">|</span>
-                            <span class="text-xs text-gray-400"><span class="text-success">42</span>
-</div>
-                       <div class="relative"><textarea id="inputMsg" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-sm outline-none resize-none h-[90px]" placeholder="请输入提问，系统自动识别场景、自动切换模型、自动检索</textarea>
-<div class="absolute right-3 bottom-3 flex gap-2">
-<button class="w-8 h-8 rounded bg-gray-700<i class="fa fa-paperclip"></button>
-                               <button onclick="sendMsg()" class="w-8 h-8 rounded bg-primary<i class="fa fa-paper-plane"></button>
-                            </div>
-                        </div</div></div>
-</main>
-    </div>
-    <script>
-        function switchPage(pageName){
-            document.querySelectorAll('.page').forEach(item=>item.classList.remove('active'));
-            document.getElementById(pageName).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(item=>item.classList.remove('sidebar-active'));
-            event.currentTarget.classList.add('sidebar-active');
-            if(pageName=="dashboard")document.getElementById("navTitle").innerText="首页 / 数据大盘总览";
-            if(pageName=="chat")document.getElementById("navTitle").innerText="首页 / AI智能对话";
-        }
-        const tokenChart = new Chart(document.getElementById('tokenChart'),{
-            type:'line',
-            data:{
-                labels:['1号','5号','10号','15号','20号','25号','30号'],
-                datasets:[
-                    {label:'原始消耗',data:[220000,245000,231000,256000,241000,272000,261000],borderColor:'#F53F3F',tension:0.4,fill:false},
-                    {label:'实际消耗',data:[112000,128000,121000,135000,124000,142000,136000],borderColor:'#00B42A',tension:0.4,fill:false}
-                ]
-            },
-            options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94A3B8'}}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
-        });
-        const modelPie = new Chart(document.getElementById('modelPie'),{
-            type:'doughnut',
-            data:{
-                labels:['ChatGPT','Claude','Gemini','绘图模型'],
-                datasets:[{data:[55,25,15,5],backgroundColor:['#165DFF','#722ED1','#00B42A','#FF7D00']}]
-            },
-            options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94A3B8'}}}}
-        });
-        function sendMsg(){
-            let msg = document.getElementById("inputMsg").value.trim();
-            if(!msg)return;
-            let box = document.getElementById("chatBox");
-            box.innerHTML<div class="flex gap-3 mb-6 justify-end"><div class="max-w-[85%] text-right">
-                   <div class="mt-2 text-sm text-gray-100 leading-relaxed card-dark p-4 text-left">${msg}</div<div class="w-9 h-9 rounded-full bg-gray-600 flex shrink-0 items-center justify-center"><i class="fa fa-user text-white"></div</div>
-            `;
-            document.getElementById("inputMsg").value="";
-            box.innerHTML += `
-            <div class="flex gap-3 mb-6 ai-<div class="w-9 h-9 rounded-full bg-primary flex shrink-0 items-center justify-center">
-                    <i class="fa fa-</i></div>
-<div class="max-w-[85%]<div class="flex gap-2 items<span class="text-sm font-medium</span</div><div class="mt-2 text-sm text-gray-300 leading-relaxed card-dark p-4 stream-text">正在检索租户知识库、调度最优</div>
                 </div>
             </div>
-            `;
-            box.scrollTop = box.scrollHeight;
-            setTimeout(()=>{
-                document.querySelector(".ai-loading").outerHTML = `
-<div class="flex gap-3 mb-6<div class="w-9 h-9 rounded-full bg-primary flex shrink-0 items-center justify-center">
-                        <i class="fa fa-robot</i>
+        </header>
+
+        <div id="dashboard" class="page active flex-1 overflow-auto p-6">
+            <div class="mb-6">
+                <h1 class="text-[22px] font-bold gradient-text">企业级AI多租户智能调度 + RAG精准网关</h1>
+                <p class="text-gray-400 text-sm mt-1">单主账号虚拟化切割 | 零串数据 | 智能模型路由 | 租户隔离知识库 | 全局安全风控</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+                <div class="card-dark p-5 num-animate">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-xs">当前在线租户</p>
+                            <h3 class="text-[26px] font-bold mt-2">28</h3>
+                            <p class="text-success text-xs mt-2"><i class="fa fa-arrow-up"></i> 正常隔离运行</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                            <i class="fa fa-server text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-dark p-5 num-animate">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-xs">今日消耗Token</p>
+                            <h3 class="text-[26px] font-bold mt-2">156.2万</h3>
+                            <p class="text-success text-xs mt-2"><i class="fa fa-arrow-down"></i> 节省47%</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-purple/20 flex items-center justify-center">
+                            <i class="fa fa-code text-purple"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-dark p-5 num-animate">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-xs">租户知识库总量</p>
+                            <h3 class="text-[26px] font-bold mt-2">218</h3>
+                            <p class="text-primary text-xs mt-2"><i class="fa fa-check"></i> 独立向量库</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-success/20 flex items-center justify-center">
+                            <i class="fa fa-database text-success"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-dark p-5 num-animate">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-400 text-xs">账号安全</p>
+                            <h3 class="text-[26px] font-bold mt-2 text-primary">100%</h3>
+                            <p class="text-success text-xs mt-2"><i class="fa fa-shield"></i> 单一固定IP出口</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-warning/20 flex items-center justify-center">
+                            <i class="fa fa-lock text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+                <div class="card-dark p-5 lg:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-medium">Token消耗 & 节省趋势</h4>
+                        <div class="text-xs text-gray-400">近30天</div>
+                    </div>
+                    <div style="height:240px">
+                        <canvas id="tokenChart"></canvas>
+                    </div>
+                </div>
+                <div class="card-dark p-5">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-medium">模型调用占比</h4>
+                    </div>
+                    <div style="height:240px">
+                        <canvas id="modelPie"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+                <div class="card-dark p-5">
+                    <h4 class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-sitemap text-primary mr-2"></i>系统链路
+                    </h4>
+                    <div class="text-sm text-gray-300 leading-loose">
+                        <div class="py-2 px-3 bg-gray-800 rounded mb-2 text-center">用户请求入口</div>
+                        <div class="text-center text-gray-500">↓</div>
+                        <div class="py-2 px-3 bg-primary/20 rounded mb-2 text-center border border-primary/40">多租户网关层（租户ID隔离）</div>
+                        <div class="text-center text-gray-500">↓</div>
+                        <div class="py-2 px-3 bg-purple/20 rounded mb-2 text-center border border-purple/40">智能模型调度路由</div>
+                        <div class="text-center text-gray-500">↓</div>
+                        <div class="py-2 px-3 bg-success/20 rounded mb-2 text-center border border-success/40">RAG租户专属知识库</div>
+                        <div class="text-center text-gray-500">↓</div>
+                        <div class="py-2 px-3 bg-warning/20 rounded mb-2 text-center border border-warning/40">VPN固定IP出口</div>
+                        <div class="text-center text-gray-500">↓</div>
+                        <div class="py-2 px-3 bg-gray-700 rounded text-center">统一返回结果</div>
+                    </div>
+                </div>
+                <div class="card-dark p-5">
+                    <h4 class="font-medium mb-4 flex items-center">
+                        <i class="fa fa-magic text-warning mr-2"></i>当前智能模型调度
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-primary"></span>
+                                <span class="text-sm">ChatGPT</span>
+                            </div>
+                            <span class="text-xs text-gray-400">通用办公</span>
+                            <span class="tag-blue text-[10px] px-2 py-0.5 rounded">启用</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-purple"></span>
+                                <span class="text-sm">Claude</span>
+                            </div>
+                            <span class="text-xs text-gray-400">长文本/总结</span>
+                            <span class="tag-purple text-[10px] px-2 py-0.5 rounded">启用</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-success"></span>
+                                <span class="text-sm">Gemini</span>
+                            </div>
+                            <span class="text-xs text-gray-400">图文理解</span>
+                            <span class="tag-green text-[10px] px-2 py-0.5 rounded">启用</span>
+                        </div>
+                        <div class="mt-3 text-xs text-gray-400">✅ 禁止员工手动切换 · 系统全自动最优调度</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="chat" class="page flex-1 overflow-hidden flex">
+            <div class="w-[260px] border-r border-gray-700 h-full overflow-auto p-4 hidden md:block">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-medium">会话列表</span>
+                    <button class="text-xs bg-primary px-2 py-1 rounded">
+                        <i class="fa fa-plus"></i> 新建
+                    </button>
+                </div>
+                <div class="space-y-2">
+                    <div class="p-3 bg-primary/20 rounded-md cursor-pointer text-sm border-l-2 border-primary">租户运营部 - 业务咨询</div>
+                    <div class="p-3 bg-gray-800 rounded-md cursor-pointer text-sm hover:bg-gray-700">技术部 - 代码问题</div>
+                    <div class="p-3 bg-gray-800 rounded-md cursor-pointer text-sm hover:bg-gray-700">市场部 - 文案生成</div>
+                    <div class="p-3 bg-gray-800 rounded-md cursor-pointer text-sm hover:bg-gray-700">财务部 - 数据查询</div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-gray-700">
+                    <p class="text-xs text-gray-400 mb-2">当前租户信息</p>
+                    <div class="p-3 bg-gray-800 rounded text-sm">
+                        <div class="flex justify-between text-gray-400">
+                            <span>租户ID</span>
+                            <span class="text-white">T20260515001</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400 mt-2">
+                            <span>所属部门</span>
+                            <span class="text-white">运营部</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400 mt-2">
+                            <span>知识库状态</span>
+                            <span class="tag-green px-1 rounded">已启用</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col h-full">
+                <div class="flex-1 p-6 overflow-auto" id="chatBox">
+                    <div class="flex gap-3 mb-6">
+                        <div class="w-9 h-9 rounded-full bg-primary flex shrink-0 items-center justify-center">
+                            <i class="fa fa-robot text-white"></i>
+                        </div>
+                        <div class="max-w-[85%]">
+                            <div class="flex gap-2 items-center">
+                                <span class="text-sm font-medium">AI智能助手</span>
+                                <span class="tag-blue text-[10px] rounded">自动调度模型</span>
+                                <span class="tag-green text-[10px] rounded">RAG已启用</span>
+                            </div>
+                            <div class="mt-2 text-sm text-gray-300 leading-relaxed card-dark p-4">
+                                您好，我是企业级多租户AI智能调度网关<br/>
+                                ✅ 当前为单主账号隔离模式<br/>
+                                ✅ 本次对话租户独立隔离<br/>
+                                ✅ 租户知识库已挂载，回答贴合企业业务<br/>
+                                ✅ 不会串会话、不会跨租户泄露数据<br/><br/>
+                                请输入您的问题，系统自动智能处理
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-700">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs text-gray-400">本次自动分配模型：</span>
+                        <span class="text-primary">ChatGPT(通用办公)</span>
+                        <span class="text-xs text-gray-400">|</span>
+                        <span class="text-xs text-gray-400">剩余额度：<span class="text-success">42万Token</span></span>
+                    </div>
+                    <div class="relative">
+                        <textarea id="inputMsg" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-sm outline-none resize-none h-[90px]" placeholder="请输入提问，系统自动识别场景、自动切换模型、自动检索租户知识库"></textarea>
+                        <div class="absolute right-3 bottom-3 flex gap-2">
+                            <button class="w-8 h-8 rounded bg-gray-700 flex items-center justify-center text-gray-400 hover:text-white">
+                                <i class="fa fa-paperclip"></i>
+                            </button>
+                            <button onclick="sendMsg()" class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white hover:opacity-90">
+                                <i class="fa fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
-                   <div class="max-w-[85%]"><div class="flex gap-2 items-center<span class="text-sm font-medium"></span><span class="tag-blue text-[10px] rounded">ChatGPT</span>
-<span class="tag-green text-[10px] rounded">RAG检索</span>
+
+<script>
+    function switchPage(pageName){
+        document.querySelectorAll('.page').forEach(item=>item.classList.remove('active'));
+        document.getElementById(pageName).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(item=>item.classList.remove('sidebar-active'));
+        event.currentTarget.classList.add('sidebar-active');
+        if(pageName=="dashboard")document.getElementById("navTitle").innerText="首页 / 数据大盘总览";
+        if(pageName=="chat")document.getElementById("navTitle").innerText="首页 / AI智能对话";
+    }
+
+    const tokenChart = new Chart(document.getElementById('tokenChart'),{
+        type:'line',
+        data:{
+            labels:['1号','5号','10号','15号','20号','25号','30号'],
+            datasets:[
+                {label:'原始消耗',data:[220000,245000,231000,256000,241000,272000,261000],borderColor:'#F53F3F',tension:0.4,fill:false},
+                {label:'实际消耗',data:[112000,128000,121000,135000,124000,142000,136000],borderColor:'#00B42A',tension:0.4,fill:false}
+            ]
+        },
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94A3B8'}}},scales:{x:{ticks:{color:'#64748B'}},y:{ticks:{color:'#64748B'}}}}
+    });
+
+    const modelPie = new Chart(document.getElementById('modelPie'),{
+        type:'doughnut',
+        data:{
+            labels:['ChatGPT','Claude','Gemini','绘图模型'],
+            datasets:[{data:[55,25,15,5],backgroundColor:['#165DFF','#722ED1','#00B42A','#FF7D00']}]
+        },
+        options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94A3B8'}}}}
+    });
+
+    function sendMsg(){
+        let msg = document.getElementById("inputMsg").value.trim();
+        if(!msg)return;
+        let box = document.getElementById("chatBox");
+        box.innerHTML += `
+            <div class="flex gap-3 mb-6 justify-end">
+                <div class="max-w-[85%] text-right">
+                    <div class="mt-2 text-sm text-gray-100 leading-relaxed card-dark p-4 text-left">${msg}</div>
+                </div>
+                <div class="w-9 h-9 rounded-full bg-gray-600 flex shrink-0 items-center justify-center">
+                    <i class="fa fa-user text-white"></i>
+                </div>
+            </div>
+        `;
+        document.getElementById("inputMsg").value="";
+        box.innerHTML += `
+            <div class="flex gap-3 mb-6 ai-loading">
+                <div class="w-9 h-9 rounded-full bg-primary flex shrink-0 items-center justify-center">
+                    <i class="fa fa-robot text-white"></i>
+                </div>
+                <div class="max-w-[85%]">
+                    <div class="flex gap-2 items-center">
+                        <span class="text-sm font-medium">AI智能助手</span>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-300 leading-relaxed card-dark p-4 stream-text">正在检索租户知识库、调度最优模型...</div>
+                </div>
+            </div>
+        `;
+        box.scrollTop = box.scrollHeight;
+        setTimeout(()=>{
+            document.querySelector(".ai-loading").outerHTML = `
+                <div class="flex gap-3 mb-6">
+                    <div class="w-9 h-9 rounded-full bg-primary flex shrink-0 items-center justify-center">
+                        <i class="fa fa-robot text-white"></i>
+                    </div>
+                    <div class="max-w-[85%]">
+                        <div class="flex gap-2 items-center">
+                            <span class="text-sm font-medium">AI智能助手</span>
+                            <span class="tag-blue text-[10px] rounded">ChatGPT</span>
+                            <span class="tag-green text-[10px] rounded">RAG检索</span>
                         </div>
                         <div class="mt-2 text-sm text-gray-300 leading-relaxed card-dark p-4">
-                            已为你调取租户私有知识库，本次请求经过网关精简、Token<br/>
-<b>✅ 租户隔离正常、无跨租户数据、无会话串<br/>
-                            本次消耗Token：482｜节省Token：41%｜出口IP固定风控保护。</div>
-</div>
-               </div>
-                `;
-                box.scrollTop = box.scrollHeight;
-            },1500);
-        }
-   </body</html>
-```
+                            已为你调取租户私有知识库，本次请求经过网关精简、Token优化<br>
+                            <b>✅ 租户隔离正常、无跨租户数据、无会话串扰</b><br>
+                            本次消耗Token：482｜节省Token：41%｜出口IP固定风控保护。
+                        </div>
+                    </div>
+                </div>
+            `;
+            box.scrollTop = box.scrollHeight;
+        },1500);
+    }
+</script>
+</body>
+</html>
