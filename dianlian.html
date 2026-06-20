@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComplianceSaaS · 合规法人店铺管理中台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    body { background: #f3f4f6; color: #1f2937; }
+    .hidden { display: none !important; }
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .sidebar { transition: width 0.3s; }
+    .sidebar.collapsed { width: 70px !important; }
+    .sidebar.collapsed .nav-label { display: none; }
+    .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
+    .badge-success { background: #dcfce7; color: #059669; }
+    .badge-warning { background: #fef3c7; color: #d97706; }
+    .badge-danger { background: #fee2e2; color: #dc2626; }
+    .badge-info { background: #dbeafe; color: #1d4ed8; }
+    .badge-secondary { background: #f1f5f9; color: #6b7280; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; display: flex; align-items: center; justify-content: center; }
+    .modal-box { background: white; border-radius: 12px; width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+    .btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-outline { background: white; color: #374151; border: 1px solid #d1d5db; }
+    .btn-outline:hover { background: #f9fafb; }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+    .card { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table th { background: #f9fafb; font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; color: #6b7280; }
+    table td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; }
+    tr:hover { background: #f9fafb; }
+    input, select, textarea { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .step-bar { display: flex; gap: 0; }
+    .step { flex: 1; padding: 6px 0; border-bottom: 3px solid #e5e7eb; text-align: center; font-size: 12px; color: #9ca3af; }
+    .step.active { border-color: #2563eb; color: #2563eb; }
+    .step.done { border-color: #10b981; color: #10b981; }
+  </style>
+</head>
+<body>
+
+<!-- 登录页面 -->
+<div id="loginPage" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e3a8a,#2563eb);">
+  <div style="background:white;border-radius:12px;padding:32px;width:380px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-size:24px;font-weight:700;color:#1e3a8a;">🛡️ ComplianceSaaS</div>
+      <div style="font-size:12px;color:#6b7280;margin-top:4px;">出海企业法人&店铺合规管理中台</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <label style="display:block;font-size:12px;font-weight:600;color:#4b5563;margin-bottom:4px;">账号</label>
+        <input id="loginUser" type="text" value="admin" placeholder="admin" />
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;font-weight:600;color:#4b5563;margin-bottom:4px;">密码</label>
+        <input id="loginPass" type="password" value="admin" placeholder="••••••••" />
+      </div>
+      <div id="loginError" style="display:none;background:#fee2e2;color:#dc2626;padding:8px 12px;border-radius:6px;font-size:12px;text-align:center;">
+        ❌ 账号或密码错误
+      </div>
+      <div style="background:#fef3c7;border:1px solid#fde68a;border-radius:6px;padding:8px 12px;font-size:11px;color:#92400e;">
+        🔐 预设账号: admin 密码: admin
+      </div>
+      <button class="btn btn-primary" onclick="doLogin()" style="width:100%;padding:10px;">登录系统</button>
+    </div>
+  </div>
+</div>
+
+<!-- 主应用 -->
+<div id="app" style="display:none;min-height:100vh;">
+
+  <!-- 顶部栏 -->
+  <header style="height:60px;background:white;border-bottom:1px solid#e5e7eb;display:flex;align-items:center;padding:0 20px;position:sticky;top:0;z-index:100;">
+    <button onclick="toggleSidebar()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#6b7280;margin-right:12px;">☰</button>
+    <div style="font-weight:700;font-size:16px;color:#1e3a8a;">🛡️ ComplianceSaaS</div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:16px;">
+      <div style="position:relative;cursor:pointer;" onclick="showNotifications()">
+        <span style="font-size:18px;">🔔</span>
+        <div style="position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#dc2626;border-radius:50%;"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;">A</div>
+        <span style="font-size:13px;">系统管理员</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 侧边栏 -->
+  <aside id="sidebar" class="sidebar" style="width:240px;background:#1f2937;min-height:calc(100vh - 60px);position:fixed;top:60px;left:0;overflow-y:auto;">
+    <nav style="padding:12px 0;">
+      <div class="nav-item active" onclick="goPage('dashboard', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#e5e7eb;cursor:pointer;background:rgba(37,99,235,0.2);border-left:3px solid #2563eb;">
+        <i class="fas fa-chart-bar" style="width:20px;"></i>
+        <span class="nav-label" style="font-size:13px;">控制台</span>
+      </div>
+      <div style="padding:12px 16px 4px;font-size:10px;color:#9ca3af;font-weight:600;">核心业务</div>
+      <div class="nav-item" onclick="goPage('person', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#d1d5db;cursor:pointer;border-left:3px solid transparent;">
+        <i class="fas fa-user-friends"></i>
+        <span class="nav-label" style="font-size:13px;">① 法人资源池</span>
+      </div>
+      <div class="nav-item" onclick="goPage('registration', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#d1d5db;cursor:pointer;border-left:3px solid transparent;">
+        <i class="fas fa-building"></i>
+        <span class="nav-label" style="font-size:13px;">② 工商注册管理</span>
+      </div>
+      <div class="nav-item" onclick="goPage('store', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#d1d5db;cursor:pointer;border-left:3px solid transparent;">
+        <i class="fas fa-store"></i>
+        <span class="nav-label" style="font-size:13px;">③ 平台店铺管理</span>
+      </div>
+      <div class="nav-item" onclick="goPage('entrust', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#d1d5db;cursor:pointer;border-left:3px solid transparent;">
+        <i class="fas fa-handshake"></i>
+        <span class="nav-label" style="font-size:13px;">④ 委托运营订单</span>
+      </div>
+      <div class="nav-item" onclick="goPage('seller', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#d1d5db;cursor:pointer;border-left:3px solid transparent;">
+        <i class="fas fa-users"></i>
+        <span class="nav-label" style="font-size:13px;">⑤ 卖家管理</span>
+      </div>
+      <div style="padding:12px 16px 4px;font-size:10px;color:#9ca3af;font-weight:600;">风控与审计</div>
+      <div class="nav-item" onclick="goPage('audit', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#d1d5db;cursor:pointer;border-left:3px solid transparent;">
+        <i class="fas fa-history"></i>
+        <span class="nav-label" style="font-size:13px;">⑥ 操作审计日志</span>
+      </div>
+      <div class="nav-item" onclick="goPage('risk', this)" style="padding:10px 16px;display:flex;align-items:center;gap:10px;color:#d1d5db;cursor:pointer;border-left:3px solid transparent;">
+        <i class="fas fa-shield-alt"></i>
+        <span class="nav-label" style="font-size:13px;">风控巡检中心</span>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main id="content" style="margin-left:240px;padding:20px;min-height:calc(100vh - 60px);transition:margin-left 0.3s;">
+    
+    <!-- 仪表板 -->
+    <div id="page-dashboard" class="page active">
+      <div style="margin-bottom:20px;">
+        <h1 style="font-size:20px;font-weight:700;color:#111827;">控制台概览</h1>
+        <p style="font-size:13px;color:#6b7280;">系统全局状态 · 合规风险一览 · 今日待办</p>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;">
+        <div class="card">
+          <div style="font-size:12px;color:#6b7280;font-weight:600;">法人资源池</div>
+          <div style="font-size:24px;font-weight:700;color:#1e3a8a;">128</div>
+          <div style="font-size:11px;color:#059669;">本月新增 12</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;color:#6b7280;font-weight:600;">已注册主体</div>
+          <div style="font-size:24px;font-weight:700;color:#1e3a8a;">97</div>
+          <div style="font-size:11px;color:#6b7280;">86 运营中 · 11 注销中</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;color:#6b7280;font-weight:600;">平台店铺总数</div>
+          <div style="font-size:24px;font-weight:700;color:#1e3a8a;">156</div>
+          <div style="font-size:11px;color:#2563eb;">142 亚马逊 · 14 沃尔玛</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;color:#6b7280;font-weight:600;">⚠️ 活跃风控告警</div>
+          <div style="font-size:24px;font-weight:700;color:#dc2626;">3</div>
+          <div style="font-size:11px;color:#dc2626;" onclick="goPage('risk')">需人工复核 →</div>
+        </div>
+      </div>
+      
+      <div class="card" style="background:#fef3c7;border:1px solid#fde68a;margin-bottom:20px;">
+        <div style="display:flex;align-items:start;gap:8px;">
+          <div style="color:#d97706;font-size:18px;">⚠️</div>
+          <div>
+            <div style="font-weight:600;color:#92400e;">合规提醒</div>
+            <div style="font-size:13px;color:#92400e;">自然人「李**」近30天关联注册主体已达 <span style="font-weight:700;">2家</span>（阈值2），系统已自动暂停其新注册权限，请人工复核。</div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;">
+        <div>
+          <div class="card">
+            <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:12px;padding-left:8px;border-left:4px solid #2563eb;">各模块待办事项</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>待办事项</th>
+                  <th>模块</th>
+                  <th>状态</th>
+                  <th>时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>法人「王**」人脸核验通过，待线上签商事协议</td>
+                  <td><span class="badge badge-info">法人资源池</span></td>
+                  <td><span class="badge badge-warning">待处理</span></td>
+                  <td>06-20 10:23</td>
+                </tr>
+                <tr>
+                  <td>主体「粤B-2024-0097」设立登记回执已上传，待确认</td>
+                  <td><span class="badge badge-info">工商注册</span></td>
+                  <td><span class="badge badge-warning">待确认</span></td>
+                  <td>06-19 16:40</td>
+                </tr>
+                <tr>
+                  <td>店铺「US-Amazon-0142」绑定主体校验通过，待发起委托协议签署</td>
+                  <td><span class="badge badge-info">委托运营</span></td>
+                  <td><span class="badge badge-warning">待签署</span></td>
+                  <td>06-19 11:05</td>
+                </tr>
+                <tr>
+                  <td>卖家「SZ CrossBorder Tech」欠缴委托费，系统已暂停店铺操作权限</td>
+                  <td><span class="badge badge-info">卖家管理</span></td>
+                  <td><span class="badge badge-danger">已拦截</span></td>
+                  <td>06-18 09:12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:12px;padding-left:8px;border-left:4px solid #10b981;">主体分布</div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;">
+              <div style="display:flex;justify-content:space-between;">
+                <span>深圳 · 前海（个体户）</span>
+                <span style="font-weight:700;">42</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>广州 · 南沙（有限公司）</span>
+                <span style="font-weight:700;">28</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>浙江 · 义乌（个体户）</span>
+                <span style="font-weight:700;">19</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;">
+                <span>香港公司（秘书代理）</span>
+                <span style="font-weight:700;">8</span>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:12px;padding-left:8px;border-left:4px solid #8b5cf6;">近期审计记录</div>
+            <div style="font-size:12px;color:#6b7280;">
+              <div>● admin 调取证件原件 NP-092 [10:22]</div>
+              <div>● system 创建委托订单 #ENT-0142 [09:15]</div>
+              <div>● risk_scan 触发高频注册预警 [08:30]</div>
+              <div>● admin 上传工商回执 REG-0097.pdf [16:40]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 法人资源池 -->
+    <div id="page-person" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div>
+          <h1 style="font-size:20px;font-weight:700;color:#111827;">① 法人资源池管理</h1>
+          <p style="font-size:13px;color:#6b7280;">仅合规招募自然人 · 人脸核验 · 商事协议电子签 · 证件加密</p>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('addPersonModal')">＋ 新增自然人</button>
+      </div>
+      
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <input placeholder="搜索姓名/编号..." style="width:200px;padding:6px 10px;" />
+          <select style="width:140px;padding:6px 10px;">
+            <option>全部状态</option>
+            <option>合作中</option>
+            <option>已注销</option>
+            <option>黑名单</option>
+          </select>
+          <select style="width:160px;padding:6px 10px;">
+            <option>全部HR机构</option>
+            <option>深圳XX人力</option>
+            <option>广州YY人力</option>
+          </select>
+          <button class="btn btn-outline btn-sm">筛选</button>
+          <div style="margin-left:auto;font-size:12px;color:#6b7280;">共 128 条记录</div>
+        </div>
+      </div>
+      
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>姓名（脱敏）</th>
+              <th>身份证号（哈希）</th>
+              <th>HR渠道</th>
+              <th>核验状态</th>
+              <th>关联主体数</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>NP-0086</td>
+              <td><strong>张**</strong> <span style="font-size:11px;color:#9ca3af;">🔒原件加密</span></td>
+              <td style="font-family:monospace;font-size:11px;color:#9ca3af;">a3f2...c91b ✓</td>
+              <td>深圳XX人力</td>
+              <td><span class="badge badge-success">✅ 已核验</span></td>
+              <td>1 家</td>
+              <td><span class="badge badge-success">合作中</span></td>
+              <td>
+                <button class="btn btn-outline btn-sm" onclick="showModal('personDetailModal')">详情</button>
+                <button class="btn btn-outline btn-sm" style="color:#dc2626;border-color:#fecaca;" onclick="requestOriginalDocument()">申请查原件</button>
+              </td>
+            </tr>
+            <tr>
+              <td>NP-0092</td>
+              <td><strong>李**</strong> <span style="font-size:11px;color:#9ca3af;">🔒原件加密</span></td>
+              <td style="font-family:monospace;font-size:11px;color:#9ca3af;">b7e1...d04a ✓</td>
+              <td>广州YY人力</td>
+              <td><span class="badge badge-success">✅ 已核验</span></td>
+              <td><strong style="color:#d97706;">2 家 ⚠️</strong></td>
+              <td><span class="badge badge-warning">⚠️ 风险复核</span></td>
+              <td>
+                <button class="btn btn-outline btn-sm">详情</button>
+                <button class="btn btn-outline btn-sm" style="background:#fee2e2;color:#dc2626;border-color:#fecaca;" onclick="pauseRegistration()">暂停注册</button>
+              </td>
+            </tr>
+            <tr>
+              <td>NP-0103</td>
+              <td><strong>王**</strong></td>
+              <td style="font-family:monospace;font-size:11px;color:#9ca3af;">— 未核验</td>
+              <td>深圳XX人力</td>
+              <td><span class="badge badge-secondary">⏳ 待人脸核验</span></td>
+              <td>0 家</td>
+              <td><span class="badge badge-secondary">待完善</span></td>
+              <td><button class="btn btn-outline btn-sm" onclick="completeRegistration()">继续录入 →</button></td>
+            </tr>
+            <tr>
+              <td>NP-0051</td>
+              <td><strong>陈**</strong></td>
+              <td style="font-family:monospace;font-size:11px;color:#9ca3af;">e2c8...a39f ✓</td>
+              <td>— 自主入驻</td>
+              <td><span class="badge badge-success">✅ 已核验</span></td>
+              <td>1 家</td>
+              <td><span class="badge badge-secondary">已注销</span></td>
+              <td><button class="btn btn-outline btn-sm">查看档案</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- 新增自然人模态框 -->
+      <div id="addPersonModal" class="modal-overlay hidden" onclick="if(event.target===this) hideModal('addPersonModal')">
+        <div class="modal-box">
+          <div style="padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;">
+            <h3 style="font-weight:700;font-size:15px;">新增自然人 · 法人资源入库</h3>
+            <button onclick="hideModal('addPersonModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;">×</button>
+          </div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:16px;">
+            <div class="step-bar">
+              <div class="step active">① HR渠道关联</div>
+              <div class="step">② 身份核验</div>
+              <div class="step">③ 电子签协议</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#4b5563;margin-bottom:4px;">关联HR机构 *</label>
+              <select>
+                <option>— 选择已入驻审核通过的HR机构 —</option>
+                <option>深圳XX人力（许可证：44030XXXX）✓</option>
+                <option>广州YY人力（许可证：44010XXXX）✓</option>
+              </select>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:#4b5563;margin-bottom:4px;">真实姓名 *</label>
+                <input placeholder="与身份证一致" />
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:#4b5563;margin-bottom:4px;">身份证号 *</label>
+                <input placeholder="系统将SHA256哈希去重" />
+              </div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#4b5563;margin-bottom:8px;">身份证正反面 + 活体人脸拍照</label>
+              <div style="border:2px dashed #d1d5db;border-radius:8px;padding:20px;text-align:center;color:#9ca3af;font-size:12px;cursor:pointer;" onclick="uploadIDCard()">
+                📷 点击拍摄 / 拖拽上传 · 文件自动AES加密存储
+              </div>
+            </div>
+            <div style="background:#f3f4f6;border-radius:6px;padding:12px;font-size:11px;color:#6b7280;">
+              🔒 <strong>合规校验（系统自动执行）：</strong><br>
+              ✓ SHA256(id_card) 查重 → 阻止同一证件二次入库<br>
+              ✓ 公安接口二要素比对 → 失败则拒收<br>
+              ✓ 同自然人30天注册计数 → ≥2 自动挂起<br>
+              ✓ 证件原文 AES-256 加密存储
+            </div>
+          </div>
+          <div style="padding:16px 20px;border-top:1px solid #e5e7eb;display:flex;justify-content:flex-end;gap:8px;">
+            <button class="btn btn-outline" onclick="hideModal('addPersonModal')">取消</button>
+            <button class="btn btn-primary" onclick="nextStepFaceVerification()">下一步：发起人脸核验</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 法人详情模态框 -->
+      <div id="personDetailModal" class="modal-overlay hidden" onclick="if(event.target===this) hideModal('personDetailModal')">
+        <div class="modal-box" style="width:500px;">
+          <div style="padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;">
+            <h3 style="font-weight:700;font-size:15px;">法人详情 · NP-0086 张**</h3>
+            <button onclick="hideModal('personDetailModal')" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af;">×</button>
+          </div>
+          <div style="padding:20px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+              <div>
+                <div style="font-size:12px;color:#6b7280;">姓名</div>
+                <div style="font-weight:600;">张**</div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#6b7280;">身份证号（哈希）</div>
+                <div style="font-family:monospace;font-size:11px;">a3f2...c91b</div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#6b7280;">HR渠道</div>
+                <div>深圳XX人力</div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#6b7280;">核验状态</div>
+                <div><span class="badge badge-success">✅ 已核验</span></div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#6b7280;">关联主体数</div>
+                <div>1 家</div>
+              </div>
+              <div>
+                <div style="font-size:12px;color:#6b7280;">状态</div>
+                <div><span class="badge badge-success">合作中</span></div>
+              </div>
+            </div>
+            <div style="margin-bottom:12px;">
+              <div style="font-size:12px;color:#6b7280;margin-bottom:4px;">商事服务协议</div>
+              <div style="background:#f3f4f6;border-radius:6px;padding:8px 12px;font-size:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span>电子签协议-20240620.pdf</span>
+                  <button class="btn btn-outline btn-sm" style="font-size:11px;" onclick="viewAgreement()">查看</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:#6b7280;margin-bottom:4px;">关联主体</div>
+              <div style="background:#f3f4f6;border-radius:6px;padding:8px 12px;font-size:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span>REG-0081 深圳市XX跨境贸易商行</span>
+                  <button class="btn btn-outline btn-sm" style="font-size:11px;" onclick="viewEntity()">查看</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 工商注册管理 -->
+    <div id="page-registration" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div>
+          <h1 style="font-size:20px;font-weight:700;color:#111827;">② 工商注册全链路管理</h1>
+          <p style="font-size:13px;color:#6b7280;">主体绑定登记法人 · 不可解绑倒卖 · 每一步上传回执凭证</p>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('newRegistrationModal')">＋ 发起新注册立项</button>
+      </div>
+      
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <select style="width:140px;padding:6px 10px;">
+            <option>全部类型</option>
+            <option>个体工商户</option>
+            <option>有限公司</option>
+            <option>香港公司</option>
+          </select>
+          <select style="width:140px;padding:6px 10px;">
+            <option>全部状态</option>
+            <option>核名中</option>
+            <option>设立登记</option>
+            <option>已领执照</option>
+            <option>已注销</option>
+          </select>
+          <input placeholder="主体编号/统一信用代码..." style="width:200px;padding:6px 10px;" />
+          <button class="btn btn-outline btn-sm">搜索</button>
+          <div style="margin-left:auto;font-size:12px;color:#6b7280;">共 97 个主体</div>
+        </div>
+      </div>
+      
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <th>主体编号</th>
+              <th>主体名称（脱敏）</th>
+              <th>类型</th>
+              <th>登记法人（脱敏）</th>
+              <th>📍 注册进度</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>REG-0097</td>
+              <td><strong>深圳市XX跨境贸易商行</strong></td>
+              <td><span class="badge badge-secondary">个体工商户</span></td>
+              <td>张** (NP-0086)</td>
+              <td>
+                <div class="step-bar" style="font-size:10px;">
+                  <div class="step done">核名✓</div>
+                  <div class="step done">设立✓</div>
+                  <div class="step done">刻章✓</div>
+                  <div class="step active">税务→</div>
+                </div>
+              </td>
+              <td><span class="badge badge-warning">办理中</span></td>
+              <td><button class="btn btn-outline btn-sm" onclick="viewRegistrationDocs()">查看档案</button></td>
+            </tr>
+            <tr>
+              <td>REG-0081</td>
+              <td><strong>广州市YY电商有限公司</strong></td>
+              <td><span class="badge badge-info">有限公司</span></td>
+              <td>陈** (NP-0051)</td>
+              <td>
+                <div class="step-bar" style="font-size:10px;">
+                  <div class="step done">核名✓</div>
+                  <div class="step done">设立✓</div>
+                  <div class="step done">刻章✓</div>
+                  <div class="step done">税务✓</div>
+                  <div class="step done">开户✓</div>
+                </div>
+              </td>
+              <td><span class="badge badge-success">✅ 已领执照</span></td>
+              <td><button class="btn btn-outline btn-sm">查看档案</button></td>
+            </tr>
+            <tr>
+              <td>REG-0108</td>
+              <td><em style="color:#9ca3af;">（待核名）</em></td>
+              <td><span class="badge badge-secondary">个体工商户</span></td>
+              <td>王** (NP-0103)</td>
+              <td><span style="font-size:11px;color:#9ca3af;">⏳ 等待HR提交核名材料</span></td>
+              <td><span class="badge badge-secondary">草稿</span></td>
+              <td><button class="btn btn-outline btn-sm">继续办理</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 平台店铺管理 -->
+    <div id="page-store" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div>
+          <h1 style="font-size:20px;font-weight:700;color:#111827;">③ 平台店铺管理</h1>
+          <p style="font-size:13px;color:#6b7280;">主体强绑定 · 账号密码加密 · 禁止脱离法人单独流转</p>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('newStoreModal')">＋ 发起店铺入驻</button>
+      </div>
+      
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <select style="width:120px;padding:6px 10px;">
+            <option>全部平台</option>
+            <option>Amazon</option>
+            <option>Walmart</option>
+            <option>Shopify</option>
+          </select>
+          <select style="width:120px;padding:6px 10px;">
+            <option>全部状态</option>
+            <option>待入驻</option>
+            <option>运营中</option>
+            <option>封店</option>
+            <option>已注销</option>
+          </select>
+          <input placeholder="店铺ID/主体编号..." style="width:200px;padding:6px 10px;" />
+          <button class="btn btn-outline btn-sm">搜索</button>
+          <div style="margin-left:auto;font-size:12px;color:#6b7280;">共 156 个店铺</div>
+        </div>
+      </div>
+      
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <th>店铺ID</th>
+              <th>平台</th>
+              <th>店铺名称（脱敏）</th>
+              <th>关联主体</th>
+              <th>法人</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>US-Am-0142</td>
+              <td><span class="badge badge-info">Amazon US</span></td>
+              <td>GlobalTrade-Store-0142</td>
+              <td>REG-0081</td>
+              <td>陈**</td>
+              <td><span class="badge badge-warning">待委托</span></td>
+              <td>
+                <button class="btn btn-outline btn-sm">查看</button>
+                <button class="btn btn-outline btn-sm" style="color:#2563eb;border-color:#93c5fd;" onclick="createEntrustOrder()">发起委托</button>
+              </td>
+            </tr>
+            <tr>
+              <td>UK-Am-0073</td>
+              <td><span class="badge badge-info">Amazon UK</span></td>
+              <td>EcoHome-UK-0073</td>
+              <td>REG-0081</td>
+              <td>陈**</td>
+              <td><span class="badge badge-success">✅ 已委托运营</span></td>
+              <td><button class="btn btn-outline btn-sm">查看</button></td>
+            </tr>
+            <tr>
+              <td>US-Wm-0021</td>
+              <td><span class="badge badge-info">Walmart</span></td>
+              <td>Walmart-US-Store</td>
+              <td>REG-0097</td>
+              <td>张**</td>
+              <td><span class="badge badge-success">✅ 运营中</span></td>
+              <td><button class="btn btn-outline btn-sm">查看</button></td>
+            </tr>
+            <tr>
+              <td>US-Sp-0035</td>
+              <td><span class="badge badge-secondary">Shopify</span></td>
+              <td>BrandShop-0035</td>
+              <td>REG-0108</td>
+              <td>王**</td>
+              <td><span class="badge badge-secondary">待入驻</span></td>
+              <td><button class="btn btn-outline btn-sm">继续入驻 →</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 委托运营订单 -->
+    <div id="page-entrust" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div>
+          <h1 style="font-size:20px;font-weight:700;color:#111827;">④ 委托运营订单（合规运营委托，非执照出租）</h1>
+          <p style="font-size:13px;color:#6b7280;">🔐 所有权永久归属法人 · 仅委托运营权 · 对公结算 · 严禁私卡转账</p>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('newEntrustModal')">＋ 创建委托订单</button>
+      </div>
+      
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <select style="width:140px;padding:6px 10px;">
+            <option>全部状态</option>
+            <option>待签署</option>
+            <option>运营中</option>
+            <option>已到期</option>
+            <option>已解约</option>
+          </select>
+          <input placeholder="店铺ID/法人姓名..." style="width:200px;padding:6px 10px;" />
+          <button class="btn btn-outline btn-sm">搜索</button>
+          <div style="margin-left:auto;font-size:12px;color:#6b7280;">共 42 个有效委托</div>
+        </div>
+      </div>
+      
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <th>委托编号</th>
+              <th>店铺</th>
+              <th>法人（所有权人）</th>
+              <th>卖家（受托人）</th>
+              <th>委托期限</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ENT-0142</td>
+              <td>US-Am-0142 (Amazon US)</td>
+              <td>陈** (NP-0051)</td>
+              <td>跨境科技公司</td>
+              <td>2024.06.01 - 2025.05.31</td>
+              <td><span class="badge badge-warning">待签署协议</span></td>
+              <td><button class="btn btn-outline btn-sm" onclick="sendAgreement()">发送协议</button></td>
+            </tr>
+            <tr>
+              <td>ENT-0127</td>
+              <td>UK-Am-0073 (Amazon UK)</td>
+              <td>陈** (NP-0051)</td>
+              <td>深圳电商公司</td>
+              <td>2024.01.15 - 2024.12.14</td>
+              <td><span class="badge badge-success">✅ 运营中</span></td>
+              <td><button class="btn btn-outline btn-sm">查看详情</button></td>
+            </tr>
+            <tr>
+              <td>ENT-0108</td>
+              <td>US-Wm-0021 (Walmart US)</td>
+              <td>张** (NP-0086)</td>
+              <td>广州贸易公司</td>
+              <td>2024.03.20 - 2025.03.19</td>
+              <td><span class="badge badge-success">✅ 运营中</span></td>
+              <td><button class="btn btn-outline btn-sm">查看详情</button></td>
+            </tr>
+            <tr>
+              <td>ENT-0095</td>
+              <td>DE-Am-0043 (Amazon DE)</td>
+              <td>李** (NP-0092)</td>
+              <td>义乌小商品公司</td>
+              <td>2023.11.01 - 2024.10.31</td>
+              <td><span class="badge badge-danger">已到期</span></td>
+              <td><button class="btn btn-outline btn-sm" onclick="renewEntrust()">续约</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 卖家管理 -->
+    <div id="page-seller" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div>
+          <h1 style="font-size:20px;font-weight:700;color:#111827;">⑤ 卖家管理 & 代入驻交付</h1>
+          <p style="font-size:13px;color:#6b7280;">卖家资质审核 · 自动匹配法人资源 · 全链路留痕 · 禁止黑名单卖家匹配</p>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('newSellerModal')">＋ 新卖家入驻</button>
+      </div>
+      
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <select style="width:140px;padding:6px 10px;">
+            <option>全部状态</option>
+            <option>正常</option>
+            <option>审核中</option>
+            <option>黑名单</option>
+          </select>
+          <input placeholder="公司名称/联系人..." style="width:200px;padding:6px 10px;" />
+          <button class="btn btn-outline btn-sm">搜索</button>
+          <div style="margin-left:auto;font-size:12px;color:#6b7280;">共 38 个卖家</div>
+        </div>
+      </div>
+      
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <th>卖家ID</th>
+              <th>公司名称</th>
+              <th>联系人</th>
+              <th>主营平台</th>
+              <th>委托中店铺数</th>
+              <th>合规评分</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SL-0038</td>
+              <td>跨境科技有限公司</td>
+              <td>王先生</td>
+              <td>Amazon, Walmart</td>
+              <td>2 个</td>
+              <td>95/100</td>
+              <td><span class="badge badge-success">正常</span></td>
+              <td><button class="btn btn-outline btn-sm">详情</button></td>
+            </tr>
+            <tr>
+              <td>SL-0022</td>
+              <td>深圳电商有限公司</td>
+              <td>李女士</td>
+              <td>Amazon, Shopify</td>
+              <td>3 个</td>
+              <td>88/100</td>
+              <td><span class="badge badge-success">正常</span></td>
+              <td><button class="btn btn-outline btn-sm">详情</button></td>
+            </tr>
+            <tr>
+              <td>SL-0015</td>
+              <td>广州贸易有限公司</td>
+              <td>张先生</td>
+              <td>Walmart</td>
+              <td>1 个</td>
+              <td>92/100</td>
+              <td><span class="badge badge-success">正常</span></td>
+              <td><button class="btn btn-outline btn-sm">详情</button></td>
+            </tr>
+            <tr>
+              <td>SL-0007</td>
+              <td>义乌小商品公司</td>
+              <td>陈先生</td>
+              <td>Amazon DE</td>
+              <td>0 个</td>
+              <td>45/100</td>
+              <td><span class="badge badge-danger">黑名单</span></td>
+              <td><button class="btn btn-outline btn-sm">查看原因</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 操作审计日志 -->
+    <div id="page-audit" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div>
+          <h1 style="font-size:20px;font-weight:700;color:#111827;">⑥ 操作审计日志（不可篡改）</h1>
+          <p style="font-size:13px;color:#6b7280;">📋 全操作留痕 · IP/时间/账号记录 · 永久归档 · 支持一键证据导出</p>
+        </div>
+        <button class="btn btn-outline" onclick="exportAuditLogs()">📤 导出审计日志</button>
+      </div>
+      
+      <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <select style="width:140px;padding:6px 10px;">
+            <option>全部操作类型</option>
+            <option>查看证件</option>
+            <option>创建委托</option>
+            <option>修改信息</option>
+            <option>登录登出</option>
+          </select>
+          <input placeholder="操作人/目标ID..." style="width:200px;padding:6px 10px;" />
+          <button class="btn btn-outline btn-sm">搜索</button>
+          <div style="margin-left:auto;font-size:12px;color:#6b7280;">共 12,847 条审计记录</div>
+        </div>
+      </div>
+      
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>操作人</th>
+              <th>IP地址</th>
+              <th>操作类型</th>
+              <th>目标对象</th>
+              <th>详情</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024-06-20 10:22:15</td>
+              <td>admin</td>
+              <td>192.168.1.100</td>
+              <td>调取证件原件</td>
+              <td>NP-0092</td>
+              <td>申请查看身份证原件，审批工单 #AP-2024062003</td>
+            </tr>
+            <tr>
+              <td>2024-06-20 09:15:33</td>
+              <td>system</td>
+              <td>—</td>
+              <td>创建委托订单</td>
+              <td>ENT-0142</td>
+              <td>法人陈** 委托 跨境科技公司 运营 US-Am-0142</td>
+            </tr>
+            <tr>
+              <td>2024-06-20 08:30:00</td>
+              <td>risk_scan</td>
+              <td>—</td>
+              <td>风险预警</td>
+              <td>NP-0092</td>
+              <td>触发高频注册预警（30天内注册2家主体）</td>
+            </tr>
+            <tr>
+              <td>2024-06-19 16:40:22</td>
+              <td>admin</td>
+              <td>192.168.1.100</td>
+              <td>上传文件</td>
+              <td>REG-0097</td>
+              <td>上传工商设立登记回执 REG-0097.pdf</td>
+            </tr>
+            <tr>
+              <td>2024-06-19 11:05:18</td>
+              <td>seller_0038</td>
+              <td>203.0.113.5</td>
+              <td>登录系统</td>
+              <td>—</td>
+              <td>卖家登录，查看委托订单</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 风控巡检中心 -->
+    <div id="page-risk" class="page">
+      <div style="margin-bottom:20px;">
+        <h1 style="font-size:20px;font-weight:700;color:#111827;">风控巡检中心</h1>
+        <p style="font-size:13px;color:#6b7280;">🚨 每日自动扫描风险点 · 实时预警 · 合规拦截 · 杜绝刑事风险</p>
+      </div>
+      
+      <div class="card" style="background:#fef2f2;border:1px solid #fecaca;margin-bottom:20px;">
+        <div style="display:flex;align-items:start;gap:8px;">
+          <div style="color:#dc2626;font-size:18px;">⚠️</div>
+          <div>
+            <div style="font-weight:600;color:#991b1b;">高风险预警（需立即处理）</div>
+            <div style="font-size:13px;color:#991b1b;">检测到 3 个高风险事件，可能涉及合规红线，请立即处理。</div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;">
+        <div class="card">
+          <div style="font-size:12px;color:#6b7280;font-weight:600;">🚨 高风险（今日）</div>
+          <div style="font-size:24px;font-weight:700;color:#dc2626;">3</div>
+          <div style="font-size:11px;color:#dc2626;">需立即处理</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;color:#6b7280;font-weight:600;">⚠️ 中风险（今日）</div>
+          <div style="font-size:24px;font-weight:700;color:#d97706;">7</div>
+          <div style="font-size:11px;color:#d97706;">需关注</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;color:#6b7280;font-weight:600;">✅ 已处理风险（7天）</div>
+          <div style="font-size:24px;font-weight:700;color:#059669;">24</div>
+          <div style="font-size:11px;color:#059669;">已闭环</div>
+        </div>
+      </div>
+      
+      <div class="card" style="margin-bottom:20px;">
+        <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:12px;padding-left:8px;border-left:4px solid #dc2626;">🚨 高风险事项（立即处理）</div>
+        <table>
+          <thead>
+            <tr>
+              <th>风险类型</th>
+              <th>目标对象</th>
+              <th>风险描述</th>
+              <th>触发规则</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-danger">高频注册</span></td>
+              <td>NP-0092 李**</td>
+              <td>同一自然人30天内注册2家主体，已达阈值上限</td>
+              <td>R001: 同人30天注册>2</td>
+              <td><button class="btn btn-outline btn-sm" style="background:#fee2e2;color:#dc2626;border-color:#fecaca;" onclick="handleRisk()">立即处理</button></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-danger">无协议运营</span></td>
+              <td>店铺 US-Am-0142</td>
+              <td>检测到店铺运营中但无有效委托协议</td>
+              <td>R002: 无协议运营</td>
+              <td><button class="btn btn-outline btn-sm" style="background:#fee2e2;color:#dc2626;border-color:#fecaca;" onclick="handleRisk()">立即处理</button></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-danger">私卡结算</span></td>
+              <td>结算单 ST-20240618</td>
+              <td>检测到一笔私卡转账记录，未走对公账户</td>
+              <td>R003: 私卡结算</td>
+              <td><button class="btn btn-outline btn-sm" style="background:#fee2e2;color:#dc2626;border-color:#fecaca;" onclick="handleRisk()">立即处理</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="card">
+        <div style="font-size:14px;font-weight:700;color:#111827;margin-bottom:12px;padding-left:8px;border-left:4px solid #d97706;">风控规则库（系统内置）</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6;">
+            <span><strong>R001</strong> 同一自然人30天内注册主体数>2</span>
+            <span class="badge badge-danger">高风险</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6;">
+            <span><strong>R002</strong> 委托运营订单无有效电子签协议</span>
+            <span class="badge badge-danger">高风险</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6;">
+            <span><strong>R003</strong> 结算流水收款账户与备案不一致（私卡转账）</span>
+            <span class="badge badge-danger">高风险</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6;">
+            <span><strong>R004</strong> 主体注册超过180天未激活店铺</span>
+            <span class="badge badge-warning">中风险</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f3f4f6;">
+            <span><strong>R005</strong> 批量导出证件原件次数>5次/天</span>
+            <span class="badge badge-warning">中风险</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+</div>
+
+<script>
+  // 应用状态
+  let currentPage = 'dashboard';
+  let sidebarCollapsed = false;
+  let notifications = [
+    { id: 1, type: 'risk', title: '高风险预警', message: '自然人NP-092达到注册阈值', time: '10:30', read: false },
+    { id: 2, type: 'task', title: '待办事项', message: '委托订单ENT-0142待签署协议', time: '09:15', read: false },
+    { id: 3, type: 'system', title: '系统提醒', message: '今日风控扫描已完成', time: '08:00', read: false }
+  ];
+  
+  // 登录功能
+  function doLogin() {
+    const username = document.getElementById('loginUser').value.trim();
+    const password = document.getElementById('loginPass').value.trim();
+    const errorDiv = document.getElementById('loginError');
+    
+    errorDiv.style.display = 'none';
+    
+    if (username === 'admin' && password === 'admin') {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      console.log('登录成功！系统已进入演示模式。');
+    } else {
+      errorDiv.textContent = '❌ 账号或密码错误，请使用 admin / admin';
+      errorDiv.style.display = 'block';
+    }
+  }
+  
+  // 页面切换
+  function goPage(pageName, element) {
+    // 隐藏所有页面
+    document.querySelectorAll('.page').forEach(page => {
+      page.classList.remove('active');
+    });
+    
+    // 移除所有导航项激活状态
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.remove('active');
+      item.style.background = 'transparent';
+      item.style.borderLeft = '3px solid transparent';
+    });
+    
+    // 显示目标页面
+    document.getElementById(`page-${pageName}`).classList.add('active');
+    
+    // 设置导航项激活状态
+    if (element) {
+      element.classList.add('active');
+      element.style.background = 'rgba(37, 99, 235, 0.2)';
+      element.style.borderLeft = '3px solid #2563eb';
+    }
+    
+    currentPage = pageName;
+  }
+  
+  // 切换侧边栏
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+    
+    if (sidebarCollapsed) {
+      sidebar.style.width = '240px';
+      content.style.marginLeft = '240px';
+      sidebar.classList.remove('collapsed');
+    } else {
+      sidebar.style.width = '70px';
+      content.style.marginLeft = '70px';
+      sidebar.classList.add('collapsed');
+    }
+    
+    sidebarCollapsed = !sidebarCollapsed;
+  }
+  
+  // 显示通知
+  function showNotifications() {
+    let unreadCount = notifications.filter(n => !n.read).length;
+    if (unreadCount > 0) {
+      alert(`您有 ${unreadCount} 条未读通知`);
+    } else {
+      alert('暂无未读通知');
+    }
+  }
+  
+  // 模态框控制
+  function showModal(modalId) {
+    document.getElementById(modalId).classList.remove('hidden');
+  }
+  
+  function hideModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+  }
+  
+  // 页面加载完成后初始化
+  document.addEventListener('DOMContentLoaded', function() {
+    // 设置默认页面
+    goPage('dashboard', document.querySelector('.nav-item.active'));
+    
+    // 为登录输入框添加回车键支持
+    document.getElementById('loginPass').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        doLogin();
+      }
+    });
+    
+    // 为所有模态框添加点击外部关闭功能
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          modal.classList.add('hidden');
+        }
+      });
+    });
+    
+    console.log('ComplianceSaaS 系统已初始化完成');
+  });
+  
+  // 演示功能函数
+  function requestOriginalDocument() {
+    alert('⚠️ 证件原件查看需二级审批\n已提交审批工单 #AP-2024062004');
+  }
+  
+  function pauseRegistration() {
+    alert('🚫 风控拦截：该自然人已达注册阈值\n需人工复核后方可解除暂停');
+  }
+  
+  function completeRegistration() {
+    alert('跳转到自然人信息完善页面');
+  }
+  
+  function viewAgreement() {
+    alert('打开商事服务协议PDF文件');
+  }
+  
+  function viewEntity() {
+    alert('查看主体详情页面');
+  }
+  
+  function uploadIDCard() {
+    alert('调用摄像头/上传组件\n① 身份证正面拍照\n② 身份证反面拍照\n③ 活体面部动作核验\n→ 后端调公安二要素比对接口');
+  }
+  
+  function nextStepFaceVerification() {
+    alert('Step 2 → 调人脸核验SDK → 返回后进入Step 3电子签');
+    hideModal('addPersonModal');
+  }
+  
+  function showModal(modalName) {
+    if (modalName === 'newRegistrationModal') {
+      alert('新注册立项功能演示');
+    } else if (modalName === 'newStoreModal') {
+      alert('发起店铺入驻功能演示');
+    } else if (modalName === 'newEntrustModal') {
+      alert('创建委托订单功能演示');
+    } else if (modalName === 'newSellerModal') {
+      alert('新卖家入驻功能演示');
+    } else {
+      document.getElementById(modalName).classList.remove('hidden');
+    }
+  }
+  
+  function viewRegistrationDocs() {
+    alert('查看档案：核名通知书.pdf / 设立登记申请书.pdf / 营业执照正副本（加密） / 印章备案回执');
+  }
+  
+  function createEntrustOrder() {
+    alert('创建委托运营订单流程');
+  }
+  
+  function sendAgreement() {
+    alert('发送委托运营协议给法人签署');
+  }
+  
+  function renewEntrust() {
+    alert('续约委托运营协议');
+  }
+  
+  function exportAuditLogs() {
+    alert('审计日志导出功能已触发，将生成包含以下内容的ZIP文件：\n1. 操作日志CSV文件\n2. 系统配置快照\n3. 用户权限清单\n4. 数字签名文件');
+  }
+  
+  function handleRisk() {
+    alert('已创建风险处理工单，请按照标准流程处理');
+  }
+</script>
+</body>
+</html>
