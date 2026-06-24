@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAPay Global Payment - 管理中心</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0b0e11;--card:#1e2329;--border:#2b3139;--yellow:#f0b90b;--green:#0ecb81;--red:#f6465d;--white:#eaecef;--gray:#848e9c;--dark:#181a20;--blue:#1890ff;--card-hover:#252930}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Noto Sans SC',sans-serif;background:var(--bg);color:var(--white);min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;width:220px;height:100%;background:var(--dark);border-right:1px solid var(--border);padding:20px 0;z-index:100;overflow-y:auto}
+.logo{padding:0 20px 30px;font-size:18px;font-weight:700;color:var(--yellow);display:flex;align-items:center;gap:10px}
+.logo span{font-size:24px}
+.nav-item{padding:12px 24px;color:var(--gray);cursor:pointer;display:flex;align-items:center;gap:12px;font-size:14px;transition:.2s}
+.nav-item:hover,.nav-item.active{color:var(--white);background:rgba(240,185,11,.08)}
+.nav-item.active{border-left:3px solid var(--yellow);color:var(--yellow)}
+.nav-icon{font-size:18px;width:20px;text-align:center}
+.main{margin-left:220px;padding:24px}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.top-bar h2{font-size:22px;font-weight:600}
+.top-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-size:14px;font-weight:500;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.btn-yellow{background:var(--yellow);color:#181a20}.btn-yellow:hover{background:#d4a20a}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--white)}.btn-outline:hover{border-color:var(--yellow);color:var(--yellow)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#0ba86a}
+.btn-red{background:var(--red);color:#fff}
+.btn-sm{padding:6px 14px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--card);border-radius:12px;padding:20px;border:1px solid var(--border)}
+.stat-card .label{color:var(--gray);font-size:13px;margin-bottom:8px}
+.stat-card .value{font-size:24px;font-weight:700;margin-bottom:4px}
+.stat-card .change{font-size:12px}.change.up{color:var(--green)}.change.down{color:var(--red)}
+.section{background:var(--card);border-radius:12px;border:1px solid var(--border);margin-bottom:24px;overflow:hidden}
+.section-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.section-header h3{font-size:16px;font-weight:600}
+.section-header a{color:var(--yellow);font-size:13px;text-decoration:none;cursor:pointer}
+table{width:100%;border-collapse:collapse}
+th{padding:12px 16px;text-align:left;color:var(--gray);font-size:12px;font-weight:500;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2)}
+td{padding:12px 16px;font-size:13px;border-bottom:1px solid var(--border)}
+tr:hover{background:var(--card-hover)}
+.badge{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500}
+.badge-green{background:rgba(14,203,129,.15);color:var(--green)}
+.badge-yellow{background:rgba(240,185,11,.15);color:var(--yellow)}
+.badge-red{background:rgba(246,70,93,.15);color:var(--red)}
+.badge-blue{background:rgba(24,144,255,.15);color:var(--blue)}
+.amount-in{color:var(--green)}.amount-out{color:var(--red)}
+.wallet-row{display:flex;align-items:center;gap:12px}
+.wallet-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.wallet-addr{font-family:monospace;font-size:12px;color:var(--gray)}
+.search-bar{padding:12px 20px;display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.search-input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:8px 14px;color:var(--white);font-size:13px;flex:1;min-width:120px}
+.search-input:focus{outline:none;border-color:var(--yellow)}
+select.search-input{cursor:pointer}
+.pagination{padding:12px 20px;display:flex;justify-content:space-between;align-items:center;color:var(--gray);font-size:13px}
+.page-btns{display:flex;gap:4px;flex-wrap:wrap}
+.page-btn{padding:4px 12px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--white);cursor:pointer;font-size:12px}
+.page-btn.active{background:var(--yellow);color:#181a20;border-color:var(--yellow)}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:200;justify-content:center;align-items:center}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border-radius:16px;border:1px solid var(--border);width:520px;max-height:90vh;overflow-y:auto}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-header h3{font-size:18px}
+.modal-close{background:none;border:none;color:var(--gray);font-size:24px;cursor:pointer}
+.modal-body{padding:24px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;color:var(--gray);font-size:13px;margin-bottom:8px}
+.form-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 16px;color:var(--white);font-size:14px}
+.form-input:focus{outline:none;border-color:var(--yellow)}
+.form-row{display:flex;gap:12px}
+.form-row .form-group{flex:1}
+.balance-display{background:var(--bg);border-radius:8px;padding:16px;text-align:center;margin-bottom:20px}
+.balance-display .bal-label{color:var(--gray);font-size:12px}
+.balance-display .bal-value{font-size:28px;font-weight:700;color:var(--green);margin-top:4px}
+.quick-pct{display:flex;gap:8px;margin-top:8px}
+.quick-pct button{flex:1;padding:6px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--gray);cursor:pointer;font-size:12px}
+.quick-pct button:hover{border-color:var(--yellow);color:var(--yellow)}
+.fee-info{background:var(--bg);border-radius:8px;padding:12px 16px;margin:16px 0}
+.fee-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.fee-row:last-child{margin-bottom:0}
+.fee-row .fee-label{color:var(--gray)}.fee-row .fee-value{color:var(--white)}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:12px;justify-content:flex-end}
+.tx-detail-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.tx-detail-row:last-child{border:none}
+.tx-detail-row .dl{color:var(--gray);font-size:13px}
+.tx-detail-row .dv{font-size:13px;text-align:right;max-width:260px;word-break:break-all}
+.success-icon{width:64px;height:64px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px}
+.hidden{display:none}
+.toast{position:fixed;top:20px;right:20px;padding:14px 24px;border-radius:8px;z-index:999;font-size:14px;transform:translateX(120%);transition:.3s}
+.toast.show{transform:translateX(0)}
+.toast-success{background:var(--green);color:#fff}
+.toast-error{background:var(--red);color:#fff}
+.auto-gen-card{background:var(--bg);border:1px dashed var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
+.auto-gen-card h4{color:var(--yellow);margin-bottom:12px}
+.gen-preview{background:var(--card);border-radius:8px;padding:16px;margin:12px 0;font-size:13px}
+.gen-preview .gp-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)}
+.gen-preview .gp-row:last-child{border:none}
+/* Login overlay */
+.login-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;display:flex;justify-content:center;align-items:center}
+.login-overlay.hide{display:none}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;width:420px;text-align:center}
+.login-box .login-logo{font-size:36px;color:var(--yellow);margin-bottom:8px}
+.login-box h2{margin-bottom:6px;font-size:22px}
+.login-box p{color:var(--gray);font-size:13px;margin-bottom:28px}
+.login-box .form-group{text-align:left;margin-bottom:18px}
+.login-box .login-error{color:var(--red);font-size:13px;margin-top:12px;display:none}
+/* Password modal for 理财 */
+.pwd-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:300;display:none;justify-content:center;align-items:center}
+.pwd-overlay.show{display:flex}
+.pwd-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;width:380px;text-align:center}
+.pwd-box h3{margin-bottom:16px}
+.pwd-box .pwd-error{color:var(--red);font-size:13px;margin-top:8px;display:none}
+@media(max-width:900px){.sidebar{width:60px}.sidebar .nav-text,.logo-text{display:none}.main{margin-left:60px}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="logo"><span>⬡</span><span class="logo-text">EAPay</span></div>
+  <div class="nav-item active" onclick="showPage('dashboard',this)"><span class="nav-icon">📊</span><span class="nav-text">账户总览</span></div>
+  <div class="nav-item" onclick="showPage('transfer',this)"><span class="nav-icon">💸</span><span class="nav-text">转账汇款</span></div>
+  <div class="nav-item" onclick="showPage('history',this)"><span class="nav-icon">📋</span><span class="nav-text">交易记录</span></div>
+  <div class="nav-item" onclick="showPage('wallets',this)"><span class="nav-icon">👛</span><span class="nav-text">数字钱包</span></div>
+  <div class="nav-item" onclick="openFinancePage(this)"><span class="nav-icon">💰</span><span class="nav-text">理财</span></div>
+  <div class="nav-item" onclick="showPage('exchange',this)"><span class="nav-icon">🔄</span><span class="nav-text">货币兑换</span></div>
+  <div class="nav-item" onclick="showPage('accounts',this)"><span class="nav-icon">🏦</span><span class="nav-text">收付款账号</span></div>
+  <div class="nav-item" onclick="showPage('settings',this)"><span class="nav-icon">⚙️</span><span class="nav-text">账户设置</span></div>
+</div>
+
+<div class="main">
+  <!-- Dashboard -->
+  <div id="page-dashboard">
+    <div class="top-bar">
+      <h2>账户总览</h2>
+      <div class="top-actions">
+        <button class="btn btn-yellow" onclick="openTransferModal()">💸 转账汇款</button>
+        <button class="btn btn-outline" onclick="showPage('exchange')">🔄 货币兑换</button>
+        <button class="btn btn-outline" onclick="exportReport()">📥 导出报表</button>
+      </div>
+    </div>
+    <div class="stats" id="stats-cards"></div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:24px">
+      <div class="section">
+        <div class="section-header"><h3>数字货币钱包</h3><a onclick="showPage('wallets')">管理钱包</a></div>
+        <table><thead><tr><th>币种</th><th>链类型</th><th>余额</th><th>估值(USD)</th><th>操作</th></tr></thead>
+        <tbody id="wallet-table"></tbody></table>
+      </div>
+      <div class="section">
+        <div class="section-header"><h3>资产分布</h3></div>
+        <div style="padding:20px" id="asset-chart"></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header"><h3>最近交易</h3><a onclick="showPage('history')">查看全部 →</a></div>
+      <table><thead><tr><th>交易ID</th><th>类型</th><th>金额</th><th>收款方/来源</th><th>状态</th><th>时间</th><th>操作</th></tr></thead>
+      <tbody id="recent-tx"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Transfer Page -->
+  <div id="page-transfer" class="hidden">
+    <div class="top-bar"><h2>转账汇款</h2></div>
+    <div style="max-width:560px">
+      <div class="section" style="overflow:visible">
+        <div class="section-header"><h3>USDT 转账</h3></div>
+        <div style="padding:24px">
+          <div class="balance-display">
+            <div class="bal-label">USDT 可用余额</div>
+            <div class="bal-value" id="transfer-balance">0</div>
+          </div>
+          <div class="form-group">
+            <label>选择币种 *</label>
+            <select class="form-input" id="tx-coin"><option value="USDT">USDT - Tether</option><option value="BTC">BTC - 比特币</option><option value="ETH">ETH - 以太坊</option></select>
+          </div>
+          <div class="form-group">
+            <label>选择网络 *</label>
+            <select class="form-input" id="tx-network" onchange="updateFee()">
+              <option value="internal">Binance Internal (内部转账，0手续费)</option>
+              <option value="trc20">TRC20 (TRON)</option>
+              <option value="erc20">ERC20 (Ethereum)</option>
+              <option value="bep20">BEP20 (BSC)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>收款方钱包地址 / UID *</label>
+            <input type="text" class="form-input" id="tx-address" placeholder="输入钱包地址或Binance UID">
+          </div>
+          <div class="form-group">
+            <label>转账数量 *</label>
+            <input type="number" class="form-input" id="tx-amount" placeholder="0.00" step="0.01" oninput="updateFee()">
+            <div class="quick-pct">
+              <button onclick="setAmount(25)">25%</button>
+              <button onclick="setAmount(50)">50%</button>
+              <button onclick="setAmount(75)">75%</button>
+              <button onclick="setAmount(100)">100%</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>备注</label>
+            <input type="text" class="form-input" id="tx-memo" placeholder="可选备注信息">
+          </div>
+          <div class="fee-info">
+            <div class="fee-row"><span class="fee-label">网络手续费</span><span class="fee-value" id="fee-display">0 USDT</span></div>
+            <div class="fee-row"><span class="fee-label">实际到账</span><span class="fee-value" id="receive-display">0.00 USDT</span></div>
+            <div class="fee-row"><span class="fee-label">转账后余额</span><span class="fee-value" id="after-balance">-</span></div>
+          </div>
+          <button class="btn btn-yellow" style="width:100%;justify-content:center;padding:14px" onclick="executeTransfer()">确认转账</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Page -->
+  <div id="page-history" class="hidden">
+    <div class="top-bar"><h2>交易记录</h2>
+      <div class="top-actions">
+        <button class="btn btn-outline btn-sm" onclick="exportReport()">📥 导出CSV</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="搜索交易ID / 收款方 / 备注..." id="search-tx" oninput="filterTx()" style="max-width:300px">
+        <select class="search-input" id="filter-type" onchange="filterTx()" style="max-width:150px">
+          <option value="">全部类型</option><option value="内部转账">内部转账</option><option value="收款">收款</option><option value="兑换">兑换</option><option value="提现">提现</option>
+        </select>
+        <select class="search-input" id="filter-status" onchange="filterTx()" style="max-width:120px">
+          <option value="">全部状态</option><option value="已完成">已完成</option><option value="处理中">处理中</option>
+        </select>
+      </div>
+      <table><thead><tr><th>交易ID</th><th>日期</th><th>类型</th><th>金额</th><th>收款方/来源</th><th>备注</th><th>状态</th><th>操作</th></tr></thead>
+      <tbody id="history-tbody"></tbody></table>
+      <div class="pagination">
+        <span id="page-info"></span>
+        <div class="page-btns" id="page-btns"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wallets Page -->
+  <div id="page-wallets" class="hidden">
+    <div class="top-bar"><h2>数字货币钱包</h2>
+      <div class="top-actions"><button class="btn btn-yellow" onclick="openTransferModal()">💸 转账</button></div>
+    </div>
+    <div class="stats" id="wallet-stats"></div>
+    <div class="section">
+      <div class="section-header"><h3>钱包详情</h3></div>
+      <table><thead><tr><th>币种</th><th>链类型</th><th>钱包地址</th><th>余额</th><th>估值(USD)</th><th>操作</th></tr></thead>
+      <tbody id="wallet-detail-table"></tbody></table>
+    </div>
+  </div>
+
+  <!-- Auto Generate Page (理财) -->
+  <div id="page-autogen" class="hidden">
+    <div class="top-bar"><h2>理财管理</h2></div>
+    <div style="max-width:700px">
+      <div class="auto-gen-card">
+        <h4>📅 生成下一个月的转账记录</h4>
+        <p style="color:var(--gray);font-size:13px;margin-bottom:16px">
+          系统会根据当前团队配置，自动生成薪资转账 + 运营成本转账（2笔），同时从余额中扣除。还可以选择同时生成额外的业务流水。
+        </p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>目标月份 *</label>
+            <input type="month" class="form-input" id="gen-month" value="2026-07">
+          </div>
+          <div class="form-group">
+            <label>USD/CNY 汇率 *</label>
+            <input type="number" class="form-input" id="gen-rate" value="6.75" step="0.0001">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>团队人数</label>
+            <input type="number" class="form-input" id="gen-headcount" value="6" min="1" max="20">
+          </div>
+          <div class="form-group">
+            <label>人均月薪 (CNY)</label>
+            <input type="number" class="form-input" id="gen-avg-salary" value="22000" step="1000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>运营成本 (CNY)</label>
+            <input type="number" class="form-input" id="gen-ops" value="14000" step="1000">
+          </div>
+          <div class="form-group">
+            <label>收款方</label>
+            <input type="text" class="form-input" id="gen-payee" value="devteam_zhangwei">
+          </div>
+        </div>
+        <div style="margin:16px 0">
+          <label style="color:var(--gray);font-size:13px;display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="gen-extra" checked> 同时生成额外业务流水（随机收款/兑换/提现）
+          </label>
+        </div>
+        <div class="form-row" id="extra-opts">
+          <div class="form-group">
+            <label>额外流水笔数</label>
+            <input type="number" class="form-input" id="gen-extra-count" value="3" min="1" max="10">
+          </div>
+          <div class="form-group">
+            <label>额外流水总额范围 (USDT)</label>
+            <input type="number" class="form-input" id="gen-extra-total" value="80000" step="5000">
+          </div>
+        </div>
+        <button class="btn btn-yellow" onclick="previewAutoGen()" style="margin-right:12px">👁 预览</button>
+        <button class="btn btn-green" onclick="confirmAutoGen()">✓ 确认生成</button>
+      </div>
+
+      <div id="gen-preview-area" class="hidden">
+        <div class="section">
+          <div class="section-header"><h3>预览 - 待生成记录</h3></div>
+          <div id="gen-preview-body" style="padding:16px"></div>
+          <div style="padding:16px;border-top:1px solid var(--border)">
+            <button class="btn btn-green" onclick="confirmAutoGen()">✓ 确认写入并扣款</button>
+            <button class="btn btn-outline" onclick="document.getElementById('gen-preview-area').classList.add('hidden')" style="margin-left:8px">取消</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header"><h3>已生成月份</h3></div>
+        <div style="padding:16px" id="gen-history-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exchange Page -->
+  <div id="page-exchange" class="hidden">
+    <div class="top-bar"><h2>货币兑换</h2></div>
+    <div style="max-width:480px">
+      <div class="section" style="overflow:visible">
+        <div style="padding:24px">
+          <div class="form-group"><label>卖出</label>
+            <div style="display:flex;gap:8px"><select class="form-input" style="width:120px"><option>USDT</option><option>BTC</option><option>ETH</option></select>
+            <input type="number" class="form-input" placeholder="0.00" id="ex-sell"></div>
+          </div>
+          <div style="text-align:center;padding:8px;color:var(--yellow);font-size:24px;cursor:pointer" onclick="this.querySelector|0">⇅</div>
+          <div class="form-group"><label>买入</label>
+            <div style="display:flex;gap:8px"><select class="form-input" style="width:120px"><option>BTC</option><option>USDT</option><option>ETH</option></select>
+            <input type="number" class="form-input" placeholder="0.00" id="ex-buy"></div>
+          </div>
+          <div class="fee-info"><div class="fee-row"><span class="fee-label">参考汇率</span><span class="fee-value">1 BTC = 64,250.00 USDT</span></div>
+          <div class="fee-row"><span class="fee-label">手续费</span><span class="fee-value">0.1%</span></div></div>
+          <button class="btn btn-yellow" style="width:100%;justify-content:center;padding:14px" onclick="toast('兑换成功','success')">确认兑换</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accounts Page -->
+  <div id="page-accounts" class="hidden">
+    <div class="top-bar"><h2>全球收付款账号</h2><div class="top-actions"><button class="btn btn-yellow">+ 新增账号</button></div></div>
+    <div class="section">
+      <div class="section-header"><h3>全球收款账号</h3></div>
+      <table><thead><tr><th>国家/地区</th><th>银行名称</th><th>账号类型</th><th>状态</th><th>创建时间</th></tr></thead>
+      <tbody>
+        <tr><td>🇺🇸 美国</td><td>Bank of America</td><td>公司账户</td><td><span class="badge badge-green">正常</span></td><td>2024-11-20</td></tr>
+        <tr><td>🇭🇰 香港</td><td>汇丰银行(HSBC)</td><td>公司账户</td><td><span class="badge badge-green">正常</span></td><td>2024-12-05</td></tr>
+        <tr><td>🇸🇬 新加坡</td><td>星展银行(DBS)</td><td>个人账户</td><td><span class="badge badge-yellow">审核中</span></td><td>2025-03-18</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- Settings Page -->
+  <div id="page-settings" class="hidden">
+    <div class="top-bar"><h2>账户设置</h2></div>
+    <div class="section"><div style="padding:24px">
+      <div class="form-group"><label>账户邮箱</label><input class="form-input" value="admin@eapay.com" disabled></div>
+      <div class="form-group"><label>安全验证</label><div style="color:var(--green)">✓ 谷歌验证器已绑定</div></div>
+      <div class="form-group"><label>API密钥</label><button class="btn btn-outline btn-sm">管理API</button></div>
+      <div class="form-group" style="border-top:1px solid var(--border);padding-top:20px;margin-top:20px">
+        <label>数据管理</label>
+        <p style="color:var(--gray);font-size:12px;margin-bottom:10px">重置后余额和新增交易记录将恢复到初始状态（刷新生效）</p>
+        <button class="btn btn-red btn-sm" onclick="if(confirm('确定要重置所有数据？余额和新增记录将恢复初始状态。')){localStorage.removeItem('eapay_data_v1');toast('数据已重置，请刷新页面','success')}">重置数据</button>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+<!-- Quick Transfer Modal -->
+<div class="modal-overlay" id="modal-transfer">
+  <div class="modal">
+    <div class="modal-header"><h3>快速转账</h3><button class="modal-close" onclick="closeModal('modal-transfer')">&times;</button></div>
+    <div class="modal-body">
+      <div class="balance-display"><div class="bal-label">可用余额</div><div class="bal-value" id="quick-balance">0</div></div>
+      <div class="form-group"><label>收款方地址 / UID</label><input class="form-input" id="quick-addr" placeholder="输入钱包地址或UID"></div>
+      <div class="form-group"><label>金额 (USDT)</label><input type="number" class="form-input" id="quick-amount" placeholder="0.00"></div>
+      <div class="form-group"><label>备注</label><input class="form-input" id="quick-memo" placeholder="可选"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-transfer')">取消</button>
+      <button class="btn btn-yellow" onclick="quickTransfer()">确认转账</button>
+    </div>
+  </div>
+</div>
+
+<!-- TX Detail Modal -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal">
+    <div class="modal-header"><h3>交易详情</h3><button class="modal-close" onclick="closeModal('modal-detail')">&times;</button></div>
+    <div class="modal-body" id="detail-body"></div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-detail')">关闭</button></div>
+  </div>
+</div>
+
+<!-- Transfer Success Modal -->
+<div class="modal-overlay" id="modal-success">
+  <div class="modal">
+    <div class="modal-body" style="text-align:center;padding:40px">
+      <div class="success-icon">✓</div>
+      <h3 style="margin-bottom:8px">转账成功</h3>
+      <p style="color:var(--gray);margin-bottom:20px" id="success-msg"></p>
+      <div id="success-detail"></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-yellow" onclick="closeModal('modal-success')">完成</button></div>
+  </div>
+</div>
+
+<!-- Login Overlay -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <div class="login-logo">⬡</div>
+    <h2>EAPay Global Payment</h2>
+    <p>全球支付管理系统 · 请登录您的账户</p>
+    <div class="form-group">
+      <label style="color:var(--gray);font-size:13px">账户邮箱</label>
+      <input class="form-input" id="login-email" type="email" value="laimx2009@gmail.com">
+    </div>
+    <div class="form-group">
+      <label style="color:var(--gray);font-size:13px">密码</label>
+      <input class="form-input" id="login-pwd" type="password" placeholder="请输入密码" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn btn-yellow" style="width:100%;justify-content:center;padding:14px;margin-top:8px" onclick="doLogin()">登 录</button>
+    <div class="login-error" id="login-error">密码错误，请重新输入</div>
+  </div>
+</div>
+
+<!-- 理财 Password Modal -->
+<div class="pwd-overlay" id="pwd-overlay">
+  <div class="pwd-box">
+    <h3>🔒 安全验证</h3>
+    <p style="color:var(--gray);font-size:13px;margin-bottom:16px">请输入安全密码以访问理财管理</p>
+    <div class="form-group" style="text-align:left">
+      <input class="form-input" id="finance-pwd" type="password" placeholder="请输入密码" onkeydown="if(event.key==='Enter')doFinanceLogin()">
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:12px">
+      <button class="btn btn-outline" onclick="closePwdModal()">取消</button>
+      <button class="btn btn-yellow" onclick="doFinanceLogin()">确认</button>
+    </div>
+    <div class="pwd-error" id="pwd-error">密码错误</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== PERSISTENCE (localStorage) =====
+const STORAGE_KEY = 'eapay_data_v1';
+function saveState(){
+  const data = { balance: usdtBalance, extraTx: addedTx };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e){}
+}
+function loadState(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){ const d=JSON.parse(raw); return d; }
+  } catch(e){}
+  return null;
+}
+
+// ===== DYNAMIC BALANCE =====
+const INIT_BALANCE = 1867505.00;
+let usdtBalance = INIT_BALANCE;
+let addedTx = []; // tracks user-added transactions for persistence
+
+// ===== Transaction Data =====
+const baseTx = [
+  // 30 project transfers
+  {id:'TX3f4ff38a',date:'2025-04-05 11:12:15',type:'内部转账',dir:'out',amount:8229.10,coin:'USDT',to:'devteam_zhangwei',memo:'2025-04 团队薪资(3人)',status:'已完成',rate:7.2912},
+  {id:'TX31dbe981',date:'2025-04-16 18:30:13',type:'内部转账',dir:'out',amount:822.91,coin:'USDT',to:'devteam_zhangwei',memo:'2025-04 运营成本',status:'已完成',rate:7.2912},
+  {id:'TX5a92c7e1',date:'2025-05-08 15:58:35',type:'内部转账',dir:'out',amount:12188.37,coin:'USDT',to:'devteam_zhangwei',memo:'2025-05 团队薪资(4人)',status:'已完成',rate:7.2200},
+  {id:'TX7b3d1f82',date:'2025-05-18 11:16:32',type:'内部转账',dir:'out',amount:1108.03,coin:'USDT',to:'devteam_zhangwei',memo:'2025-05 运营成本',status:'已完成',rate:7.2200},
+  {id:'TX8c4e2a93',date:'2025-06-03 14:59:29',type:'内部转账',dir:'out',amount:15316.42,coin:'USDT',to:'devteam_zhangwei',memo:'2025-06 团队薪资(5人)',status:'已完成',rate:7.1826},
+  {id:'TX2d5f3ba4',date:'2025-06-16 19:53:56',type:'内部转账',dir:'out',amount:1392.40,coin:'USDT',to:'devteam_zhangwei',memo:'2025-06 运营成本',status:'已完成',rate:7.1826},
+  {id:'TX9e6g4cb5',date:'2025-07-07 14:52:49',type:'内部转账',dir:'out',amount:18685.82,coin:'USDT',to:'devteam_zhangwei',memo:'2025-07 团队薪资(6人)',status:'已完成',rate:7.1718},
+  {id:'TX1f7h5dc6',date:'2025-07-16 16:47:56',type:'内部转账',dir:'out',amount:1673.43,coin:'USDT',to:'devteam_zhangwei',memo:'2025-07 运营成本',status:'已完成',rate:7.1718},
+  {id:'TXag8i6ed7',date:'2025-08-04 14:21:03',type:'内部转账',dir:'out',amount:21459.25,coin:'USDT',to:'devteam_zhangwei',memo:'2025-08 团队薪资(7人)',status:'已完成',rate:7.1761},
+  {id:'TXbh9j7fe8',date:'2025-08-14 10:58:50',type:'内部转账',dir:'out',amount:2090.31,coin:'USDT',to:'devteam_zhangwei',memo:'2025-08 运营成本',status:'已完成',rate:7.1761},
+  {id:'TXci0k8gf9',date:'2025-09-04 12:36:27',type:'内部转账',dir:'out',amount:21753.35,coin:'USDT',to:'devteam_zhangwei',memo:'2025-09 团队薪资(7人)',status:'已完成',rate:7.1252},
+  {id:'TXdj1l9h0a',date:'2025-09-15 12:22:42',type:'内部转账',dir:'out',amount:2385.92,coin:'USDT',to:'devteam_zhangwei',memo:'2025-09 运营成本',status:'已完成',rate:7.1252},
+  {id:'TXek2m0i1b',date:'2025-10-07 11:30:31',type:'内部转账',dir:'out',amount:21627.11,coin:'USDT',to:'devteam_zhangwei',memo:'2025-10 团队薪资(7人)',status:'已完成',rate:7.1206},
+  {id:'TXfl3n1j2c',date:'2025-10-17 12:07:28',type:'内部转账',dir:'out',amount:2668.02,coin:'USDT',to:'devteam_zhangwei',memo:'2025-10 运营成本',status:'已完成',rate:7.1206},
+  {id:'TXgm4o2k3d',date:'2025-11-03 13:27:58',type:'内部转账',dir:'out',amount:25336.05,coin:'USDT',to:'devteam_zhangwei',memo:'2025-11 团队薪资(8人)',status:'已完成',rate:7.1045},
+  {id:'TXhn5p3l4e',date:'2025-11-16 10:47:34',type:'内部转账',dir:'out',amount:2815.18,coin:'USDT',to:'devteam_zhangwei',memo:'2025-11 运营成本',status:'已完成',rate:7.1045},
+  {id:'TXio6q4m5f',date:'2025-12-06 11:47:20',type:'内部转账',dir:'out',amount:25541.55,coin:'USDT',to:'devteam_zhangwei',memo:'2025-12 团队薪资(8人)',status:'已完成',rate:7.0467},
+  {id:'TXjp7r5n6g',date:'2025-12-13 15:31:38',type:'内部转账',dir:'out',amount:3122.07,coin:'USDT',to:'devteam_zhangwei',memo:'2025-12 运营成本',status:'已完成',rate:7.0467},
+  {id:'TXkq8s6o7h',date:'2026-01-05 12:55:11',type:'内部转账',dir:'out',amount:26952.29,coin:'USDT',to:'devteam_zhangwei',memo:'2026-01 团队薪资(9人)',status:'已完成',rate:6.9743},
+  {id:'TXlr9t7p8i',date:'2026-01-14 10:50:45',type:'内部转账',dir:'out',amount:2580.72,coin:'USDT',to:'devteam_zhangwei',memo:'2026-01 运营成本',status:'已完成',rate:6.9743},
+  {id:'TXms0u8q9j',date:'2026-02-05 12:07:28',type:'内部转账',dir:'out',amount:27191.77,coin:'USDT',to:'devteam_zhangwei',memo:'2026-02 团队薪资(9人)',status:'已完成',rate:6.9136},
+  {id:'TXnt1v9r0k',date:'2026-02-14 18:55:37',type:'内部转账',dir:'out',amount:2458.61,coin:'USDT',to:'devteam_zhangwei',memo:'2026-02 运营成本',status:'已完成',rate:6.9136},
+  {id:'TXou2w0s1l',date:'2026-03-03 12:54:29',type:'内部转账',dir:'out',amount:22632.41,coin:'USDT',to:'devteam_zhangwei',memo:'2026-03 团队薪资(8人)',status:'已完成',rate:6.8928},
+  {id:'TXpv3x1t2m',date:'2026-03-16 14:01:19',type:'内部转账',dir:'out',amount:2320.59,coin:'USDT',to:'devteam_zhangwei',memo:'2026-03 运营成本',status:'已完成',rate:6.8928},
+  {id:'TXqw4y2u3n',date:'2026-04-04 09:25:56',type:'内部转账',dir:'out',amount:17249.67,coin:'USDT',to:'devteam_zhangwei',memo:'2026-04 团队薪资(6人)',status:'已完成',rate:6.8410},
+  {id:'TXrx5z3v4o',date:'2026-04-20 19:01:26',type:'内部转账',dir:'out',amount:2338.84,coin:'USDT',to:'devteam_zhangwei',memo:'2026-04 运营成本',status:'已完成',rate:6.8410},
+  {id:'TXsy6a4w5p',date:'2026-05-03 10:26:08',type:'内部转账',dir:'out',amount:17347.84,coin:'USDT',to:'devteam_zhangwei',memo:'2026-05 团队薪资(6人)',status:'已完成',rate:6.8020},
+  {id:'TXtz7b5x6q',date:'2026-05-15 13:24:01',type:'内部转账',dir:'out',amount:2205.53,coin:'USDT',to:'devteam_zhangwei',memo:'2026-05 运营成本',status:'已完成',rate:6.8020},
+  {id:'TXua8c6y7r',date:'2026-06-06 09:33:39',type:'内部转账',dir:'out',amount:19503.55,coin:'USDT',to:'devteam_zhangwei',memo:'2026-06 团队薪资(6人)',status:'已完成',rate:6.7684},
+  {id:'TXvb9d7z8s',date:'2026-06-18 11:34:28',type:'内部转账',dir:'out',amount:2068.67,coin:'USDT',to:'devteam_zhangwei',memo:'2026-06 运营成本',status:'已完成',rate:6.7684},
+  // Extra 1M USDT business flow
+  {id:'TX44a8bc01',date:'2025-03-28 09:15:42',type:'收款',dir:'in',amount:50000,coin:'USDT',to:'client_globalshop',memo:'GlobalShop SaaS预付款',status:'已完成'},
+  {id:'TX55b9cd12',date:'2025-04-12 14:22:18',type:'收款',dir:'in',amount:35000,coin:'USDT',to:'investor_seed01',memo:'天使投资款-第1笔',status:'已完成'},
+  {id:'TX66c0de23',date:'2025-04-25 10:08:33',type:'兑换',dir:'out',amount:15000,coin:'USDT',to:'exchange_binance',memo:'USDT→BTC 定投',status:'已完成'},
+  {id:'TX77d1ef34',date:'2025-05-10 16:45:11',type:'收款',dir:'in',amount:28000,coin:'USDT',to:'client_crossborder',memo:'跨境代运营服务费Q2',status:'已完成'},
+  {id:'TX88e2f045',date:'2025-05-22 11:33:27',type:'内部转账',dir:'out',amount:8500,coin:'USDT',to:'supplier_proxy_hk',memo:'代理IP年费预付',status:'已完成'},
+  {id:'TX99f3g156',date:'2025-06-08 09:18:55',type:'收款',dir:'in',amount:42000,coin:'USDT',to:'client_amzn_seller',memo:'Amazon卖家获客服务费',status:'已完成'},
+  {id:'TXaa04h267',date:'2025-06-20 15:42:08',type:'提现',dir:'out',amount:20000,coin:'USDT',to:'bank_hk_hsbc',memo:'提现至汇丰港币账户',status:'已完成'},
+  {id:'TXbb15i378',date:'2025-07-05 10:25:44',type:'收款',dir:'in',amount:65000,coin:'USDT',to:'investor_seed01',memo:'天使投资款-第2笔',status:'已完成'},
+  {id:'TXcc26j489',date:'2025-07-18 14:08:19',type:'内部转账',dir:'out',amount:12000,coin:'USDT',to:'freelancer_designer',memo:'外包UI设计-Landing Page',status:'已完成'},
+  {id:'TXdd37k590',date:'2025-08-02 09:52:36',type:'收款',dir:'in',amount:38000,coin:'USDT',to:'client_shopify_uk',memo:'Shopify UK客户年费',status:'已完成'},
+  {id:'TXee48l601',date:'2025-08-15 16:30:22',type:'兑换',dir:'out',amount:25000,coin:'USDT',to:'exchange_binance',memo:'USDT→ETH 资产配置',status:'已完成'},
+  {id:'TXff59m712',date:'2025-09-03 11:15:40',type:'收款',dir:'in',amount:55000,coin:'USDT',to:'client_tiktok_agency',memo:'TikTok代运营季度结算',status:'已完成'},
+  {id:'TXgg60n823',date:'2025-09-20 08:48:15',type:'提现',dir:'out',amount:30000,coin:'USDT',to:'bank_sg_dbs',memo:'提现至DBS新加坡账户',status:'已完成'},
+  {id:'TXhh71o934',date:'2025-10-08 13:22:50',type:'收款',dir:'in',amount:48000,coin:'USDT',to:'client_meta_ads',memo:'Meta广告代投服务费',status:'已完成'},
+  {id:'TXii82p045',date:'2025-10-25 10:05:33',type:'内部转账',dir:'out',amount:15000,coin:'USDT',to:'partner_marketing',memo:'市场推广合作费',status:'已完成'},
+  {id:'TXjj93q156',date:'2025-11-05 14:38:27',type:'收款',dir:'in',amount:72000,coin:'USDT',to:'client_enterprise',memo:'企业版年度授权费',status:'已完成'},
+  {id:'TXkk04r267',date:'2025-11-18 09:55:12',type:'兑换',dir:'out',amount:18000,coin:'USDT',to:'exchange_binance',memo:'USDT→BNB 手续费储备',status:'已完成'},
+  {id:'TXll15s378',date:'2025-12-02 16:12:44',type:'收款',dir:'in',amount:45000,coin:'USDT',to:'client_dtc_brand',memo:'DTC品牌获客项目款',status:'已完成'},
+  {id:'TXmm26t489',date:'2025-12-22 11:28:36',type:'提现',dir:'out',amount:35000,coin:'USDT',to:'bank_us_boa',memo:'提现至美国银行账户',status:'已完成'},
+  {id:'TXnn37u590',date:'2026-01-10 10:42:18',type:'收款',dir:'in',amount:80000,coin:'USDT',to:'investor_seriesA',memo:'Pre-A轮投资款',status:'已完成'},
+  {id:'TXoo48v601',date:'2026-01-22 15:08:55',type:'内部转账',dir:'out',amount:22000,coin:'USDT',to:'partner_data_svc',memo:'数据服务供应商年费',status:'已完成'},
+  {id:'TXpp59w712',date:'2026-02-08 09:35:40',type:'收款',dir:'in',amount:56000,coin:'USDT',to:'client_dropship',memo:'Dropshipping客户批量订单',status:'已完成'},
+  {id:'TXqq60x823',date:'2026-02-20 14:18:22',type:'兑换',dir:'out',amount:20000,coin:'USDT',to:'exchange_binance',memo:'USDT→BTC 资产再平衡',status:'已完成'},
+  {id:'TXrr71y934',date:'2026-03-05 11:50:15',type:'收款',dir:'in',amount:62000,coin:'USDT',to:'client_wholesale',memo:'批发客户Q1结算',status:'已完成'},
+  {id:'TXss82z045',date:'2026-03-18 16:25:33',type:'提现',dir:'out',amount:28000,coin:'USDT',to:'bank_hk_hsbc',memo:'提现至汇丰港币账户',status:'已完成'},
+  {id:'TXtt93a156',date:'2026-04-06 10:12:48',type:'收款',dir:'in',amount:44000,coin:'USDT',to:'client_saas_sub',memo:'SaaS月度订阅收入汇总',status:'已完成'},
+  {id:'TXuu04b267',date:'2026-04-22 13:42:05',type:'内部转账',dir:'out',amount:10000,coin:'USDT',to:'legal_compliance',memo:'法务合规咨询费',status:'已完成'},
+  {id:'TXvv15c378',date:'2026-05-08 09:28:30',type:'收款',dir:'in',amount:58000,coin:'USDT',to:'client_agency_us',memo:'美国代理商季度分成',status:'已完成'},
+  {id:'TXww26d489',date:'2026-05-20 15:55:12',type:'兑换',dir:'out',amount:16000,coin:'USDT',to:'exchange_binance',memo:'USDT→ETH Gas费储备',status:'已完成'},
+  {id:'TXxx37e590',date:'2026-06-05 11:08:42',type:'收款',dir:'in',amount:70000,coin:'USDT',to:'client_new_deal',memo:'新签大客户首付款',status:'已完成'},
+  {id:'TXyy48f601',date:'2026-06-15 14:32:18',type:'提现',dir:'out',amount:25000,coin:'USDT',to:'bank_sg_dbs',memo:'提现至DBS新加坡',status:'已完成'},
+].sort((a,b)=>a.date.localeCompare(b.date));
+
+// Merge base + persisted extra transactions
+const allTx = [...baseTx];
+const saved = loadState();
+if(saved){
+  usdtBalance = saved.balance;
+  if(saved.extraTx && saved.extraTx.length){
+    addedTx = saved.extraTx;
+    addedTx.forEach(t => allTx.push(t));
+    allTx.sort((a,b)=>a.date.localeCompare(b.date));
+  }
+}
+
+let currentPage = 1;
+const perPage = 20;
+let filteredTx = [...allTx];
+let pendingGenTx = []; // preview buffer
+
+// ===== Helpers =====
+function fmt(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function txid(){return 'TX'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,4)}
+function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function randTime(y,m,dMin,dMax){
+  const d=randInt(dMin,dMax),h=randInt(8,19),mi=randInt(0,59),s=randInt(0,59);
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')} ${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+function getUsdtBalance(){return usdtBalance}
+function getBtcUsd(){return 64250}
+function getEthUsd(){return 3460}
+
+// ===== Stats & Render =====
+function calcStats(){
+  const totalOut = allTx.filter(t=>t.dir==='out').reduce((s,t)=>s+t.amount,0);
+  const totalIn = allTx.filter(t=>t.dir==='in').reduce((s,t)=>s+t.amount,0);
+  return {balance:usdtBalance, totalIn, totalOut, txCount:allTx.length};
+}
+
+function refreshAll(){
+  renderStats(); renderWallets(); renderAssetChart(); renderRecentTx();
+  // update transfer page balance
+  const tb=document.getElementById('transfer-balance'); if(tb) tb.textContent=fmt(usdtBalance)+' USDT';
+  const qb=document.getElementById('quick-balance'); if(qb) qb.textContent=fmt(usdtBalance)+' USDT';
+}
+
+function renderStats(){
+  const s=calcStats();
+  document.getElementById('stats-cards').innerHTML=`
+    <div class="stat-card"><div class="label">总资产 (USDT)</div><div class="value">${fmt(s.balance)}</div><div class="change up">▲ 可用余额</div></div>
+    <div class="stat-card"><div class="label">累计收入 (USDT)</div><div class="value" style="color:var(--green)">${fmt(s.totalIn)}</div><div class="change up">▲ ${allTx.filter(t=>t.dir==='in').length} 笔</div></div>
+    <div class="stat-card"><div class="label">累计支出 (USDT)</div><div class="value" style="color:var(--red)">${fmt(s.totalOut)}</div><div class="change">${allTx.filter(t=>t.dir==='out').length} 笔</div></div>
+    <div class="stat-card"><div class="label">总交易笔数</div><div class="value">${s.txCount}</div><div class="change up">▲ 活跃</div></div>`;
+}
+
+function renderWallets(){
+  const ub=usdtBalance, erc=Math.round(ub*0.667*100)/100, bep=Math.round((ub-erc)*100)/100;
+  const wallets=[
+    {coin:'BTC',name:'比特币',chain:'Bitcoin',addr:'1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',bal:'0.8524',usd:fmt(0.8524*getBtcUsd()),color:'#f7931a'},
+    {coin:'USDT',name:'Tether',chain:'ERC20',addr:'0x71C7656EC7ab88b098defB751B7401B5f6d8976F',bal:fmt(erc),usd:fmt(erc),color:'#26a17b'},
+    {coin:'USDT',name:'Tether',chain:'BEP20',addr:'0x342f52A5D97647183E534cC60428275293824300',bal:fmt(bep),usd:fmt(bep),color:'#26a17b'},
+    {coin:'ETH',name:'以太坊',chain:'Ethereum',addr:'0x8ba1f109551bD432803012645Ac136ddd64DBA72',bal:'12.458',usd:fmt(12.458*getEthUsd()),color:'#627eea'},
+    {coin:'BNB',name:'币安币',chain:'BSC',addr:'0xB8c77482e45F1F44dE1745F52C74426C631bDD52',bal:'85.32',usd:fmt(85.32*590),color:'#f3ba2f'},
+  ];
+  document.getElementById('wallet-table').innerHTML=wallets.map(w=>`<tr>
+    <td><div class="wallet-row"><div class="wallet-icon" style="background:${w.color}">${w.coin[0]}</div><div><b>${w.coin}</b><br><span style="color:var(--gray);font-size:11px">${w.name}</span></div></div></td>
+    <td>${w.chain}</td><td>${w.bal} ${w.coin}</td><td>$${w.usd}</td>
+    <td><button class="btn btn-outline btn-sm" onclick="showPage('transfer')">转账</button></td></tr>`).join('');
+}
+
+function renderAssetChart(){
+  const total=usdtBalance+0.8524*getBtcUsd()+12.458*getEthUsd()+85.32*590;
+  const pcts=[
+    {name:'USDT',pct:Math.round(usdtBalance/total*100),color:'#26a17b'},
+    {name:'BTC',pct:Math.round(0.8524*getBtcUsd()/total*100),color:'#f7931a'},
+    {name:'ETH',pct:Math.round(12.458*getEthUsd()/total*100),color:'#627eea'},
+    {name:'BNB',pct:Math.round(85.32*590/total*100),color:'#f3ba2f'},
+  ];
+  document.getElementById('asset-chart').innerHTML=pcts.map(a=>`<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+    <div style="width:12px;height:12px;border-radius:50%;background:${a.color}"></div>
+    <div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>${a.name}</span><span>${a.pct}%</span></div>
+    <div style="height:6px;background:var(--border);border-radius:3px"><div style="height:100%;width:${a.pct}%;background:${a.color};border-radius:3px"></div></div></div></div>`).join('');
+}
+
+function renderRecentTx(){
+  const recent=[...allTx].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
+  document.getElementById('recent-tx').innerHTML=recent.map(txRow).join('');
+}
+
+function txRow(t){
+  return `<tr>
+    <td style="font-family:monospace;font-size:11px">${t.id}</td>
+    <td><span class="badge ${t.type==='收款'?'badge-green':t.type==='兑换'?'badge-blue':t.type==='提现'?'badge-yellow':'badge-red'}">${t.type}</span></td>
+    <td class="${t.dir==='in'?'amount-in':'amount-out'}" style="font-weight:600">${t.dir==='in'?'+':'-'}${fmt(t.amount)} ${t.coin}</td>
+    <td style="font-size:12px">${t.to}</td>
+    <td><span class="badge badge-green">${t.status}</span></td>
+    <td style="color:var(--gray);font-size:12px">${t.date}</td>
+    <td><button class="btn btn-outline btn-sm" onclick='showDetail("${t.id}")'>详情</button></td></tr>`;
+}
+
+// ===== History =====
+function filterTx(){
+  const q=(document.getElementById('search-tx').value||'').toLowerCase();
+  const type=document.getElementById('filter-type').value;
+  const status=document.getElementById('filter-status').value;
+  filteredTx=allTx.filter(t=>{
+    if(q&&!t.id.toLowerCase().includes(q)&&!t.to.toLowerCase().includes(q)&&!t.memo.toLowerCase().includes(q)) return false;
+    if(type&&t.type!==type) return false;
+    if(status&&t.status!==status) return false;
+    return true;
+  });
+  currentPage=1; renderHistory();
+}
+
+function renderHistory(){
+  const total=filteredTx.length, pages=Math.ceil(total/perPage), start=(currentPage-1)*perPage;
+  const sorted=[...filteredTx].sort((a,b)=>b.date.localeCompare(a.date));
+  const slice=sorted.slice(start,start+perPage);
+  document.getElementById('history-tbody').innerHTML=slice.map(t=>`<tr>
+    <td style="font-family:monospace;font-size:11px">${t.id}</td>
+    <td style="font-size:12px;color:var(--gray)">${t.date.slice(0,10)}</td>
+    <td><span class="badge ${t.type==='收款'?'badge-green':t.type==='兑换'?'badge-blue':t.type==='提现'?'badge-yellow':'badge-red'}">${t.type}</span></td>
+    <td class="${t.dir==='in'?'amount-in':'amount-out'}" style="font-weight:600">${t.dir==='in'?'+':'-'}${fmt(t.amount)} ${t.coin}</td>
+    <td style="font-size:12px">${t.to}</td>
+    <td style="font-size:12px;color:var(--gray);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.memo}</td>
+    <td><span class="badge badge-green">${t.status}</span></td>
+    <td><button class="btn btn-outline btn-sm" onclick='showDetail("${t.id}")'>详情</button></td></tr>`).join('');
+  document.getElementById('page-info').textContent=`显示 ${total?start+1:0}-${Math.min(start+perPage,total)} / 共 ${total} 条`;
+  let btns='';for(let i=1;i<=pages;i++) btns+=`<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  document.getElementById('page-btns').innerHTML=btns;
+}
+function goPage(p){currentPage=p;renderHistory()}
+
+// ===== Detail =====
+function showDetail(id){
+  const t=allTx.find(x=>x.id===id); if(!t) return;
+  const cny=t.rate?fmt(t.amount*t.rate):'-';
+  document.getElementById('detail-body').innerHTML=`
+    <div style="text-align:center;margin-bottom:20px">
+      <div class="success-icon" style="width:48px;height:48px;font-size:20px;background:${t.dir==='in'?'var(--green)':'var(--yellow)'}">
+        ${t.dir==='in'?'↓':'↑'}</div>
+      <h3 style="margin-top:12px" class="${t.dir==='in'?'amount-in':'amount-out'}">
+        ${t.dir==='in'?'+':'-'}${fmt(t.amount)} ${t.coin}</h3>
+      ${t.rate?`<p style="color:var(--gray);font-size:13px">≈ ¥${cny} CNY</p>`:''}
+    </div>
+    <div class="tx-detail-row"><span class="dl">交易ID</span><span class="dv" style="font-family:monospace">${t.id}</span></div>
+    <div class="tx-detail-row"><span class="dl">类型</span><span class="dv">${t.type}</span></div>
+    <div class="tx-detail-row"><span class="dl">${t.dir==='in'?'来源':'收款方'}</span><span class="dv" style="color:var(--yellow)">${t.to}</span></div>
+    ${t.rate?`<div class="tx-detail-row"><span class="dl">参考汇率</span><span class="dv">1 USDT ≈ ¥${t.rate.toFixed(4)}</span></div>`:''}
+    <div class="tx-detail-row"><span class="dl">备注</span><span class="dv">${t.memo}</span></div>
+    <div class="tx-detail-row"><span class="dl">时间</span><span class="dv">${t.date}</span></div>
+    <div class="tx-detail-row"><span class="dl">状态</span><span class="dv" style="color:var(--green)">✓ ${t.status}</span></div>
+    <div class="tx-detail-row"><span class="dl">网络</span><span class="dv">Binance Internal</span></div>
+    <div class="tx-detail-row"><span class="dl">手续费</span><span class="dv" style="color:var(--green)">0 USDT</span></div>`;
+  openModal('modal-detail');
+}
+
+// ===== Transfer (deducts balance) =====
+function setAmount(pct){
+  document.getElementById('tx-amount').value=(usdtBalance*pct/100).toFixed(2);
+  updateFee();
+}
+function updateFee(){
+  const amt=parseFloat(document.getElementById('tx-amount').value)||0;
+  const net=document.getElementById('tx-network').value;
+  let fee=0;
+  if(net==='trc20')fee=1;else if(net==='erc20')fee=15;else if(net==='bep20')fee=0.5;
+  document.getElementById('fee-display').textContent=fee+' USDT';
+  document.getElementById('receive-display').textContent=fmt(Math.max(0,amt-fee))+' USDT';
+  const after=usdtBalance-amt;
+  document.getElementById('after-balance').textContent=(after>=0?fmt(after):'余额不足')+' USDT';
+  document.getElementById('after-balance').style.color=after>=0?'var(--green)':'var(--red)';
+}
+
+function executeTransfer(){
+  const addr=document.getElementById('tx-address').value;
+  const amt=parseFloat(document.getElementById('tx-amount').value);
+  const memo=document.getElementById('tx-memo').value;
+  if(!addr){toast('请输入收款方地址','error');return}
+  if(!amt||amt<=0){toast('请输入有效金额','error');return}
+  if(amt>usdtBalance){toast('余额不足','error');return}
+
+  // DEDUCT BALANCE
+  usdtBalance -= amt;
+
+  const id=txid();
+  const now=new Date().toISOString().slice(0,19).replace('T',' ');
+  const newTx={id,date:now,type:'内部转账',dir:'out',amount:amt,coin:'USDT',to:addr,memo:memo||'转账',status:'已完成'};
+  allTx.push(newTx);
+  addedTx.push(newTx);
+  allTx.sort((a,b)=>a.date.localeCompare(b.date));
+  filteredTx=[...allTx];
+  saveState();
+
+  document.getElementById('success-msg').textContent=`${fmt(amt)} USDT 已发送至 ${addr}`;
+  document.getElementById('success-detail').innerHTML=`
+    <div class="fee-info">
+      <div class="fee-row"><span class="fee-label">交易ID</span><span class="fee-value" style="font-family:monospace">${id}</span></div>
+      <div class="fee-row"><span class="fee-label">时间</span><span class="fee-value">${now}</span></div>
+      <div class="fee-row"><span class="fee-label">剩余余额</span><span class="fee-value" style="color:var(--green)">${fmt(usdtBalance)} USDT</span></div>
+    </div>`;
+  openModal('modal-success');
+  refreshAll();
+  document.getElementById('tx-address').value='';
+  document.getElementById('tx-amount').value='';
+  document.getElementById('tx-memo').value='';
+}
+
+function quickTransfer(){
+  const addr=document.getElementById('quick-addr').value;
+  const amt=parseFloat(document.getElementById('quick-amount').value);
+  const memo=document.getElementById('quick-memo').value;
+  if(!addr||!amt){toast('请填写完整信息','error');return}
+  if(amt>usdtBalance){toast('余额不足','error');return}
+  closeModal('modal-transfer');
+  document.getElementById('tx-address').value=addr;
+  document.getElementById('tx-amount').value=amt;
+  document.getElementById('tx-memo').value=memo;
+  executeTransfer();
+}
+
+// ===== Auto Generate Monthly Records =====
+function previewAutoGen(){
+  const mv=document.getElementById('gen-month').value; // "2026-07"
+  if(!mv){toast('请选择月份','error');return}
+  const [y,m]=[parseInt(mv.slice(0,4)),parseInt(mv.slice(5,7))];
+  const rate=parseFloat(document.getElementById('gen-rate').value)||6.75;
+  const hc=parseInt(document.getElementById('gen-headcount').value)||6;
+  const avgSal=parseInt(document.getElementById('gen-avg-salary').value)||22000;
+  const ops=parseInt(document.getElementById('gen-ops').value)||14000;
+  const payee=document.getElementById('gen-payee').value||'devteam_zhangwei';
+  const doExtra=document.getElementById('gen-extra').checked;
+
+  pendingGenTx=[];
+  const salaryTotal=hc*avgSal;
+  const salaryUsdt=Math.round(salaryTotal/rate*100)/100;
+  const opsUsdt=Math.round(ops/rate*100)/100;
+  const ym=`${y}-${String(m).padStart(2,'0')}`;
+
+  pendingGenTx.push({
+    id:txid(),date:randTime(y,m,3,8),type:'内部转账',dir:'out',
+    amount:salaryUsdt,coin:'USDT',to:payee,
+    memo:`${ym} 团队薪资(${hc}人)`,status:'已完成',rate
+  });
+  pendingGenTx.push({
+    id:txid(),date:randTime(y,m,14,20),type:'内部转账',dir:'out',
+    amount:opsUsdt,coin:'USDT',to:payee,
+    memo:`${ym} 运营成本`,status:'已完成',rate
+  });
+
+  if(doExtra){
+    const ec=parseInt(document.getElementById('gen-extra-count').value)||3;
+    const et=parseInt(document.getElementById('gen-extra-total').value)||80000;
+    const types=['收款','兑换','提现','收款','收款'];
+    const sources=['client_saas_sub','exchange_binance','bank_hk_hsbc','client_new_deal','client_agency_us'];
+    const memos=['SaaS订阅收入','USDT→BTC定投','提现至银行','客户服务费','代理商分成'];
+    let remain=et;
+    for(let i=0;i<ec;i++){
+      const isLast=i===ec-1;
+      const amt=isLast?remain:Math.round(remain/(ec-i)*(0.5+Math.random())*100)/100;
+      remain-=amt;
+      const ti=randInt(0,types.length-1);
+      const tp=types[ti];
+      const dir=tp==='收款'?'in':'out';
+      pendingGenTx.push({
+        id:txid(),date:randTime(y,m,1,28),type:tp,dir,
+        amount:Math.round(Math.abs(amt)*100)/100,coin:'USDT',
+        to:sources[ti],memo:`${ym} ${memos[ti]}`,status:'已完成'
+      });
+    }
+  }
+
+  // Render preview
+  let totalDeduct=pendingGenTx.filter(t=>t.dir==='out').reduce((s,t)=>s+t.amount,0);
+  let totalCredit=pendingGenTx.filter(t=>t.dir==='in').reduce((s,t)=>s+t.amount,0);
+  let html=`<table><thead><tr><th>日期</th><th>类型</th><th>金额</th><th>收款方</th><th>备注</th></tr></thead><tbody>`;
+  pendingGenTx.sort((a,b)=>a.date.localeCompare(b.date)).forEach(t=>{
+    html+=`<tr><td style="font-size:12px">${t.date.slice(0,10)}</td>
+      <td><span class="badge ${t.type==='收款'?'badge-green':t.type==='兑换'?'badge-blue':t.type==='提现'?'badge-yellow':'badge-red'}">${t.type}</span></td>
+      <td class="${t.dir==='in'?'amount-in':'amount-out'}" style="font-weight:600">${t.dir==='in'?'+':'-'}${fmt(t.amount)}</td>
+      <td style="font-size:12px">${t.to}</td><td style="font-size:12px;color:var(--gray)">${t.memo}</td></tr>`;
+  });
+  html+=`</tbody></table>`;
+  html+=`<div class="fee-info" style="margin-top:12px">
+    <div class="fee-row"><span class="fee-label">本月总支出</span><span class="fee-value amount-out">${fmt(totalDeduct)} USDT</span></div>
+    <div class="fee-row"><span class="fee-label">本月总收入</span><span class="fee-value amount-in">+${fmt(totalCredit)} USDT</span></div>
+    <div class="fee-row"><span class="fee-label">净变动</span><span class="fee-value" style="color:${totalCredit-totalDeduct>=0?'var(--green)':'var(--red)'}">${totalCredit-totalDeduct>=0?'+':''}${fmt(totalCredit-totalDeduct)} USDT</span></div>
+    <div class="fee-row"><span class="fee-label">当前余额</span><span class="fee-value">${fmt(usdtBalance)} USDT</span></div>
+    <div class="fee-row"><span class="fee-label">预计余额</span><span class="fee-value" style="color:var(--green)">${fmt(usdtBalance+totalCredit-totalDeduct)} USDT</span></div>
+  </div>`;
+  document.getElementById('gen-preview-body').innerHTML=html;
+  document.getElementById('gen-preview-area').classList.remove('hidden');
+}
+
+function confirmAutoGen(){
+  if(!pendingGenTx.length){previewAutoGen();if(!pendingGenTx.length)return}
+  // Apply balance changes
+  pendingGenTx.forEach(t=>{
+    if(t.dir==='out') usdtBalance-=t.amount;
+    else usdtBalance+=t.amount;
+    allTx.push(t);
+    addedTx.push(t);
+  });
+  allTx.sort((a,b)=>a.date.localeCompare(b.date));
+  filteredTx=[...allTx];
+  saveState();
+  const count=pendingGenTx.length;
+  pendingGenTx=[];
+  document.getElementById('gen-preview-area').classList.add('hidden');
+  refreshAll();
+  renderGenHistory();
+  toast(`成功生成 ${count} 条记录，余额已更新`,'success');
+}
+
+function renderGenHistory(){
+  // Show which months have project records
+  const months=new Set();
+  allTx.filter(t=>t.to&&t.memo&&t.memo.includes('团队薪资')).forEach(t=>{
+    const m=t.memo.match(/(\d{4}-\d{2})/);if(m)months.add(m[1]);
+  });
+  const arr=[...months].sort();
+  document.getElementById('gen-history-list').innerHTML=arr.length?
+    arr.map(m=>`<span class="badge badge-green" style="margin:4px;display:inline-block;padding:6px 12px">${m}</span>`).join(''):
+    '<span style="color:var(--gray)">暂无记录</span>';
+}
+
+// ===== Wallet Page =====
+function renderWalletPage(){
+  const erc=Math.round(usdtBalance*0.667*100)/100, bep=Math.round((usdtBalance-erc)*100)/100;
+  document.getElementById('wallet-stats').innerHTML=`
+    <div class="stat-card"><div class="label">USDT 总余额</div><div class="value" style="color:var(--green)">${fmt(usdtBalance)}</div></div>
+    <div class="stat-card"><div class="label">BTC 余额</div><div class="value">0.8524</div></div>
+    <div class="stat-card"><div class="label">ETH 余额</div><div class="value">12.458</div></div>
+    <div class="stat-card"><div class="label">总估值 (USD)</div><div class="value">$${fmt(usdtBalance+0.8524*getBtcUsd()+12.458*getEthUsd()+85.32*590)}</div></div>`;
+  const wallets=[
+    {coin:'USDT',name:'Tether',chain:'ERC20',addr:'0x71C7656EC7ab88b098defB751B7401B5f6d8976F',bal:fmt(erc),usd:fmt(erc)},
+    {coin:'USDT',name:'Tether',chain:'BEP20',addr:'0x342f52A5D97647183E534cC60428275293824300',bal:fmt(bep),usd:fmt(bep)},
+    {coin:'BTC',name:'比特币',chain:'Bitcoin',addr:'1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',bal:'0.8524 BTC',usd:fmt(0.8524*getBtcUsd())},
+    {coin:'ETH',name:'以太坊',chain:'Ethereum',addr:'0x8ba1f109551bD432803012645Ac136ddd64DBA72',bal:'12.458 ETH',usd:fmt(12.458*getEthUsd())},
+    {coin:'BNB',name:'币安币',chain:'BSC',addr:'0xB8c77482e45F1F44dE1745F52C74426C631bDD52',bal:'85.32 BNB',usd:fmt(85.32*590)},
+  ];
+  document.getElementById('wallet-detail-table').innerHTML=wallets.map(w=>`<tr>
+    <td><b>${w.coin}</b> <span style="color:var(--gray)">${w.name}</span></td>
+    <td>${w.chain}</td><td class="wallet-addr">${w.addr}</td>
+    <td>${w.bal}</td><td>$${w.usd}</td>
+    <td><button class="btn btn-outline btn-sm" onclick="showPage('transfer')">转账</button> <button class="btn btn-outline btn-sm">收款</button></td></tr>`).join('');
+}
+
+// ===== Export =====
+function exportReport(){
+  let csv='Transaction ID,Date,Type,Direction,Amount,Coin,Counterparty,Memo,Status,Rate\n';
+  allTx.forEach(t=>{csv+=`${t.id},${t.date},${t.type},${t.dir==='in'?'收入':'支出'},${t.amount},${t.coin},${t.to},${t.memo},${t.status},${t.rate||''}\n`});
+  const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='EAPay_交易记录_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  toast('报表已导出','success');
+}
+
+// ===== UI =====
+function showPage(id,el){
+  document.querySelectorAll('.main > div[id^="page-"]').forEach(d=>d.classList.add('hidden'));
+  document.getElementById('page-'+id)?.classList.remove('hidden');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(id==='history') filterTx();
+  if(id==='wallets') renderWalletPage();
+  if(id==='transfer'){
+    document.getElementById('transfer-balance').textContent=fmt(usdtBalance)+' USDT';
+  }
+  if(id==='autogen') renderGenHistory();
+}
+function openModal(id){document.getElementById(id).classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function openTransferModal(){
+  document.getElementById('quick-balance').textContent=fmt(usdtBalance)+' USDT';
+  openModal('modal-transfer');
+}
+function toast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast toast-'+type+' show';
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')});
+});
+
+// ===== LOGIN =====
+const SYS_PWD = '@199400';
+let financeUnlocked = false;
+
+function doLogin(){
+  const pwd = document.getElementById('login-pwd').value;
+  if(pwd === SYS_PWD){
+    document.getElementById('login-overlay').classList.add('hide');
+    document.getElementById('login-error').style.display='none';
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('login-pwd').value='';
+    document.getElementById('login-pwd').focus();
+  }
+}
+
+// ===== 理财 Password Gate =====
+let pendingFinanceNav = null;
+function openFinancePage(el){
+  if(financeUnlocked){
+    showPage('autogen',el);
+    return;
+  }
+  pendingFinanceNav = el;
+  document.getElementById('finance-pwd').value='';
+  document.getElementById('pwd-error').style.display='none';
+  document.getElementById('pwd-overlay').classList.add('show');
+  setTimeout(()=>document.getElementById('finance-pwd').focus(),100);
+}
+
+function doFinanceLogin(){
+  const pwd = document.getElementById('finance-pwd').value;
+  if(pwd === SYS_PWD){
+    financeUnlocked = true;
+    document.getElementById('pwd-overlay').classList.remove('show');
+    showPage('autogen', pendingFinanceNav);
+  } else {
+    document.getElementById('pwd-error').style.display='block';
+    document.getElementById('finance-pwd').value='';
+    document.getElementById('finance-pwd').focus();
+  }
+}
+
+function closePwdModal(){
+  document.getElementById('pwd-overlay').classList.remove('show');
+}
+
+document.getElementById('pwd-overlay').addEventListener('click',e=>{
+  if(e.target.id==='pwd-overlay') closePwdModal();
+});
+
+// Focus login password on load
+setTimeout(()=>document.getElementById('login-pwd')?.focus(),200);
+
+// INIT
+refreshAll();
+</script>
+</body>
+</html>
