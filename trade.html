@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>动态半中性策略 · 路演</title>
+<style>
+:root{
+  --plane:#0a0d14; --bg:#0d1119; --panel:#141b28; --panel2:#1a2233; --line:#232c3f;
+  --ink:#ffffff; --sec:#c3c2b7; --muted:#8b93a3;
+  --blue:#3987e5; --green:#199e70; --red:#e66767; --amber:#c98500; --warn:#fab219; --good:#0ca30c;
+  --glow:0 0 40px rgba(57,135,229,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--plane);color:var(--ink);
+  font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+  line-height:1.7;font-size:16px;overflow-x:hidden}
+.bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bgfx .grid{position:absolute;inset:-2px;
+  background-image:linear-gradient(rgba(57,135,229,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(57,135,229,.06) 1px,transparent 1px);
+  background-size:46px 46px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%)}
+.bgfx .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:float 18s ease-in-out infinite}
+.orb.a{width:520px;height:520px;background:radial-gradient(circle,#1e63c0,transparent 70%);top:-160px;left:-120px}
+.orb.b{width:460px;height:460px;background:radial-gradient(circle,#16755a,transparent 70%);top:40%;right:-160px;animation-delay:-6s}
+.orb.c{width:400px;height:400px;background:radial-gradient(circle,#3a2f7a,transparent 70%);bottom:-120px;left:30%;animation-delay:-11s}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-30px)}}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 22px}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:40;backdrop-filter:blur(12px);
+  background:rgba(10,13,20,.72);border-bottom:1px solid var(--line)}
+nav .in{max-width:1080px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+nav .brand{font-weight:800;letter-spacing:.5px;font-size:15px;display:flex;align-items:center;gap:9px}
+nav .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue)}
+nav .links{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+nav .links button{background:none;border:1px solid transparent;color:var(--muted);font-size:13px;
+  padding:5px 11px;border-radius:999px;cursor:pointer;transition:.2s;font-family:inherit}
+nav .links button:hover{color:var(--ink);border-color:var(--line)}
+nav .links button.on{color:var(--ink);border-color:var(--blue);background:rgba(57,135,229,.12)}
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--green));z-index:41;width:0}
+
+section.blk{padding:70px 0;position:relative}
+.eyebrow{color:var(--blue);font-size:12.5px;letter-spacing:3px;font-weight:700;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:clamp(30px,5vw,50px);line-height:1.12;margin:0 0 18px;letter-spacing:.5px}
+h2{font-size:clamp(23px,3.4vw,32px);margin:0 0 14px;letter-spacing:.3px}
+h3{font-size:18px;margin:0 0 8px}
+p.lead{font-size:18px;color:var(--sec);max-width:720px}
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* hero */
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding-top:80px}
+.badges{display:flex;gap:9px;flex-wrap:wrap;margin:8px 0 26px}
+.badge{border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:999px;padding:6px 13px;font-size:13px;color:var(--sec)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:linear-gradient(160deg,var(--panel),var(--bg));border:1px solid var(--line);border-radius:16px;padding:18px}
+.kpi .v{font-size:30px;font-weight:800;background:linear-gradient(90deg,#8ec2ff,#5fe0b0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.kpi .l{color:var(--muted);font-size:13px;margin-top:4px}
+.scrollcue{margin-top:38px;color:var(--muted);font-size:13px;display:flex;align-items:center;gap:8px;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid3,.grid2{grid-template-columns:1fr}}
+.cmp{border-top:3px solid var(--line)}
+.cmp.win{border-top-color:var(--green);box-shadow:var(--glow)}
+.cmp h3{display:flex;align-items:center;gap:8px}
+.tick{color:var(--green)}.cross{color:var(--red)}
+ul.clean{list-style:none;padding:0;margin:10px 0 0}
+ul.clean li{padding-left:22px;position:relative;margin:8px 0;color:var(--sec);font-size:14.5px}
+ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:8px;height:8px;border-radius:2px;background:var(--blue)}
+
+/* simulator */
+.sim{background:linear-gradient(160deg,var(--panel2),var(--bg));border:1px solid var(--line);border-radius:20px;padding:26px}
+.segbtns{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:18px}
+.segbtns button{background:none;border:none;color:var(--muted);font-size:14px;padding:8px 18px;border-radius:9px;cursor:pointer;font-family:inherit;font-weight:600;transition:.2s}
+.segbtns button.on{color:#fff}
+.segbtns button.on.short{background:var(--red)}
+.segbtns button.on.long{background:var(--green)}
+.simgrid{display:grid;grid-template-columns:1.15fr 1fr;gap:26px;align-items:center}
+@media(max-width:820px){.simgrid{grid-template-columns:1fr}}
+.slabel{display:flex;justify-content:space-between;font-size:13.5px;color:var(--muted);margin-bottom:6px}
+input[type=range]{width:100%;-webkit-appearance:none;height:8px;border-radius:6px;
+  background:linear-gradient(90deg,var(--blue),var(--green));outline:none;margin:6px 0 4px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:#fff;border:3px solid var(--blue);cursor:pointer;box-shadow:0 0 14px rgba(57,135,229,.7)}
+.bar{height:26px;border-radius:8px;background:var(--bg);border:1px solid var(--line);position:relative;overflow:hidden;margin:6px 0}
+.bar > span{position:absolute;left:0;top:0;bottom:0;border-radius:7px;transition:width .35s cubic-bezier(.2,.7,.2,1)}
+.barrow{margin:14px 0}
+.barrow .t{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:2px}
+.readout{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center}
+.readout .big{font-size:44px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.readout .sub{color:var(--muted);font-size:13px;margin-top:6px}
+.chips{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:120px}
+.chip .cv{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.chip .cl{font-size:11.5px;color:var(--muted)}
+
+/* state machine */
+.machine{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+@media(max-width:820px){.machine{grid-template-columns:1fr}}
+.ring{position:relative;width:100%;max-width:420px;aspect-ratio:1;margin:0 auto}
+.node{position:absolute;transform:translate(-50%,-50%);width:96px;height:96px;border-radius:50%;
+  background:var(--panel);border:2px solid var(--line);cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;transition:.28s;font-size:13px;font-weight:700}
+.node small{color:var(--muted);font-weight:500;font-size:10.5px;margin-top:2px}
+.node:hover{border-color:var(--blue)}
+.node.on{border-color:var(--blue);box-shadow:0 0 26px rgba(57,135,229,.55);background:var(--panel2);transform:translate(-50%,-50%) scale(1.08)}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;min-height:230px}
+.detail .tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:7px;margin-bottom:8px}
+.playbtn{background:var(--bg);border:1px solid var(--line);color:var(--sec);border-radius:10px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;margin-top:10px}
+.playbtn:hover{border-color:var(--blue);color:#fff}
+
+/* tabs scenario */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{background:var(--bg);border:1px solid var(--line);color:var(--muted);border-radius:11px;padding:9px 16px;cursor:pointer;font-family:inherit;font-weight:600;transition:.2s;font-size:14px}
+.tabs button.on{color:#fff;border-color:var(--blue);background:rgba(57,135,229,.12)}
+.moneybox{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:6px}
+.mb{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;transition:.4s;opacity:0;transform:translateY(10px)}
+.mb.show{opacity:1;transform:none}
+.mb .mv{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.mb .ml{font-size:12.5px;color:var(--muted);margin-top:3px}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:10px;align-items:center}
+.fstage{border:1px solid var(--line);border-radius:12px;padding:14px 20px;text-align:center;background:var(--panel);transition:.5s}
+.fstage .fn{font-size:26px;font-weight:800}
+.fstage .fl{font-size:12.5px;color:var(--muted)}
+.farrow{color:var(--muted);font-size:18px}
+
+/* risk cards */
+.rcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;transition:.3s;cursor:default}
+.rcard:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.rcard .ic{font-size:24px}
+.rcard h3{margin:8px 0 6px;font-size:16px}
+.rcard p{color:var(--sec);font-size:14px;margin:0}
+
+/* pipeline */
+.pipe{display:flex;gap:10px;align-items:stretch;overflow-x:auto;padding-bottom:6px}
+.pstep{flex:1;min-width:150px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative}
+.pstep .pn{font-size:12px;color:var(--blue);font-weight:700}
+.pstep h4{margin:6px 0;font-size:15px}
+.pstep p{font-size:12.8px;color:var(--muted);margin:0}
+.pstep::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--muted);z-index:2}
+.pstep:last-child::after{display:none}
+
+.disc{background:rgba(250,178,25,.06);border:1px solid rgba(250,178,25,.3);border-radius:16px;padding:20px;color:var(--sec);font-size:13.5px}
+.disc b{color:var(--warn)}
+footer{padding:40px 0 60px;color:var(--muted);font-size:12.5px;text-align:center;border-top:1px solid var(--line);margin-top:30px}
+.hl-g{color:var(--green)}.hl-r{color:var(--red)}.hl-b{color:var(--blue)}.hl-a{color:var(--warn)}
+.note{color:var(--muted);font-size:12.5px}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bgfx"><div class="grid"></div><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
+
+<nav><div class="in">
+  <div class="brand"><span class="dot"></span>动态半中性策略</div>
+  <div class="links" id="nav">
+    <button data-t="s-top">概览</button>
+    <button data-t="s-why">为何配置</button>
+    <button data-t="s-engine">核心引擎</button>
+    <button data-t="s-modes">五模式</button>
+    <button data-t="s-return">收益来源</button>
+    <button data-t="s-scn">情景测算</button>
+    <button data-t="s-risk">风控体系</button>
+    <button data-t="s-stock">选股</button>
+    <button data-t="s-sys">系统</button>
+    <button data-t="s-disc">风险披露</button>
+  </div>
+</div></nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<section class="blk hero" id="s-top">
+  <div class="reveal in">
+    <div class="eyebrow">动态半中性 · 绝不深度回撤</div>
+    <h1>为承接低成本机构资金<br>而生的<span class="hl-b">动态半中性</span>策略</h1>
+    <p class="lead">用一篮子高弹性A股赚上涨，用 IF/IC/IM 股指期货在关键顶/底"上保险 + 反手赚趋势"。以"<span class="hl-g">绝不深度回撤</span>"为硬约束，把本金安全放在收益之前。</p>
+    <div class="badges">
+      <span class="badge">A股一篮子个股 · 只做多</span>
+      <span class="badge">股指期货 · 可多可空 · T+0</span>
+      <span class="badge">五模式状态机 · 全自动交易</span>
+      <span class="badge">相关性对冲 · 赚两份钱</span>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="v">≤32%</div><div class="l">股指保证金占用硬顶</div></div>
+      <div class="kpi"><div class="v">0.16%</div><div class="l">单次试错代价（总资金）</div></div>
+      <div class="kpi"><div class="v">85%<span style="font-size:15px">*</span></div><div class="l">目标胜率（待回测验证）</div></div>
+      <div class="kpi"><div class="v">5</div><div class="l">市场形态全覆盖</div></div>
+    </div>
+    <div class="scrollcue">↓ 向下滚动 · 每个模块均可点击交互</div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="blk" id="s-why">
+  <div class="reveal"><div class="eyebrow">为何配置</div>
+  <h2>利率下行时代，资金需要"稳"的替代品</h2>
+  <p class="lead">银行理财平均收益已降至 2%–3% 区间且持续下行，纯固收与货币类产品收益中枢被压低。低波动、低回撤的中性型策略，成为承接银行、机构低成本资金的稀缺配置。</p>
+  </div>
+  <div class="grid3" style="margin-top:22px">
+    <div class="card reveal"><h3 class="hl-a">痛点</h3><p class="note" style="font-size:14px">无风险利率深度下行，理财收益逐年走低（2.4%→2.3%…），传统底仓资产收益能力弱化。</p></div>
+    <div class="card reveal"><h3 class="hl-b">诉求</h3><p class="note" style="font-size:14px">资金方要的是"稳"：本金不许深度回撤、收益略高于理财即可、可规模化、可解释。</p></div>
+    <div class="card reveal"><h3 class="hl-g">本策略的位置</h3><p class="note" style="font-size:14px">以"绝不深度回撤"为硬约束的动态半中性，收益来自个股超额 + 顶底趋势，恰好填补这一配置空缺。</p></div>
+  </div>
+</section>
+
+<!-- ENGINE / SIMULATOR -->
+<section class="blk" id="s-engine">
+  <div class="reveal"><div class="eyebrow">核心引擎 · 可交互</div>
+  <h2>资金杠杆与对冲，一个公式说清</h2>
+  <p class="lead">股指侧资金 Z 在总资金的 20%–80% 之间移动，保证金 = Z×40%，自然得出 8%→32% 的占用区间。拖动下方滑块，实时看敞口如何变化。</p>
+  </div>
+  <div class="sim reveal" style="margin-top:20px">
+    <div class="segbtns" id="dirseg">
+      <button data-d="top" class="on short">顶部 · 股指开空</button>
+      <button data-d="bot" class="long">底部 · 股指开多</button>
+    </div>
+    <div class="simgrid">
+      <div>
+        <div class="slabel"><span>股指侧资金 Z 占总资金</span><span id="zval" class="hl-b">20%</span></div>
+        <input type="range" id="zslider" min="20" max="80" value="20" step="1">
+        <div class="note">拖到最左 = 顶部初锁（近似中性）；拖到最右 = 重仓方向档（硬顶）</div>
+
+        <div class="barrow">
+          <div class="t"><span>股票侧（多头底仓）</span><span id="sval" class="hl-g">80%</span></div>
+          <div class="bar"><span id="sbar" style="background:var(--green);width:80%"></span></div>
+        </div>
+        <div class="barrow">
+          <div class="t"><span>股指保证金占用</span><span id="mval" class="hl-b">8%</span></div>
+          <div class="bar"><span id="mbar" style="background:var(--blue);width:8%"></span></div>
+        </div>
+        <div class="barrow">
+          <div class="t"><span>股指名义敞口（×10倍）</span><span id="nval">80%</span></div>
+          <div class="bar"><span id="nbar" style="background:var(--amber);width:24%"></span></div>
+          <div class="note">名义敞口按总资金计，条形按 1/3 缩放显示</div>
+        </div>
+      </div>
+      <div class="readout">
+        <div class="sub">当前净方向敞口（占总资金）</div>
+        <div class="big" id="netbig">≈ 0%</div>
+        <div class="sub" id="netdesc">股票多 80% − 股指空 80% ≈ 市场中性</div>
+        <div class="chips">
+          <div class="chip"><div class="cv hl-g" id="c1">80%</div><div class="cl">股票多头</div></div>
+          <div class="chip"><div class="cv" id="c2" style="color:var(--red)">−80%</div><div class="cl">股指方向</div></div>
+          <div class="chip"><div class="cv hl-a" id="c3">8%</div><div class="cl">保证金占用</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note reveal" style="margin-top:12px">说明：以上为策略资金约束的<b style="color:var(--sec)">机制演示</b>，非收益承诺。32% 档为重杠杆方向头寸，其风控与 8% 档完全分离（见"风控体系"）。</p>
+</section>
+
+<!-- MODES -->
+<section class="blk" id="s-modes">
+  <div class="reveal"><div class="eyebrow">五模式状态机 · 点击节点</div>
+  <h2>A股就在五个形态里循环</h2>
+  <p class="lead">识别当前形态 → 执行对应模式，是整套系统的骨架。点击环上任意节点查看动作，或让它自动演播一圈。</p>
+  </div>
+  <div class="machine reveal" style="margin-top:20px">
+    <div class="ring" id="ring">
+      <svg viewBox="0 0 400 400" style="position:absolute;inset:0;width:100%;height:100%">
+        <circle cx="200" cy="200" r="150" fill="none" stroke="#232c3f" stroke-width="1.5" stroke-dasharray="4 6"/>
+        <circle id="dot" cx="200" cy="50" r="7" fill="#3987e5"/>
+      </svg>
+      <!-- nodes positioned by JS -->
+    </div>
+    <div class="detail" id="mdetail"></div>
+  </div>
+</section>
+
+<!-- RETURN SOURCE -->
+<section class="blk" id="s-return">
+  <div class="reveal"><div class="eyebrow">收益来源</div>
+  <h2>为什么能"赚两份钱"</h2></div>
+  <div class="grid2" style="margin-top:20px">
+    <div class="card reveal">
+      <h3 class="hl-g">① 个股超额（相对强弱）</h3>
+      <p class="note" style="font-size:14.5px">在成分股里只留"跌得更少、涨得更多"的强票。大盘下行时股指空单赚钱，而这批小盘活跃股里仍有上涨的——多赚这一份超额。</p>
+    </div>
+    <div class="card reveal">
+      <h3 class="hl-b">② 顶底趋势（反手）</h3>
+      <p class="note" style="font-size:14.5px">顶部锁利后反手做空吃下跌，底部反手做多吃反弹。只在高胜率的两头出手，不赌中间震荡。</p>
+    </div>
+    <div class="card reveal">
+      <h3 class="hl-a">③ 升贴水"捡红包"</h3>
+      <p class="note" style="font-size:14.5px">升水多现于上升期、贴水多现于下行期。因只在顶部开空、底部开多，方向固定，基差长期站在策略一边——结算收敛即为额外收益。</p>
+    </div>
+    <div class="card reveal">
+      <h3 class="hl-r">④ 逆回购托底</h3>
+      <p class="note" style="font-size:14.5px">空仓或留存现金时做国债逆回购，保本吃息，闲钱不闲，且随时可调回对冲。</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIO -->
+<section class="blk" id="s-scn">
+  <div class="reveal"><div class="eyebrow">情景测算 · 理论示例</div>
+  <h2>以 5000 万总资金为例</h2>
+  <p class="lead">下列为策略资金调度的<b style="color:var(--sec)">理论测算示例</b>（不含浮盈浮亏，非历史业绩、非收益承诺）。点击切换模式。</p>
+  </div>
+  <div class="card reveal" style="margin-top:18px">
+    <div class="tabs" id="scntabs">
+      <button data-s="0" class="on">模式一 · 顶部</button>
+      <button data-s="1">模式二 · 底部</button>
+      <button data-s="2">模式三 · 盘整</button>
+    </div>
+    <div id="scndesc" class="note" style="margin-bottom:12px"></div>
+    <div class="moneybox" id="scnbox"></div>
+  </div>
+</section>
+
+<!-- RISK -->
+<section class="blk" id="s-risk">
+  <div class="reveal"><div class="eyebrow">风控体系 · 核心竞争力</div>
+  <h2>"绝不深度回撤"如何做到</h2>
+  <p class="lead">对资金方而言，这才是最该看的一页。五道防线层层兜底。</p></div>
+  <div class="grid3" style="margin-top:20px">
+    <div class="rcard reveal"><div class="ic">🎯</div><h3>只在两头出手</h3><p>只在高胜率的顶部/底部动手，最难猜的中间震荡不重赌，从源头降低犯错概率。</p></div>
+    <div class="rcard reveal"><div class="ic">🧷</div><h3>2% 硬止损</h3><p>开仓即预设错向，反向 2% 即平，单次代价约总资金 0.16%–1.6%，几乎不伤本金。</p></div>
+    <div class="rcard reveal"><div class="ic">🛡️</div><h3>错向保护单</h3><p>在下注反方向预挂对等单，看错即自动对锁，把亏损卡在预设可承受区间，阻止扩大。</p></div>
+    <div class="rcard reveal"><div class="ic">💰</div><h3>永留现金</h3><p>任何时点都保留一份干净现金（逆回购托底），随时可反向对冲，不会一条道走到黑。</p></div>
+    <div class="rcard reveal"><div class="ic">📊</div><h3>硬性资金边界</h3><p>股票/股指各 20%–80%、保证金 ≤Z×40%（≤32%），禁止极端集中——纪律写死在系统里。</p></div>
+    <div class="rcard reveal"><div class="ic">🤖</div><h3>全自动执行</h3><p>规则预设、程序化交易，剔除情绪化操作；盘中盘后自动监测，减少人为偏差。</p></div>
+  </div>
+</section>
+
+<!-- STOCK -->
+<section class="blk" id="s-stock">
+  <div class="reveal"><div class="eyebrow">选股与因子</div>
+  <h2>从 3800 只到 300 只精选</h2></div>
+  <div class="grid2" style="margin-top:20px;align-items:center">
+    <div class="funnel reveal">
+      <div class="fstage" style="width:100%"><div class="fn">3800</div><div class="fl">全市场A股</div></div>
+      <div class="farrow">↓ 剔除ST、低流动性</div>
+      <div class="fstage" style="width:80%"><div class="fn">1200</div><div class="fl">基础池（动态复核）</div></div>
+      <div class="farrow">↓ 相对强弱排序</div>
+      <div class="fstage" style="width:56%;border-color:var(--green);box-shadow:var(--glow)"><div class="fn hl-g">300</div><div class="fl">交易持仓（市值5档×强弱）</div></div>
+    </div>
+    <div class="reveal">
+      <div class="card">
+        <h3 class="hl-b">因子强弱分档</h3>
+        <p class="note" style="font-size:14.5px;margin-top:6px">主引擎清晰、可解释，杜绝"因子打架"：</p>
+        <ul class="clean">
+          <li><b class="hl-g">强 / 次强因子：技术指标 + 成交量</b> —— 决定优/次优排序的主因子。</li>
+          <li><b>中 / 次弱 / 弱因子：其他</b>（基本面、政策/消息等）—— 仅作正向助推，不否决、不独立开平仓。</li>
+        </ul>
+        <p class="note" style="margin-top:10px">选股由股指组合方向驱动：股指涨看谁涨更多、股指跌看谁跌更少，连续打分动态换位。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM -->
+<section class="blk" id="s-sys">
+  <div class="reveal"><div class="eyebrow">系统与落地</div>
+  <h2>从数据到执行的全自动闭环</h2></div>
+  <div class="pipe reveal" style="margin-top:20px">
+    <div class="pstep"><div class="pn">01</div><h4>数据层</h4><p>日线为主 + 分钟线；量价、成交量、升贴水、指数组合</p></div>
+    <div class="pstep"><div class="pn">02</div><h4>指标/因子</h4><p>布林/KDJ/均线/乖离 + β偏差系数（IF/IC/IM）</p></div>
+    <div class="pstep"><div class="pn">03</div><h4>决策</h4><p>五模式状态机判定 + 相对强弱选股 + 资金分配</p></div>
+    <div class="pstep"><div class="pn">04</div><h4>执行</h4><p>全自动算法交易 · 双向持仓/错向保护 · 实时监控</p></div>
+    <div class="pstep"><div class="pn">05</div><h4>反馈</h4><p>历史回测寻优 · 参数标定 · 持续迭代</p></div>
+  </div>
+  <p class="note reveal" style="margin-top:12px">交易执行全自动化，规则预设后无需人工逐笔干预；策略参数以全周期历史回测标定。</p>
+</section>
+
+<!-- DISCLOSURE -->
+<section class="blk" id="s-disc">
+  <div class="reveal"><div class="eyebrow">风险披露</div>
+  <h2>诚实的边界</h2></div>
+  <div class="disc reveal" style="margin-top:16px">
+    <p style="margin-top:0">本材料仅供<b>合格投资者</b>参考，不构成投资建议或收益承诺。请知悉以下要点：</p>
+    <ul class="clean" style="margin-top:4px">
+      <li>本策略为<b style="color:var(--sec)">动态半中性</b>：32% 档为含杠杆的方向性头寸，胜率再高亦非零风险，极端跳空行情下预设保护可能滑点或失效。</li>
+      <li>"85% 胜率"为<b style="color:var(--sec)">目标值，尚待全周期历史回测与实盘验证</b>，过往测算不代表未来收益。</li>
+      <li>股指只对冲大盘系统性风险，<b style="color:var(--sec)">无法对冲个股黑天鹅</b>；存在移仓、升贴水、手续费等成本损耗。</li>
+      <li>跨账户对锁/通算需期货公司业务支持；策略参数与阈值仍在标定阶段。</li>
+    </ul>
+    <p style="margin-bottom:0">市场有风险，投资需谨慎。以上均为策略机制说明，最终以合同条款及经审计的实盘数据为准。</p>
+  </div>
+</section>
+
+</div>
+
+<footer>动态半中性策略 · 路演材料（机制说明版）&nbsp;|&nbsp; 本页为交互演示，不含真实API/交易接口 &nbsp;|&nbsp; 不构成投资建议</footer>
+
+<script>
+/* progress + nav highlight */
+const prog=document.getElementById('prog');
+const navbtns=[...document.querySelectorAll('#nav button')];
+const secs=navbtns.map(b=>document.getElementById(b.dataset.t));
+navbtns.forEach(b=>b.onclick=()=>document.getElementById(b.dataset.t).scrollIntoView({behavior:'smooth'}));
+addEventListener('scroll',()=>{
+  const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let cur=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<160)cur=i});
+  navbtns.forEach((b,i)=>b.classList.toggle('on',i===cur));
+},{passive:true});
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---- simulator ---- */
+let dir='top';
+const zs=document.getElementById('zslider');
+function fmt(n){return (Math.round(n*10)/10);}
+function updateSim(){
+  const Z=+zs.value, S=100-Z, M=Z*0.4, N=Z*4;
+  document.getElementById('zval').textContent=Z+'%';
+  document.getElementById('sval').textContent=S+'%';
+  document.getElementById('mval').textContent=fmt(M)+'%';
+  document.getElementById('nval').textContent=fmt(N)+'%';
+  document.getElementById('sbar').style.width=S+'%';
+  document.getElementById('mbar').style.width=M+'%';
+  document.getElementById('nbar').style.width=Math.min(100,N/3)+'%';
+  const net = dir==='top' ? (S - N) : (S + N);
+  const nb=document.getElementById('netbig'), nd=document.getElementById('netdesc');
+  const c1=document.getElementById('c1'),c2=document.getElementById('c2'),c3=document.getElementById('c3');
+  c1.textContent=S+'%'; c3.textContent=fmt(M)+'%';
+  if(dir==='top'){
+    c2.textContent='−'+fmt(N)+'%'; c2.style.color='var(--red)';
+    nb.textContent=(net>=0?'+':'')+fmt(net)+'%';
+    nb.style.color = Math.abs(net)<15?'var(--amber)':'var(--red)';
+    nd.textContent = Math.abs(net)<15 ? ('股票多 '+S+'% − 股指空 '+fmt(N)+'% ≈ 市场中性') : ('净做空 ≈ '+fmt(net)+'% · 反手吃跌');
+  }else{
+    c2.textContent='+'+fmt(N)+'%'; c2.style.color='var(--green)';
+    nb.textContent='+'+fmt(net)+'%'; nb.style.color='var(--green)';
+    nd.textContent='净做多 ≈ +'+fmt(net)+'% · 反手吃涨';
+  }
+}
+zs.oninput=updateSim;
+document.querySelectorAll('#dirseg button').forEach(b=>b.onclick=()=>{
+  dir=b.dataset.d;
+  document.querySelectorAll('#dirseg button').forEach(x=>x.classList.remove('on','short','long'));
+  b.classList.add('on', dir==='top'?'short':'long');
+  updateSim();
+});
+updateSim();
+
+/* ---- state machine ---- */
+const modes=[
+  {k:'顶部',s:'模式一',t:'阶段顶部 · 股指开空对冲',c:'--red',a:'股指破布林上轨（出圈≈+2%）→ 分4回锁到8%，把80%股票浮盈焊死；停止新开股票。',cash:'8% 保证金 · 近似市场中性'},
+  {k:'下跌',s:'模式一-1',t:'确认下跌 · 反手做空',c:'--red',a:'5穿10/M头/破颈线确认 → 卖掉同步掉头的股，股指空单加码至32%，净做空吃下跌。',cash:'32% 保证金 · 净方向头寸'},
+  {k:'盘整',s:'模式三',t:'中途盘整 · 轻量试探',c:'--amber',a:'跌到中轨磨蹭5–7天，等5日线到位。股指仅轻量试探不打满，股票分批不打满80%。',cash:'不做极限调拨 · 观望'},
+  {k:'底部',s:'模式二',t:'阶段底部 · 反手做多',c:'--green',a:'破下轨 + KDJ≈−17 + 底背离翘头 → 股指做多32%，同步把20%股票买满，反手吃反弹。',cash:'32% 保证金 · 净做多'},
+  {k:'上涨',s:'模式二-1',t:'双底成立 · 回流股票',c:'--green',a:'双底确认后期平掉获利多单，资金回流股票端，逐步向80%上限加仓 → 回到顶部循环。',cash:'股票加仓 · 净做多'},
+];
+const ring=document.getElementById('ring');
+const R=42; // percent radius
+modes.forEach((m,i)=>{
+  const ang=(-90 + i*72)*Math.PI/180;
+  const x=50+R*Math.cos(ang), y=50+R*Math.sin(ang);
+  const n=document.createElement('div');
+  n.className='node';n.style.left=x+'%';n.style.top=y+'%';
+  n.innerHTML=m.k+'<small>'+m.s+'</small>';
+  n.onclick=()=>{selectMode(i);stopPlay();};
+  ring.appendChild(n); m.el=n;
+});
+const dot=document.getElementById('dot');
+function selectMode(i){
+  modes.forEach((m,j)=>m.el.classList.toggle('on',j===i));
+  const m=modes[i];
+  document.getElementById('mdetail').innerHTML=
+    '<span class="tag" style="background:rgba(255,255,255,.06);color:var('+m.c+')">'+m.s+'</span>'+
+    '<h3>'+m.t+'</h3>'+
+    '<p style="color:var(--sec);font-size:14.5px">'+m.a+'</p>'+
+    '<p style="color:var(--muted);font-size:13px;margin-top:8px">资金状态：<b style="color:var('+m.c+')">'+m.cash+'</b></p>'+
+    '<button class="playbtn" id="playtoggle">▶ 自动演播一圈</button>';
+  document.getElementById('playtoggle').onclick=togglePlay;
+  // move dot
+  const ang=(-90+i*72)*Math.PI/180;
+  dot.setAttribute('cx',200+150*Math.cos(ang));
+  dot.setAttribute('cy',200+150*Math.sin(ang));
+  dot.setAttribute('fill', getComputedStyle(document.documentElement).getPropertyValue(m.c)||'#3987e5');
+  cur=i;
+}
+let cur=0, playTimer=null;
+function togglePlay(){ playTimer?stopPlay():startPlay(); }
+function startPlay(){
+  const btn=document.getElementById('playtoggle'); if(btn)btn.textContent='⏸ 暂停演播';
+  playTimer=setInterval(()=>{selectMode((cur+1)%modes.length);
+    const b=document.getElementById('playtoggle'); if(b)b.textContent='⏸ 暂停演播';},2200);
+}
+function stopPlay(){ if(playTimer){clearInterval(playTimer);playTimer=null;} const btn=document.getElementById('playtoggle'); if(btn)btn.textContent='▶ 自动演播一圈'; }
+selectMode(0);
+
+/* ---- scenario ---- */
+const scn=[
+  {d:'初期：股票 80% / 股指 20%（A=B=各半）。合计保证金上限 = 总资金 8%，即触发阈值。',
+   b:[['4000万','股票组合 80%','--green'],['1000万','股指 Z 20%','--blue'],['400万','保证金上限 8%','--amber'],['≈中性','净方向','--sec']]},
+  {d:'边界：股票降至底线 20%，股指 Z 提升至 80%。合计保证金上限 = 总资金 32%，A按信号开多、B下方挂对等空仓保护。',
+   b:[['1000万','股票底线 20%','--green'],['4000万','股指 Z 80%','--blue'],['1600万','保证金上限 32%','--amber'],['净做多','反手吃涨','--green']]},
+  {d:'盘整：股票、股指各 ≥20%（且 ≤80%），仅轻量试探不打满，禁止极端集中至单一账户。',
+   b:[['≥20%','股票侧','--green'],['≥20%','股指侧','--blue'],['轻量','保证金试探','--amber'],['观望','等待突破','--sec']]},
+];
+const scnbox=document.getElementById('scnbox'), scndesc=document.getElementById('scndesc');
+function showScn(i){
+  document.querySelectorAll('#scntabs button').forEach((b,j)=>b.classList.toggle('on',j===i));
+  scndesc.textContent=scn[i].d;
+  scnbox.innerHTML='';
+  scn[i].b.forEach((c,k)=>{
+    const d=document.createElement('div');d.className='mb';
+    d.innerHTML='<div class="mv" style="color:var('+c[2]+')">'+c[0]+'</div><div class="ml">'+c[1]+'</div>';
+    scnbox.appendChild(d);
+    setTimeout(()=>d.classList.add('show'),60+k*90);
+  });
+}
+document.querySelectorAll('#scntabs button').forEach((b,i)=>b.onclick=()=>showScn(i));
+showScn(0);
+</script>
+</body>
+</html>
